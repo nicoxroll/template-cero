@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/logo.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <!-- Los hosts de imagen se resuelven antes de que el parser llegue al primer
+         <img>: sin esto el DNS + TLS de cada uno cae dentro del camino critico
+         del LCP, que en este sitio es una foto a sangre. -->
+    <link rel="preconnect" href="https://images.pexels.com" crossorigin />
+    <link rel="preconnect" href="https://hoirqrkdgbmvpwutwuwj.supabase.co" crossorigin />
+    <link rel="dns-prefetch" href="https://basemaps.cartocdn.com" />
+    <!-- La foto del hero es la imagen LCP del sitio. Sin este preload no empieza
+         a bajar hasta que el navegador parsea el CSS, encuentra el
+         background-image y recién ahí la pide: en una conexión media eso son
+         cientos de milisegundos con la portada en negro. Debe mantenerse en
+         sincronía con STORY_PHOTO_URL (src/components/home/story/frameSource.ts).
+         `fetchpriority=high` la pone delante del resto de la cola. -->
+    <link
+      rel="preload"
+      as="image"
+      fetchpriority="high"
+      href="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/482e7b6a-168c-4d0d-b35d-0e2ff4014577_1600w.webp"
+    />
+    <title>Template Cero — Plantilla Corporativa & Showcase Premium</title>
+    <meta
+      name="description"
+      content="Plantilla web corporativa modular y de alto rendimiento construida con React 19, Tailwind CSS v4, GSAP, panel de administración desacoplado y arquitectura de datos resiliente."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Template Cero" />
+    <meta property="og:title" content="Template Cero — Plantilla Corporativa & Showcase Premium" />
+    <meta
+      property="og:description"
+      content="Plantilla web corporativa modular y de alto rendimiento construida con React 19, Tailwind CSS v4, GSAP, panel de administración desacoplado y arquitectura de datos resiliente."
+    />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:url" content="https://template-cero.vercel.app/" />
+    <meta
+      property="og:image"
+      content="/hero-frames/f001.webp"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Template Cero — Plantilla Corporativa & Showcase Premium" />
+    <meta
+      name="twitter:description"
+      content="Plantilla web corporativa modular y de alto rendimiento construida con React 19, Tailwind CSS v4, GSAP, panel de administración desacoplado y arquitectura de datos resiliente."
+    />
+    <meta
+      name="twitter:image"
+      content="/hero-frames/f001.webp"
+    />
+    <link rel="canonical" href="https://template-cero.vercel.app/" />
+    <meta name="theme-color" content="#10281d" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Template Cero",
+        "url": "https://template-cero.vercel.app/",
+        "logo": "https://template-cero.vercel.app/logo.svg",
+        "email": "contacto@templatecero.com",
+        "sameAs": [
+          "https://github.com",
+          "https://linkedin.com"
+        ]
+      }
+    </script>
+    <script>
+      // Anti-flash de tema (sin FOUC): corre síncrono antes del primer paint,
+      // después del <meta name="theme-color"> de arriba (para poder actualizarlo).
+      // Precedencia: localStorage > prefers-color-scheme del SO. Ver src/lib/theme.ts.
+      (function () {
+        try {
+          var stored = localStorage.getItem('tc-theme') || localStorage.getItem('pc-theme');
+          var isDark =
+            stored === 'dark' || stored === 'light'
+              ? stored === 'dark'
+              : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.classList.toggle('dark', isDark);
+          document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', isDark ? '#0b0f0d' : '#10281d');
+        } catch (e) {}
+      })();
+      // Anti-flash del modo de HERO (sin FOUC)
+      (function () {
+        try {
+          var raw = localStorage.getItem('tc-skin') || localStorage.getItem('pc-skin');
+          var mode = raw === 'video' || raw === 'tour' ? 'video' : 'imagen';
+          document.documentElement.setAttribute('data-mode', mode);
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      /* Telón de entrada (INTRO-01) — el isotipo se dibuja trazo por trazo y
+         después las dos hojas se abren hacia los costados.
+
+         Vive en el HTML y lo anima CSS puro, NO React, por dos razones que no
+         son de estilo:
+
+           1. Un preloader que dependa del bundle puede dejar la página TAPADA
+              PARA SIEMPRE si el JS no llega (red caída, chunk con error, un
+              navegador que no soporta algo). Acá el telón se abre igual: el
+              JavaScript solo sincroniza la entrada del hero y limpia el nodo.
+           2. Al estar en el HTML ya pintado, cubre desde el primer frame. Si se
+              montara desde React se vería un destello del contenido —y en las
+              13 páginas prerenderizadas, la página entera— antes del telón.
+
+         Los tiempos están duplicados en src/lib/pageIntro.ts: si se tocan acá,
+         hay que tocarlos allá (ese archivo lo dice y explica por qué). */
+      #pc-intro {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        /* Nunca intercepta clicks: aunque algo saliera mal con la animación,
+           el sitio de abajo queda usable. */
+        pointer-events: none;
+        animation: pc-intro-off 0.01s linear 1.75s forwards;
+      }
+      @keyframes pc-intro-off {
+        to {
+          visibility: hidden;
+        }
+      }
+
+      /* 50.5% y no 50%: a anchos impares dos mitades exactas dejan una costura
+         de medio píxel por la que se ve el fondo. Se superponen y no se nota. */
+      #pc-intro .pc-intro__half {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 50.5%;
+        background: #0b0f0d;
+        will-change: transform;
+      }
+      #pc-intro .pc-intro__half--l {
+        left: 0;
+        animation: pc-intro-l 0.7s cubic-bezier(0.76, 0, 0.24, 1) 1.05s forwards;
+      }
+      #pc-intro .pc-intro__half--r {
+        right: 0;
+        animation: pc-intro-r 0.7s cubic-bezier(0.76, 0, 0.24, 1) 1.05s forwards;
+      }
+      @keyframes pc-intro-l {
+        to {
+          transform: translateX(-100%);
+        }
+      }
+      @keyframes pc-intro-r {
+        to {
+          transform: translateX(100%);
+        }
+      }
+
+      #pc-intro .pc-intro__mark {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: min(190px, 44vw);
+        height: auto;
+        transform: translate(-50%, -50%);
+        color: #a8c9b4;
+        opacity: 0;
+        animation:
+          pc-intro-mark-in 0.4s ease-out 0.1s forwards,
+          pc-intro-mark-out 0.3s ease-in 0.95s forwards;
+      }
+      @keyframes pc-intro-mark-in {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes pc-intro-mark-out {
+        from {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        to {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(1.06);
+        }
+      }
+
+      /* pathLength="1" en cada trazo normaliza largos muy distintos (la línea de
+         base mide 120 unidades, una ventana 9): sin eso, con un dasharray fijo,
+         los trazos cortos aparecerían recién sobre el final y de golpe. Con
+         pathLength todos se dibujan en el mismo tiempo relativo. */
+      #pc-intro .pc-intro__mark path {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        animation: pc-intro-draw 0.75s cubic-bezier(0.65, 0, 0.35, 1) 0.1s forwards;
+      }
+      @keyframes pc-intro-draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      /* Un telón ES movimiento no pedido, y encima retrasa el contenido. Con la
+         preferencia activada no se muestra en absoluto. pageIntro.ts consulta la
+         misma media query para no dejar al hero esperando un telón que no está. */
+      @media (prefers-reduced-motion: reduce) {
+        #pc-intro {
+          display: none;
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Punto Cero Desarrollos",
+        "url": "https://www.puntocerodesarrollos.com.ar/",
+        "logo": "https://www.puntocerodesarrollos.com.ar/favicon.svg",
+        "description": "Soluciones integrales en desarrollo inmobiliario: arquitectura, construcción, dirección de obra, infraestructura, financiamiento e inversiones.",
+        "email": "contacto@puntocerodesarrollos.com.ar",
+        "telephone": "+54 11 5555-0123",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Av. del Libertador 5252, Piso 3",
+          "addressLocality": "Vicente López",
+          "addressRegion": "Buenos Aires",
+          "addressCountry": "AR"
+        },
+        "areaServed": "Argentina"
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Telón de entrada. aria-hidden + sin texto: para un lector de pantalla
+         esto no existe, es puro gesto visual. Ver el <style> del <head>. -->
+    <div id="pc-intro" aria-hidden="true">
+      <div class="pc-intro__half pc-intro__half--l"></div>
+      <div class="pc-intro__half pc-intro__half--r"></div>
+      <svg
+        class="pc-intro__mark"
+        viewBox="0 0 132 88"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path pathLength="1" d="M10 47 L30 30 L50 47" />
+        <path pathLength="1" d="M14 44 V78" />
+        <path pathLength="1" d="M50 47 V78" />
+        <path pathLength="1" d="M27 55 h9 v9 h-9 z" />
+        <path pathLength="1" d="M58 78 V16 h14 v62" />
+        <path pathLength="1" d="M65 16 V4" />
+        <path pathLength="1" d="M80 78 V26 h10" />
+        <path pathLength="1" d="M92 47 L106 34 L120 47" />
+        <path pathLength="1" d="M96 45 V78" />
+        <path pathLength="1" d="M120 47 V78" />
+        <path pathLength="1" d="M103 57 h7 v7 h-7 z" />
+        <path pathLength="1" d="M6 80 H126" />
+      </svg>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

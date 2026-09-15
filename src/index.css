@@ -1,0 +1,509 @@
+@import '@fontsource/montserrat/300.css';
+@import '@fontsource/montserrat/400.css';
+@import '@fontsource/montserrat/500.css';
+@import '@fontsource/montserrat/600.css';
+/* Lora (aker-serif): SOLO acento editorial 15-18px del skin Aker — nunca en
+   headings. Pesos 400/500 alcanzan (ver DESIGN-AKER.md § Tipografía). */
+@import '@fontsource/lora/400.css';
+@import '@fontsource/lora/500.css';
+@import '@fontsource/lora/400-italic.css';
+/* Skin Ciridae (modo NORMAL) — DESIGN-CIRIDAE.md § Tipografía:
+   Oswald = voz display/UI condensada (MAYÚSCULAS, weight 400 únicamente,
+   nunca bold); Roboto Mono = voz de sistema (ticker, metadata, 11px caps).
+   Solo se importa weight 400 de Oswald: el sistema entero opera en 400,
+   sin negritas (ver DESIGN-CIRIDAE.md § Don't). */
+@import '@fontsource/oswald/400.css';
+@import '@fontsource/roboto-mono/400.css';
+@import '@fontsource/roboto-mono/500.css';
+@import 'lenis/dist/lenis.css';
+@import 'tailwindcss';
+
+/* Dark mode class-based (.dark en <html>), no solo prefers-color-scheme:
+   así ThemeToggle + localStorage mandan sobre la preferencia del SO.
+   Ver inline script en index.html (sin flash) y src/lib/theme.ts. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Montserrat', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Roles de superficie/texto (DESIGN.md): flippean con el tema — ver
+     valores crudos en :root / .dark más abajo. */
+  --color-paper: var(--surface);
+  --color-paper-soft: var(--surface-soft);
+  --color-ink: var(--text);
+  --color-ink-soft: var(--text-soft);
+  --color-line: var(--border);
+
+  /* ink-fixed: el MISMO casi-negro que `ink` en tema claro, pero FIJO en ambos
+     temas. `ink` es un rol de TEXTO y se invierte con el tema — usarlo como
+     fondo (bg-ink) daba una superficie casi blanca en oscuro, justo debajo de
+     los heros y del canvas de video, donde el fondo tiene que ser oscuro
+     siempre. Regla: bg-ink-fixed para superficies oscuras permanentes,
+     text-ink para tipografía. */
+  --color-ink-fixed: #101512;
+
+  /* Hairline de marca: la raya verde clarísima que separa bloques (métricas,
+     specs, listas de documentos, filtros). Antes se dibujaba con brand-100,
+     que es un token FIJO —correcto para chips `bg-brand-100 + text-brand-700`,
+     pero como borde sobre `bg-paper` quedaba casi blanco en tema oscuro.
+     Este rol SÍ flippea: mismo valor que brand-100 en claro, verde apagado en
+     oscuro. Regla: border-/divide-hairline para separadores, brand-100 solo
+     cuando va junto a un fondo brand-50/100 fijo. */
+  --color-hairline: var(--hairline);
+
+  /* Verde de marca: 50/100/300/700/900 quedan FIJOS en ambos temas —
+     identidad estable en fills sólidos (botones, badges) y en chips con
+     tint propio (bg-brand-100 + text-brand-700 siempre se leen juntos).
+     Solo 500 flippea: es el único tono que se usa como texto/ícono/borde
+     directo sobre la superficie de página (kickers, links, íconos). */
+  --color-brand-50: #f2f7f4;
+  --color-brand-100: #e2eee7;
+  --color-brand-300: #9dbfac;
+  --color-brand-500: var(--brand-accent);
+  --color-brand-700: #1f4a35;
+  --color-brand-900: #10281d;
+
+  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+
+  /* Skin Aker (modo Galería) — DESIGN-AKER.md § Quick Start, adaptado a la
+     marca Punto Cero: escala acromática de galería tal cual el documento
+     (Ink/Paper/Char/Mist/Smoke/Pewter — valores FIJOS, no flippean con
+     .dark: Aker es un skin "Theme: light" per DESIGN-AKER.md, deliberado).
+     El acento cromático NO es Ember (terracota) — se reemplaza por el verde
+     corporativo ya existente (brand-500/700/900, arriba): Aker es un
+     lenguaje visual (layout/tipografía/pills/hairlines), la marca que habla
+     a través de él sigue siendo Punto Cero. Por eso no se define
+     --color-aker-ember/pine/tide/cedar/coral: usar brand-* para acento y
+     superficies de color. */
+  --color-aker-ink: #000000;
+  --color-aker-paper: #ffffff;
+  --color-aker-char: #1c1c1c;
+  --color-aker-midnight: #070707;
+  --color-aker-iron: #262626;
+  --color-aker-slate: #38464a;
+  --color-aker-mist: #e5e4e4;
+  --color-aker-smoke: #8d8d8d;
+  --color-aker-pewter: #666666;
+  --color-aker-action: #494949;
+
+  /* Type scale Aker (DESIGN-AKER.md § Quick Start / Type Scale) — cada rol
+     emite size + line-height + letter-spacing exactos vía text-aker-*. */
+  --text-aker-body: 15px;
+  --text-aker-body--line-height: 1.5;
+  --text-aker-body--letter-spacing: 0.15px;
+  --text-aker-sub: 18px;
+  --text-aker-sub--line-height: 1.5;
+  --text-aker-sub--letter-spacing: 0.18px;
+  --text-aker-hsm: 22px;
+  --text-aker-hsm--line-height: 1.25;
+  --text-aker-hsm--letter-spacing: -0.44px;
+  --text-aker-h: 36px;
+  --text-aker-h--line-height: 1.2;
+  --text-aker-h--letter-spacing: -0.72px;
+  --text-aker-hlg: 62px;
+  --text-aker-hlg--line-height: 1.1;
+  --text-aker-hlg--letter-spacing: -1.55px;
+  --text-aker-display: 168px;
+  --text-aker-display--line-height: 0.8;
+  --text-aker-display--letter-spacing: -4.2px;
+
+  /* Acento serif Aker: SOLO body 15-18px (nunca headings) — ver import arriba. */
+  --font-aker-serif: 'Lora', ui-serif, Georgia, serif;
+
+  /* Radios firma Aker: 8px cards/imágenes, 3.2px small, 80px botones,
+     1584px pills/badges. */
+  --radius-aker-card: 8px;
+  --radius-aker-small: 3.2px;
+  --radius-aker-button: 80px;
+  --radius-aker-pill: 1584px;
+
+  /* Skin Ciridae (modo NORMAL) — DESIGN-CIRIDAE.md § Quick Start, adaptado
+     a Punto Cero: estructura/tipografía/formas EXACTAS a la referencia; el
+     único cambio es el acento cromático — donde la referencia usa Ember
+     Rust #cc6437, acá se usa el brand-500 ya existente (arriba), mismo rol
+     (hairline strokes, highlights chicos), nunca relleno. Por eso NO se
+     define --color-cir-accent/ember: usar brand-500 directamente
+     (bg/border/text-brand-500) en los componentes Ciridae. */
+  --color-cir-void: #0b0b0b;
+  --color-cir-abyss: #050505;
+  --color-cir-charcoal: #272a2a;
+  --color-cir-bone: #edebe7;
+  --color-cir-bone-dark: #dfddd9;
+  --color-cir-white: #ffffff;
+  --color-cir-steel: #484848;
+  --color-cir-ash: #cecece;
+
+  /* Type scale Ciridae (DESIGN-CIRIDAE.md § Quick Start / Escala) — cada
+     rol emite size + line-height + letter-spacing exactos vía text-cir-*.
+     Usar SIEMPRE con font-cir-cond + uppercase (ver utilidades más abajo);
+     nunca mixed case salvo prosa larga en font-cir-body. */
+  --text-cir-caption: 11px;
+  --text-cir-caption--line-height: 1.1;
+  --text-cir-caption--letter-spacing: -0.22px;
+  --text-cir-body: 14px;
+  --text-cir-body--line-height: 1.43;
+  --text-cir-body--letter-spacing: -0.28px;
+  --text-cir-hsm: 20px;
+  --text-cir-hsm--line-height: 1;
+  --text-cir-hsm--letter-spacing: -0.4px;
+  --text-cir-h: 24px;
+  --text-cir-h--line-height: 1.2;
+  --text-cir-h--letter-spacing: -0.48px;
+  --text-cir-hlg: 32px;
+  --text-cir-hlg--line-height: 1.05;
+  --text-cir-hlg--letter-spacing: -0.64px;
+
+  /* Tres voces tipográficas Ciridae (DESIGN-CIRIDAE.md § Tipografía):
+     font-cir-cond = display/UI condensada (Oswald, weight 400, MAYÚSCULAS,
+       tracking -0.02em) — nav, botones, headings, labels;
+     font-cir-body = prosa larga (Montserrat, la familia ya presente en el
+       sitio) — SOLO descripciones de card, mixed case permitido;
+     font-cir-mono = voz de sistema (Roboto Mono, MAYÚSCULAS 11px) — SOLO
+       ticker de news bar y metadata, con separadores •.
+     Nunca cruzar registros (ver doc § Tipografía). */
+  --font-cir-cond: 'Oswald', ui-sans-serif, system-ui, sans-serif;
+  --font-cir-body: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  --font-cir-mono: 'Roboto Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Radios firma Ciridae: pill 1440px = TODO botón/badge/nav (la forma
+     firma del sistema); card 10px = ÚNICO radio no-pill, exclusivo de
+     cards/paneles; sharp 0px = SOLO el botón sólido de la news bar. */
+  --radius-cir-card: 10px;
+  --radius-cir-pill: 1440px;
+  --radius-cir-sharp: 0px;
+}
+
+/* Tratamiento fotográfico Aker — DESIGN-AKER.md § Imagery: muted, ligeramente
+   desaturado, consistente en TODAS las fotos del skin (hero, bandas, cards). */
+@utility aker-photo {
+  filter: saturate(0.82) contrast(1.02) brightness(0.97);
+}
+
+/* Legibilidad de texto blanco sobre el hero de video, que tiene cuadros MUY
+   claros (paredes blancas, cielo, interiores con sol). Sombra en tres capas:
+   halo amplio que separa del fondo + dos capas cortas que densifican el borde
+   de la letra. Sin contorno duro — se lee premium, no stroke. Usada por los
+   beats del hero (ScrubStage) y por la marca/nav del Header cuando está
+   transparente. */
+/* Foco de teclado único para todo el sitio. Antes había cuatro tratamientos
+   distintos y la primitiva <Button> —el CTA de cada página— no definía ninguno:
+   navegando con Tab no se veía dónde estabas parado. Verde de marca para que
+   funcione sobre superficies claras y oscuras. */
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--brand-accent);
+    outline-offset: 2px;
+  }
+}
+
+@utility hero-legible {
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.85),
+    0 2px 8px rgba(0, 0, 0, 0.7),
+    0 8px 36px rgba(0, 0, 0, 0.55);
+}
+
+:root {
+  --surface: #ffffff;
+  --surface-soft: #f6f8f6;
+  --text: #101512;
+  --text-soft: #4a544e;
+  --border: #e4e8e5;
+  --brand-accent: #3e7a5a;
+  --hairline: #e2eee7;
+  --shimmer-highlight: rgba(255, 255, 255, 0.7);
+  color-scheme: light;
+}
+
+/* Dark: superficies casi-negras (no #000 puro), ink/paper invertidos,
+   verde de acento más claro para mantener contraste sobre fondo oscuro. */
+.dark {
+  --surface: #0b0f0d;
+  --surface-soft: #121713;
+  --text: #f2f5f3;
+  --text-soft: #a7b2ac;
+  --border: #232f28;
+  --brand-accent: #7fc7a0;
+  --hairline: #23372c;
+  --shimmer-highlight: rgba(180, 214, 195, 0.14);
+  color-scheme: dark;
+}
+
+/* Barrido del skeleton: el ::before (gradiente) cruza el bloque vía transform.
+   Fuera de @theme para que siempre se emita, incluso usado como animate-[shimmer_…]. */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Skeleton PARA <img>. El shimmer normal se dibuja con un ::before, y una
+   <img> es un elemento reemplazado: no renderiza pseudo-elementos. Así que acá
+   el barrido es un background-position animado, que sí funciona y además se ve
+   a través de la imagen mientras no cargó (queda tapado apenas carga).
+   Lo aplica y lo saca <Photo> — ver src/components/ui/Skeleton.tsx. */
+.img-loading {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-paper-soft) 0%,
+    var(--shimmer-highlight) 50%,
+    var(--color-paper-soft) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-bg 1.6s ease-in-out infinite;
+}
+
+@keyframes shimmer-bg {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .img-loading {
+    animation: none;
+  }
+}
+
+/* Los mapas, teñidos con el verde de marca.
+   No existe un basemap verde de CARTO, así que el color se consigue con un
+   filtro sobre los tiles. La receta es en tres pasos y cada uno hace falta:
+
+     · sepia(1)      convierte el gris a un monocromo cálido (~45° de matiz).
+                     Es el paso que le DA color a algo que no tenía.
+     · hue-rotate    corre ese matiz hasta el verde de la paleta.
+     · saturate      baja la intensidad: el mapa es fondo, no protagonista.
+                     Sin esto queda un verde de neón que se come los marcadores.
+
+   Va sobre `.leaflet-tile-pane` y no sobre el contenedor entero a propósito:
+   marcadores, popups, controles de zoom y atribución viven en otros panes, así
+   que conservan sus colores de marca en vez de teñirse también. Si se aplicara
+   al contenedor, el pin verde del proyecto terminaría de otro color. */
+.leaflet-tile-pane {
+  filter: sepia(1) hue-rotate(78deg) saturate(0.5) brightness(1.03);
+}
+
+/* En oscuro se parte de dark_all, que ya es casi negro: la saturación puede
+   subir un poco sin volverse chillona, y el brillo baja para que el mapa no sea
+   la superficie más clara de la pantalla. */
+.dark .leaflet-tile-pane {
+  filter: sepia(1) hue-rotate(78deg) saturate(0.75) brightness(0.72) contrast(1.08);
+}
+
+/* Atribución de los mapas.
+   La de OpenStreetMap y CARTO es obligatoria por licencia (ODbL) y no se saca:
+   lo que se saca es el recuadro blanco de fábrica, que sobre un sitio oscuro se
+   ve como un parche. Queda chica, translúcida y con los colores de la marca —
+   presente y legible, sin competir con el mapa. El crédito "Leaflet" sí se
+   quita, en BrandTiles.tsx: es opcional. */
+.leaflet-control-attribution {
+  background: color-mix(in srgb, var(--color-paper) 78%, transparent) !important;
+  color: var(--color-ink-soft) !important;
+  font-size: 0.62rem !important;
+  line-height: 1.5 !important;
+  padding: 1px 6px !important;
+  backdrop-filter: blur(3px);
+}
+
+.leaflet-control-attribution a {
+  color: var(--color-ink-soft) !important;
+  text-decoration: none;
+}
+
+.leaflet-control-attribution a:hover {
+  color: var(--color-brand-700) !important;
+  text-decoration: underline;
+}
+
+/* Los controles de zoom, con el mismo criterio: son de Leaflet pero tienen que
+   parecer del sitio. */
+.leaflet-bar a,
+.leaflet-bar a:hover {
+  background: var(--color-paper) !important;
+  color: var(--color-ink) !important;
+  border-bottom-color: var(--color-line) !important;
+}
+
+.leaflet-bar a:hover {
+  color: var(--color-brand-700) !important;
+}
+
+.leaflet-bar {
+  border: 1px solid var(--color-line) !important;
+  box-shadow: none !important;
+}
+
+/* Barras de scroll con los colores del sitio.
+   La del sistema es gris de Windows y sobre la interfaz oscura se lee como un
+   pedazo de otra aplicación —se nota sobre todo en los textareas de avisos
+   legales del panel y en el historial del chat—.
+
+   Se declaran las dos sintaxis a propósito: `scrollbar-color` es el estándar
+   (Firefox y Chrome 121+) y `::-webkit-scrollbar` cubre Safari y los Chromium
+   viejos. Donde valen las dos gana la estándar, así que no se pisan.
+
+   Los colores salen de los tokens, así que la barra cambia con el tema sola. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-line);
+  border-radius: 999px;
+  /* Borde del color del fondo y no un thumb más fino: así el pulgar se ve
+     angosto pero el área que se puede agarrar con el mouse sigue siendo de
+     10 px, que es lo que hace que no haya que apuntar con precisión. */
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-brand-500);
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+.dark .leaflet-control-attribution,
+.dark .leaflet-bar a {
+
+  background: var(--surface-soft);
+  color: var(--text-soft);
+  border-color: var(--border);
+}
+
+.dark .leaflet-bar a:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.dark .leaflet-control-attribution a {
+  color: var(--text);
+}
+
+/* Popups de Leaflet con el idioma del sitio. De fábrica traen esquinas
+   redondeadas de 12px, sombra difusa y la tipografía del sistema: al lado de
+   una interfaz de esquinas rectas y hairlines se leían como un widget pegado
+   de otro lado. Se los alinea a la escala tipográfica y a las superficies
+   propias, en ambos temas. */
+.leaflet-popup-content-wrapper {
+  border-radius: 0;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 8px 28px rgba(16, 21, 18, 0.18);
+  font-family: inherit;
+}
+
+.leaflet-popup-content {
+  margin: 0.75rem 1rem;
+  line-height: 1.4;
+}
+
+.leaflet-popup-tip {
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  box-shadow: none;
+}
+
+.leaflet-popup-content a {
+  color: var(--brand-accent);
+}
+
+/* En oscuro las tiles van invertidas por filtro: sobre ese mapa nocturno el
+   blanco puro del popup quedaba como un recorte de papel. */
+.dark .leaflet-popup-content-wrapper,
+.dark .leaflet-popup-tip {
+  background: var(--surface-soft);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+}
+
+.dark .leaflet-container a.leaflet-popup-close-button {
+  color: var(--text-soft);
+}
+
+/* Entrada de los CTAs del hero (modo tour). En CSS y no en GSAP a propósito:
+   el ticker de GSAP corre sobre requestAnimationFrame y, si el rAF se congela
+   (pestaña en segundo plano, panel sin componer, throttling del navegador), un
+   tween deja los botones clavados en su estado inicial y el hero pierde su
+   conversión. Y por el mismo motivo la animación NO toca la opacidad: si los
+   cuadros no avanzan, un fade queda en opacity 0 y el botón desaparece. Solo
+   se desplaza — congelada o no, la pieza siempre se ve. */
+/* Crossfade genérico para capas que entran cuando llegan los datos (portada
+   del hero de Proyectos). Respeta reduced-motion más abajo. */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[fade-in_0\.8s_ease-out_both\] {
+    animation: none;
+  }
+}
+
+@keyframes hero-cta-in {
+  from {
+    transform: translateY(16px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.hero-cta-in {
+  animation: hero-cta-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta-in {
+    animation: none;
+  }
+}
+
+/* Ocultar el botón nativo de revelar contraseña del navegador (Edge / IE)
+   para que no compita ni se duplique con el botón custom de Lucide */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+

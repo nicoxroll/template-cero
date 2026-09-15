@@ -1,0 +1,43 @@
+# Cursor Rules — Template Cero
+
+## Stack Overview
+- **Framework**: React 19 + TypeScript 6 + Vite 8
+- **Styling**: Tailwind CSS v4 (native `@tailwindcss/vite`, CSS-first configuration via `@theme` in `src/index.css`)
+- **Animation**: GSAP 3 + `@gsap/react` (`useGSAP` hook) + Lenis smooth scrolling
+- **Routing**: `react-router` (version 8+, DO NOT import from `react-router-dom`)
+- **Backend/Data**: Dual-mode Repository Pattern (mock in `localStorage` by default; Supabase PostgreSQL + RLS when configured). Resilient fallback via `resilientRepo.ts`.
+
+## Core Architectural Invariants
+
+### 1. Data Layer Contract (Strict)
+- **NEVER** import `fixtures.ts` or `localStorageRepo.ts` directly into UI components.
+- **NEVER** call `supabaseClient` directly inside React components.
+- **ALWAYS** import repository singletons from `src/data` (e.g. `import { projectRepo, type Project } from '../data'`).
+
+### 2. Dual-Engine Preservation
+- Any domain model change in `src/data/types.ts` must be mirrored in:
+  1. `src/data/fixtures.ts` (local mock)
+  2. `src/data/localStorageRepo.ts` (browser persistence)
+  3. `src/data/supabaseMappers.ts` & `supabaseRepo.ts` (remote DB)
+  4. `supabase/schema-completo.sql` (schema definition)
+- The app must ALWAYS run out of the box with `npm run dev` with ZERO configuration / ZERO `.env` files.
+
+### 3. Styling & Tailwind v4
+- Do NOT create `tailwind.config.js` or `postcss.config.js`.
+- Design tokens, brand colors, and theme overrides belong in `src/index.css` inside `@theme { ... }`.
+- Dark mode is class-based (`.dark` on `<html>`).
+
+### 4. Animation Best Practices
+- Every GSAP animation must be wrapped inside `useGSAP` from `@gsap/react`.
+- Always clean up ScrollTriggers on unmount.
+- Check `prefersReducedMotion()` for accessibility.
+
+### 5. Central Branding Configuration
+- For company details, navigation links, contact info, and feature flags, read or edit `src/config/site.ts`.
+
+## Verification Commands
+Before submitting code changes, ensure:
+```bash
+npm run typecheck
+npm run lint
+```

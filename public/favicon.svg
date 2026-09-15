@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 100" role="img" aria-label="Punto Cero Desarrollos">
+  <!-- Isotipo solo (sin wordmark): a 16-32 px el texto sería una mancha. Fondo
+       verde oscuro sólido para que el mark blanco se recorte con nitidez tanto
+       en pestañas claras como oscuras — un mark en degradado sobre transparente
+       desaparecía sobre el gris del navegador. -->
+  <rect width="132" height="100" rx="18" fill="#16351F"/>
+  <g transform="translate(0,6)" stroke="#DCEBE1" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M10 47 L30 30 L50 47"/>
+    <path d="M14 44 V78"/>
+    <path d="M50 47 V78"/>
+    <path d="M27 55 h9 v9 h-9 z"/>
+    <path d="M58 78 V16 h14 v62"/>
+    <path d="M65 16 V4"/>
+    <path d="M80 78 V26 h10"/>
+    <path d="M92 47 L106 34 L120 47"/>
+    <path d="M96 45 V78"/>
+    <path d="M120 47 V78"/>
+    <path d="M103 57 h7 v7 h-7 z"/>
+    <path d="M6 80 H126"/>
+  </g>
+</svg>

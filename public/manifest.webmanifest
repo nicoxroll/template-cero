@@ -1,0 +1,23 @@
+{
+  "name": "Punto Cero Desarrollos",
+  "short_name": "Punto Cero",
+  "description": "Transformamos ideas en proyectos de valor. Soluciones integrales en desarrollo inmobiliario, arquitectura, construcción e inversiones.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#091711",
+  "theme_color": "#10281d",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
