@@ -2,6 +2,9 @@
 
 Este documento es el **manual maestro de instrucciones** para cualquier agente de Inteligencia Artificial (Claude, Cursor, Antigravity, GitHub Copilot, ChatGPT, etc.) que trabaje sobre el repositorio **Template Cero**.
 
+> 💡 **Guía de Modificaciones y Notificaciones:**  
+> Para consultar el catálogo completo de procedimientos paso a paso con alertas de seguridad y la arquitectura de notificaciones (Webhooks, WhatsApp, Toasts y Fallback), consulta **[`MODIFICACIONES.md`](MODIFICACIONES.md)**.
+
 ---
 
 ## 🎯 Rol y Filosofía del Agente

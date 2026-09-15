@@ -12,9 +12,10 @@
 4. [Estructura del Proyecto](#-estructura-del-proyecto)
 5. [Scripts Disponibles](#-scripts-disponibles)
 6. [Cómo Personalizar la Plantilla](#-cómo-personalizar-la-plantilla)
-7. [Arquitectura de Datos Resiliente (Mock ↔ Supabase)](#-arquitectura-de-datos-resiliente)
-8. [Despliegue a Producción](#-despliegue-a-producción)
-9. [Uso con Asistentes y Agentes de IA](#-uso-con-asistentes-y-agentes-de-ia)
+7. [Guía Maestra de Modificaciones (con Alertas y Notificaciones)](MODIFICACIONES.md)
+8. [Arquitectura de Datos Resiliente (Mock ↔ Supabase)](#-arquitectura-de-datos-resiliente)
+9. [Despliegue a Producción](#-despliegue-a-producción)
+10. [Uso con Asistentes y Agentes de IA](#-uso-con-asistentes-y-agentes-de-ia)
 
 ---
 
@@ -89,6 +90,7 @@ Template Cero incluye un panel administrativo completo integrado en la SPA.
 ```text
 template-cero/
 ├── AI_INSTRUCTIONS.md        # Manual exhaustivo para agentes de IA (Cursor, Claude, Copilot)
+├── MODIFICACIONES.md         # Guía maestra de modificaciones con alertas y notificaciones
 ├── DEPLOY.md                 # Guía de despliegue a Vercel, Netlify o Docker
 ├── SUPABASE.md               # Guía de conexión y migraciones de base de datos
 ├── README.md                 # Este documento
