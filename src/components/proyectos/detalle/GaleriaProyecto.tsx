@@ -91,7 +91,7 @@ export default function GaleriaProyecto({ name, gallery, isRender }: GaleriaProy
 
       {lightbox !== null && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 md:p-8"
           role="dialog"
           aria-modal="true"
           aria-label={`Imagen ${lightbox + 1} de ${gallery.length}`}
@@ -100,7 +100,7 @@ export default function GaleriaProyecto({ name, gallery, isRender }: GaleriaProy
           <button
             type="button"
             onClick={close}
-            className="absolute right-4 top-4 p-2 text-white/70 transition-colors hover:text-white"
+            className="absolute right-4 top-4 z-20 rounded-full bg-black/40 p-2.5 text-white/80 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white md:right-8 md:top-8"
             aria-label="Cerrar galería"
           >
             <X className="h-7 w-7" strokeWidth={1.5} />
@@ -112,18 +112,22 @@ export default function GaleriaProyecto({ name, gallery, isRender }: GaleriaProy
               e.stopPropagation();
               move(-1);
             }}
-            className="absolute left-2 p-2 text-white/70 transition-colors hover:text-white md:left-6"
+            className="absolute left-2 z-20 rounded-full bg-black/40 p-3 text-white/80 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white md:left-6"
             aria-label="Imagen anterior"
           >
-            <ChevronLeft className="h-9 w-9" strokeWidth={1} />
+            <ChevronLeft className="h-8 w-8" strokeWidth={1.5} />
           </button>
 
-          <Photo
-            src={gallery[lightbox]}
-            alt={`${name} — imagen ${lightbox + 1}`}
+          <div
+            className="flex h-full w-full items-center justify-center p-2 md:p-6"
             onClick={(e) => e.stopPropagation()}
-            className="max-h-[85vh] max-w-[88vw] object-contain"
-          />
+          >
+            <Photo
+              src={gallery[lightbox]}
+              alt={`${name} — imagen ${lightbox + 1}`}
+              className="max-h-[85vh] max-w-[85vw] object-contain shadow-2xl"
+            />
+          </div>
 
           <button
             type="button"
@@ -131,13 +135,13 @@ export default function GaleriaProyecto({ name, gallery, isRender }: GaleriaProy
               e.stopPropagation();
               move(1);
             }}
-            className="absolute right-2 p-2 text-white/70 transition-colors hover:text-white md:right-6"
+            className="absolute right-2 z-20 rounded-full bg-black/40 p-3 text-white/80 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white md:right-6"
             aria-label="Imagen siguiente"
           >
-            <ChevronRight className="h-9 w-9" strokeWidth={1} />
+            <ChevronRight className="h-8 w-8" strokeWidth={1.5} />
           </button>
 
-          <p className="absolute bottom-5 text-xs font-medium uppercase tracking-widest text-white/60">
+          <p className="absolute bottom-5 z-20 text-xs font-medium uppercase tracking-widest text-white/60">
             {lightbox + 1} / {gallery.length}
           </p>
         </div>
