@@ -27,6 +27,7 @@ import CustomSectionsStrip from '../components/home/CustomSectionsStrip';
 import InversionesStrip from '../components/home/InversionesStrip';
 import ContactoStrip from '../components/home/ContactoStrip';
 import NewsletterSignup from '../components/inversiones/NewsletterSignup';
+import { siteConfig } from '../config/site';
 
 // El stage de scrub (canvas + timeline + 191 cuadros WebP) se carga lazy: solo
 // paga su costo quien ve el hero de video. Es el único chunk diferido de la
@@ -58,9 +59,8 @@ function HeroPlaceholder() {
 
 export default function Home() {
   usePageMeta({
-    title: 'Desarrollo inmobiliario integral',
-    description:
-      'Transformamos ideas en proyectos de valor. Arquitectura, construcción, infraestructura, financiamiento e inversiones inmobiliarias.',
+    title: siteConfig.tagline,
+    description: siteConfig.description,
   });
 
   const { isVideo } = useSkin();
@@ -98,13 +98,13 @@ export default function Home() {
       ) : (
         <StaticHero />
       )}
-      <FeaturedProjectsStrip />
+      {siteConfig.features.enableShowcase && <FeaturedProjectsStrip />}
       <QuienesSomosSection />
       <AlianzasStrip />
       <ServiciosSection />
-      <CustomSectionsStrip />
-      <InversionesStrip />
-      <NewsletterSignup location="home" />
+      {siteConfig.features.enableCustomSections && <CustomSectionsStrip />}
+      {siteConfig.features.enableOfferings && <InversionesStrip />}
+      {siteConfig.features.enableNewsletter && <NewsletterSignup location="home" />}
       <ContactoStrip />
     </>
   );

@@ -56,12 +56,12 @@
      tint propio (bg-brand-100 + text-brand-700 siempre se leen juntos).
      Solo 500 flippea: es el único tono que se usa como texto/ícono/borde
      directo sobre la superficie de página (kickers, links, íconos). */
-  --color-brand-50: #f2f7f4;
-  --color-brand-100: #e2eee7;
-  --color-brand-300: #9dbfac;
-  --color-brand-500: var(--brand-accent);
-  --color-brand-700: #1f4a35;
-  --color-brand-900: #10281d;
+  --color-brand-50: var(--brand-50, #f2f7f4);
+  --color-brand-100: var(--brand-100, #e2eee7);
+  --color-brand-300: var(--brand-300, #9dbfac);
+  --color-brand-500: var(--brand-accent, #3e7a5a);
+  --color-brand-700: var(--brand-700, #1f4a35);
+  --color-brand-900: var(--brand-900, #10281d);
 
   --animate-shimmer: shimmer 1.6s ease-in-out infinite;
 
@@ -209,14 +209,57 @@
   --text: #101512;
   --text-soft: #4a544e;
   --border: #e4e8e5;
+  --brand-50: #f2f7f4;
+  --brand-100: #e2eee7;
+  --brand-300: #9dbfac;
   --brand-accent: #3e7a5a;
+  --brand-700: #1f4a35;
+  --brand-900: #10281d;
   --hairline: #e2eee7;
   --shimmer-highlight: rgba(255, 255, 255, 0.7);
   color-scheme: light;
 }
 
-/* Dark: superficies casi-negras (no #000 puro), ink/paper invertidos,
-   verde de acento más claro para mantener contraste sobre fondo oscuro. */
+/* Preset: Indigo (Tech / Modern SaaS) */
+[data-theme-preset="indigo"] {
+  --surface-soft: #f8fafc;
+  --border: #e2e8f0;
+  --brand-50: #eef2ff;
+  --brand-100: #e0e7ff;
+  --brand-300: #a5b4fc;
+  --brand-accent: #4f46e5;
+  --brand-700: #3730a3;
+  --brand-900: #1e1b4b;
+  --hairline: #e0e7ff;
+}
+
+/* Preset: Slate (Minimal / Luxury / Editorial) */
+[data-theme-preset="slate"] {
+  --surface-soft: #f8fafc;
+  --border: #e2e8f0;
+  --brand-50: #f8fafc;
+  --brand-100: #f1f5f9;
+  --brand-300: #94a3b8;
+  --brand-accent: #334155;
+  --brand-700: #1e293b;
+  --brand-900: #0f172a;
+  --hairline: #e2e8f0;
+}
+
+/* Preset: Amber (Creative / Studio / Warm) */
+[data-theme-preset="amber"] {
+  --surface-soft: #fffdfa;
+  --border: #f3eae0;
+  --brand-50: #fffbeb;
+  --brand-100: #fef3c7;
+  --brand-300: #fcd34d;
+  --brand-accent: #d97706;
+  --brand-700: #b45309;
+  --brand-900: #78350f;
+  --hairline: #fde68a;
+}
+
+/* Dark mode */
 .dark {
   --surface: #0b0f0d;
   --surface-soft: #121713;
@@ -227,6 +270,36 @@
   --hairline: #23372c;
   --shimmer-highlight: rgba(180, 214, 195, 0.14);
   color-scheme: dark;
+}
+
+.dark[data-theme-preset="indigo"] {
+  --surface: #0b0f17;
+  --surface-soft: #111827;
+  --text: #f8fafc;
+  --text-soft: #94a3b8;
+  --border: #1e293b;
+  --brand-accent: #818cf8;
+  --hairline: #1e293b;
+}
+
+.dark[data-theme-preset="slate"] {
+  --surface: #09090b;
+  --surface-soft: #18181b;
+  --text: #fafafa;
+  --text-soft: #a1a1aa;
+  --border: #27272a;
+  --brand-accent: #cbd5e1;
+  --hairline: #27272a;
+}
+
+.dark[data-theme-preset="amber"] {
+  --surface: #140d07;
+  --surface-soft: #1f140b;
+  --text: #fef3c7;
+  --text-soft: #d97706;
+  --border: #2c1b0e;
+  --brand-accent: #fbbf24;
+  --hairline: #2c1b0e;
 }
 
 /* Barrido del skeleton: el ::before (gradiente) cruza el bloque vía transform.

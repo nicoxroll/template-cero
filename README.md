@@ -46,7 +46,13 @@ cd template-cero
 npm install
 ```
 
-### Paso 3: Iniciar el servidor local
+### Paso 3: (Opcional) Configurar tu marca con el asistente interactivo
+```bash
+npm run setup
+```
+Este asistente te preguntará el nombre de tu empresa, eslogan, paleta de color (Emerald, Indigo, Slate o Amber) y datos de contacto, y actualizará todo automáticamente en 5 segundos.
+
+### Paso 4: Iniciar el servidor local
 ```bash
 npm run dev
 ```
@@ -132,6 +138,7 @@ En la raíz del proyecto puedes ejecutar:
 | Comando | Acción |
 |---|---|
 | `npm run dev` | Inicia el servidor de desarrollo en `localhost:5173`. |
+| `npm run setup` | Asistente interactivo en terminal para configurar marca, paleta y contacto. |
 | `npm run build` | Compila TypeScript, arma el bundle optimizado y ejecuta el prerenderizador SEO. |
 | `npm run preview` | Sirve localmente la carpeta `dist/` resultante del build. |
 | `npm run typecheck` | Ejecuta `tsc --noEmit` para verificar tipos sin compilar. |
@@ -142,26 +149,40 @@ En la raíz del proyecto puedes ejecutar:
 
 ## 🎨 Cómo Personalizar la Plantilla
 
-### 1. Identidad y Datos de la Empresa (2 minutos)
-Abre [`src/config/site.ts`](src/config/site.ts) y edita:
-- Nombre de la empresa (`name`, `shortName`).
-- Eslogan y descripción corporativa (`tagline`, `description`).
-- Email, teléfono y número de WhatsApp con código de país (`contact.whatsapp`).
-- Redes sociales y datos fiscales (`legal`).
+### 1. Asistente Rápido en Terminal (Recomendado)
+Ejecuta:
+```bash
+npm run setup
+```
+Y responde las preguntas para personalizar todo el sitio automáticamente.
 
-### 2. Paleta de Colores y Tipografía (Tailwind CSS v4)
-Abre [`src/index.css`](src/index.css). La plantilla utiliza la nueva sintaxis `@theme` de Tailwind v4:
-```css
-@theme {
-  --font-sans: 'Montserrat', sans-serif;
-
-  /* Colores de marca */
-  --color-brand-500: #2e7d52; /* Color principal */
-  --color-brand-700: #1f4a35; /* Hover o variante oscura */
-}
+### 2. Configuración Manual y Feature Flags ([`src/config/site.ts`](src/config/site.ts))
+Puedes editar directamente `src/config/site.ts` para cambiar datos y alternar funcionalidades:
+```ts
+export const siteConfig: SiteConfig = {
+  name: 'Mi Empresa',
+  theme: {
+    preset: 'indigo', // 'emerald' | 'indigo' | 'slate' | 'amber'
+  },
+  features: {
+    enableCustomSections: true, // Gestor de bloques dinámicos desde /admin
+    enableShowcase: true,       // Catálogo / Proyectos
+    enableOfferings: true,      // Planes / Oportunidades
+    enableChatWidget: true,     // Widget de chat interactivo
+    enableHeroScrub: false,     // Activar hero cinemático scrubeado
+    enableNewsletter: true,     // Captura de leads
+  }
+};
 ```
 
-### 3. Contenido de Demostración
+### 3. Presets de Paletas de Color (Tailwind CSS v4)
+La plantilla incluye 4 paletas prediseñadas listas para usar con 1 solo click en `siteConfig.theme.preset`:
+- 🟢 **`emerald`**: Verde de alta gama (ideal finanzas, sustentabilidad, real estate, corporativo).
+- 🔷 **`indigo`**: Azul moderno (ideal SaaS, tecnología, plataformas, startups).
+- ⬛ **`slate`**: Escala de grises minimalista (ideal arquitectura, estudios de diseño, fotografía, marcas de lujo).
+- 🟧 **`amber`**: Cálido y enérgico (ideal gastronomía, estudios creativos, agencias).
+
+### 4. Contenido de Demostración
 Modifica los datos iniciales en [`src/data/fixtures.ts`](src/data/fixtures.ts) para cambiar los proyectos, servicios, miembros del equipo o preguntas frecuentes de ejemplo.
 
 ---

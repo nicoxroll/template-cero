@@ -12,6 +12,7 @@ import LiveCMSEditor from './components/LiveCMSEditor';
 import ErrorBoundary from './components/ui/ErrorBoundary';
 import PrivacyCookieBanner from './components/ui/PrivacyCookieBanner';
 import { scrollToElement, scrollToTopImmediate } from './lib/smoothScroll';
+import { siteConfig } from './config/site';
 
 // Rutas públicas (lazy — code-splitting por página)
 const Home = lazy(() => import('./pages/Home'));
@@ -133,8 +134,8 @@ function PublicLayout() {
           <Outlet />
         </div>
       </RevealFooter>
-      <ChatWidget />
-      <LiveCMSEditor />
+      {siteConfig.features.enableChatWidget && <ChatWidget />}
+      {siteConfig.features.enableLiveCMS && <LiveCMSEditor />}
       <PrivacyCookieBanner />
     </>
   );

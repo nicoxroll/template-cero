@@ -4,7 +4,12 @@
  * Para adaptar esta plantilla a cualquier cliente o empresa, modifica
  * los valores en este archivo. Todos los componentes de navegación,
  * pie de página, meta tags y contacto leen de aquí.
+ *
+ * También puedes ejecutar `npm run setup` para configurar estos valores
+ * de forma interactiva en la terminal.
  */
+
+export type ThemePreset = 'emerald' | 'indigo' | 'slate' | 'amber';
 
 export interface SiteConfig {
   name: string;
@@ -13,6 +18,9 @@ export interface SiteConfig {
   description: string;
   url: string;
   ogImage: string;
+  theme: {
+    preset: ThemePreset;
+  };
   contact: {
     email: string;
     phone: string;
@@ -52,6 +60,11 @@ export interface SiteConfig {
     enableChatWidget: boolean;
     enableHeroScrub: boolean;
     enableNewsletter: boolean;
+    enableCustomSections: boolean;
+    enableOfferings: boolean;
+    enableShowcase: boolean;
+    enableCalculator: boolean;
+    enableTipologias: boolean;
   };
 }
 
@@ -63,6 +76,10 @@ export const siteConfig: SiteConfig = {
     'Plantilla web corporativa y showcase de alta fidelidad, construida con React 19, Tailwind CSS v4, GSAP, panel de administración desacoplado y arquitectura de datos resiliente.',
   url: 'https://template-cero.vercel.app',
   ogImage: '/hero-frames/f001.webp',
+
+  theme: {
+    preset: 'emerald', // 'emerald' | 'indigo' | 'slate' | 'amber'
+  },
 
   contact: {
     email: 'contacto@templatecero.com',
@@ -109,7 +126,12 @@ export const siteConfig: SiteConfig = {
     enableSkinSwitcher: true,
     enableDarkMode: true,
     enableChatWidget: true,
-    enableHeroScrub: true,
+    enableHeroScrub: false, // Por defecto usamos el Hero estático/rápido de alta gama
     enableNewsletter: true,
+    enableCustomSections: true,
+    enableOfferings: true,
+    enableShowcase: true,
+    enableCalculator: true,
+    enableTipologias: true,
   },
 };

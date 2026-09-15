@@ -3,6 +3,8 @@
 // El anti-flash inicial vive en index.html (script inline, corre antes del
 // primer paint) — este módulo es la fuente de verdad que usa React después.
 
+import { siteConfig } from '../config/site';
+
 const STORAGE_KEY = 'tc-theme';
 
 export type Theme = 'light' | 'dark';
@@ -11,6 +13,15 @@ const THEME_COLOR: Record<Theme, string> = {
   light: '#10281d',
   dark: '#0b0f0d',
 };
+
+// Aplica el preset de color de la marca definido en siteConfig
+if (typeof document !== 'undefined') {
+  if (siteConfig.theme?.preset && siteConfig.theme.preset !== 'emerald') {
+    document.documentElement.setAttribute('data-theme-preset', siteConfig.theme.preset);
+  } else {
+    document.documentElement.removeAttribute('data-theme-preset');
+  }
+}
 
 export function getStoredTheme(): Theme | null {
   try {

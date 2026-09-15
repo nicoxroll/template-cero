@@ -85,10 +85,11 @@ Si agregas un nuevo campo a una entidad (por ejemplo en `Project`):
 ### 📘 Receta A: Adaptar la plantilla a un cliente o rubro nuevo
 Si el usuario te pide: *"Adapta este template para una clínica médica / estudio contable / agencia de diseño"*:
 
-1. **Editar datos corporativos:** Modifica [`src/config/site.ts`](src/config/site.ts) con el nuevo nombre, eslogan, datos de contacto, links de redes y número de WhatsApp.
-2. **Ajustar paleta de colores:** Modifica [`src/index.css`](src/index.css) en el bloque `@theme` para cambiar los tonos de `--color-brand-*` acordes a la identidad deseada.
-3. **Poblar datos de muestra iniciales:** Adapta [`src/data/fixtures.ts`](src/data/fixtures.ts) con ejemplos pertinentes al rubro (reemplazar proyectos inmobiliarios por casos de estudio, productos o servicios de la clínica).
-4. **Verificar compilación:** Ejecuta `npm run typecheck` y `npm run build`.
+1. **Configurar datos corporativos:** Ejecuta `npm run setup` para responder interactivamente o edita directamente [`src/config/site.ts`](src/config/site.ts) con el nuevo nombre, eslogan, datos de contacto, links de redes y número de WhatsApp.
+2. **Seleccionar preset de color:** En `src/config/site.ts`, fija `theme.preset` en `'emerald'`, `'indigo'`, `'slate'` o `'amber'` para cambiar toda la identidad cromática al instante. También puedes ajustar variables específicas en [`src/index.css`](src/index.css).
+3. **Configurar feature flags:** En `src/config/site.ts`, activa o desactiva secciones según la necesidad del cliente (`enableShowcase`, `enableOfferings`, `enableCustomSections`, `enableChatWidget`, `enableHeroScrub`, etc.).
+4. **Poblar datos de muestra iniciales:** Adapta [`src/data/fixtures.ts`](src/data/fixtures.ts) con ejemplos pertinentes al rubro (reemplazar por casos de estudio, productos o servicios del cliente).
+5. **Verificar compilación:** Ejecuta `npm run typecheck` y `npm run build`.
 
 ---
 
