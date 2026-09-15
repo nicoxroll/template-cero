@@ -35,9 +35,17 @@ export default function Header() {
   // Rutas que abren con un hero a sangre: ahí el header arranca transparente y
   // se vuelve sólido al scrollear. Es una lista explícita y no un patrón porque
   // las páginas de detalle pueden renderizar un 404 sin hero, y un header
-  // transparente sobre fondo claro deja el nav invisible.
+  // Rutas que abren con un hero a sangre: ahí el header arranca transparente y
+  // se vuelve sólido al scrollear.
   const hasFullBleedHero =
-    pathname === '/' || pathname === '/proyectos' || pathname === '/contacto' || pathname === '/inversiones';
+    pathname === '/' ||
+    pathname === '/proyectos' ||
+    pathname.startsWith('/proyectos/') ||
+    pathname === '/contacto' ||
+    pathname === '/inversiones' ||
+    pathname.startsWith('/inversiones/') ||
+    pathname === '/blog' ||
+    pathname.startsWith('/blog/');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -48,14 +56,10 @@ export default function Header() {
 
   const solid = scrolled || !hasFullBleedHero || menuOpen;
 
-  // Sobre el hero transparente el header se apoya en cuadros de video que
-  // pueden ser MUY claros (paredes blancas, cielo, interiores con sol): el
-  // scrim radial de ScrubStage se disuelve al 78% y no llega hasta acá, así
-  // que la marca y el nav necesitan su propia sombra en capas (misma receta
-  // que los beats del hero — ver .hero-legible en src/index.css).
   const legible = solid ? '' : 'hero-legible';
 
-  const headerBg = solid ? 'bg-paper/90 shadow-sm backdrop-blur-md' : 'bg-transparent';
+  // Sin shadow-sm para evitar la línea dura de corte sobre el hero o el fondo
+  const headerBg = solid ? 'bg-paper/85 backdrop-blur-md' : 'bg-transparent';
   const brandText = solid ? 'text-ink' : 'text-white';
   const brandAccent = solid ? 'text-brand-500' : 'text-white/80';
   const navLinkColor = solid
@@ -63,14 +67,19 @@ export default function Header() {
     : 'text-white/90 hover:text-white';
   const menuIconColor = solid ? 'text-ink' : 'text-white';
 
+  const isItemActive = (itemTo: string) => {
+    if (itemTo === '/') {
+      return pathname === '/';
+    }
+    if (itemTo.startsWith('/#')) {
+      return pathname === '/' && window.location.hash === itemTo.substring(1);
+    }
+    return pathname === itemTo || pathname.startsWith(`${itemTo}/`);
+  };
+
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${headerBg}`}>
-      {/* Velo superior mientras el header es transparente. La referencia
-          real5.html resuelve su nav con mix-blend-difference y el resultado es
-          que "RESIDENCES / ABOUT" queda casi ilegible sobre el cielo. Acá el
-          nav NO lleva blend: se apoya en este degradado —que cubre el alto del
-          header con margen— más la sombra en capas de .hero-legible. Cuesta
-          nada de imagen y el menú se lee sobre cualquier foto. */}
+      {/* Velo superior mientras el header es transparente */}
       {!solid && (
         <div
           aria-hidden
@@ -101,15 +110,31 @@ export default function Header() {
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-8 lg:flex">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={`text-xs font-medium uppercase tracking-widest transition-colors duration-300 ${navLinkColor} ${legible}`}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            const active = isItemActive(item.to);
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`relative py-1 text-xs font-medium uppercase tracking-widest transition-colors duration-300 ${legible} ${
+                  active
+                    ? solid
+                      ? 'text-brand-600 dark:text-brand-400 font-semibold'
+                      : 'text-brand-300 font-semibold'
+                    : navLinkColor
+                }`}
+              >
+                {item.label}
+                {active && (
+                  <span
+                    className={`absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all duration-300 ${
+                      solid ? 'bg-brand-500 dark:bg-brand-400' : 'bg-brand-300'
+                    }`}
+                  />
+                )}
+              </Link>
+            );
+          })}
           {showHeroToggle && <SkinToggle dark={!solid} />}
           <ThemeToggle dark={!solid} />
 
@@ -172,16 +197,24 @@ export default function Header() {
       >
         <div className="min-h-0">
           <div className="flex flex-col px-4 py-4 sm:px-6">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                onClick={() => setMenuOpen(false)}
-                className="py-3 text-sm font-medium uppercase tracking-widest text-ink-soft transition-colors hover:text-brand-700 dark:hover:text-brand-300"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              const active = isItemActive(item.to);
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setMenuOpen(false)}
+                  className={`py-3 text-sm font-medium uppercase tracking-widest transition-colors flex items-center justify-between ${
+                    active
+                      ? 'text-brand-600 dark:text-brand-400 font-semibold'
+                      : 'text-ink-soft hover:text-brand-700 dark:hover:text-brand-300'
+                  }`}
+                >
+                  <span>{item.label}</span>
+                  {active && <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />}
+                </Link>
+              );
+            })}
 
             {esAdmin && (
               <Link

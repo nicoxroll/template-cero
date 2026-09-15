@@ -9,6 +9,7 @@
 
 import type {
   AdminUser,
+  BlogPost,
   FaqItem,
   Investment,
   Lead,
@@ -18,9 +19,11 @@ import type {
   Project,
   Service,
   TeamMember,
+  Testimonial,
 } from './types';
 import type {
   AdminUserRepository,
+  BlogPostRepository,
   ConfigRepository,
   FaqRepository,
   InvestmentRepository,
@@ -29,15 +32,18 @@ import type {
   ProjectRepository,
   ServiceRepository,
   TeamRepository,
+  TestimonialRepository,
 } from './repositories';
 
 import {
+  BLOG_POSTS_FIXTURE,
   CONFIG_FIXTURE,
   FAQ_FIXTURE,
   INVESTMENTS_FIXTURE,
   PROJECTS_FIXTURE,
   SERVICES_FIXTURE,
   TEAM_FIXTURE,
+  TESTIMONIALS_FIXTURE,
 } from './fixtures';
 
 const NS = 'templatecero:v1:';
@@ -421,4 +427,122 @@ export class LocalStorageAdminUserRepository implements AdminUserRepository {
     save(this.key, filtered);
   }
 }
+
+// ---------------------------------------------------------------------- Blog
+
+export class LocalStorageBlogPostRepository implements BlogPostRepository {
+  private key = 'blog_posts';
+
+  private all(): BlogPost[] {
+    return withPublished(load(this.key, BLOG_POSTS_FIXTURE));
+  }
+
+  async list(): Promise<BlogPost[]> {
+    await delay();
+    return this.all();
+  }
+
+  async listPublished(): Promise<BlogPost[]> {
+    await delay();
+    return this.all().filter((p) => p.published);
+  }
+
+  async listFeatured(): Promise<BlogPost[]> {
+    await delay();
+    return this.all().filter((p) => p.published && p.featured);
+  }
+
+  async getBySlug(slug: string): Promise<BlogPost | null> {
+    await delay();
+    return this.all().find((p) => p.slug === slug && p.published) ?? null;
+  }
+
+  async getBySlugAdmin(slug: string): Promise<BlogPost | null> {
+    await delay();
+    return this.all().find((p) => p.slug === slug) ?? null;
+  }
+
+  async create(post: Omit<BlogPost, 'id' | 'updatedAt'>): Promise<BlogPost> {
+    await delay();
+    const all = this.all();
+    if (all.some((p) => p.slug === post.slug)) {
+      throw new Error(`Ya existe una publicación con slug "${post.slug}"`);
+    }
+    const full: BlogPost = {
+      ...post,
+      id: `post-${newId()}`,
+      updatedAt: now(),
+    };
+    all.unshift(full);
+    save(this.key, all);
+    return full;
+  }
+
+  async update(idOrSlug: string, patch: Partial<BlogPost>): Promise<BlogPost> {
+    await delay();
+    const all = this.all();
+    const idx = all.findIndex((p) => p.id === idOrSlug || p.slug === idOrSlug);
+    if (idx === -1) throw new Error(`Publicación "${idOrSlug}" no encontrada`);
+    all[idx] = { ...all[idx], ...patch, updatedAt: now() };
+    save(this.key, all);
+    return all[idx];
+  }
+
+  async remove(idOrSlug: string): Promise<void> {
+    await delay();
+    save(
+      this.key,
+      this.all().filter((p) => p.id !== idOrSlug && p.slug !== idOrSlug),
+    );
+  }
+}
+
+// ---------------------------------------------------------------- Testimonials
+
+export class LocalStorageTestimonialRepository implements TestimonialRepository {
+  private key = 'testimonials';
+
+  private all(): Testimonial[] {
+    return withPublished(load(this.key, TESTIMONIALS_FIXTURE));
+  }
+
+  async list(): Promise<Testimonial[]> {
+    await delay();
+    return this.all();
+  }
+
+  async listPublished(): Promise<Testimonial[]> {
+    await delay();
+    return this.all().filter((t) => t.published);
+  }
+
+  async create(testimonial: Omit<Testimonial, 'id' | 'createdAt'>): Promise<Testimonial> {
+    await delay();
+    const all = this.all();
+    const full: Testimonial = {
+      ...testimonial,
+      id: `test-${newId()}`,
+      createdAt: now(),
+    };
+    all.unshift(full);
+    save(this.key, all);
+    return full;
+  }
+
+  async update(id: string, patch: Partial<Testimonial>): Promise<Testimonial> {
+    await delay();
+    const all = this.all();
+    const idx = all.findIndex((t) => t.id === id);
+    if (idx === -1) throw new Error(`Testimonio "${id}" no encontrado`);
+    all[idx] = { ...all[idx], ...patch };
+    save(this.key, all);
+    return all[idx];
+  }
+
+  async remove(id: string): Promise<void> {
+    await delay();
+    save(this.key, this.all().filter((t) => t.id !== id));
+  }
+}
+
 

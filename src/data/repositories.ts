@@ -8,6 +8,7 @@
 
 import type {
   AdminUser,
+  BlogPost,
   FaqItem,
   Investment,
   Lead,
@@ -17,6 +18,7 @@ import type {
   Project,
   Service,
   TeamMember,
+  Testimonial,
 } from './types';
 
 
@@ -105,4 +107,24 @@ export interface AdminUserRepository {
   create(data: { email: string; fullName: string }): Promise<AdminUser>;
   delete(id: string): Promise<void>;
 }
+
+export interface BlogPostRepository {
+  list(): Promise<BlogPost[]>;
+  listPublished(): Promise<BlogPost[]>;
+  listFeatured(): Promise<BlogPost[]>;
+  getBySlug(slug: string): Promise<BlogPost | null>;
+  getBySlugAdmin(slug: string): Promise<BlogPost | null>;
+  create(post: Omit<BlogPost, 'id' | 'updatedAt'>): Promise<BlogPost>;
+  update(idOrSlug: string, patch: Partial<BlogPost>): Promise<BlogPost>;
+  remove(idOrSlug: string): Promise<void>;
+}
+
+export interface TestimonialRepository {
+  list(): Promise<Testimonial[]>;
+  listPublished(): Promise<Testimonial[]>;
+  create(testimonial: Omit<Testimonial, 'id' | 'createdAt'>): Promise<Testimonial>;
+  update(id: string, patch: Partial<Testimonial>): Promise<Testimonial>;
+  remove(id: string): Promise<void>;
+}
+
 

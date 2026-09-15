@@ -339,5 +339,55 @@ export interface PageConfig {
   leadNotificationWebhook?: string;
   /** Email adicional para avisos comerciales */
   leadNotificationEmail?: string;
+  /** Token de bot de Telegram para notificaciones instantáneas */
+  telegramBotToken?: string;
+  /** Chat ID de Telegram para notificaciones */
+  telegramChatId?: string;
+}
+
+export interface BlogPostAuthor {
+  name: string;
+  role: string;
+  avatar: string;
+}
+
+export interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string; // Markdown o HTML
+  coverImage: string;
+  category: string;
+  tags: string[];
+  author: BlogPostAuthor;
+  readTimeMinutes: number;
+  published: boolean;
+  publishedAt: string;
+  featured: boolean;
+  updatedAt?: string;
+}
+
+export interface Testimonial {
+  id: string;
+  clientName: string;
+  role: string;
+  company: string;
+  avatar: string;
+  content: string;
+  rating: number; // 1 a 5
+  featured: boolean;
+  published: boolean;
+  createdAt: string;
+}
+
+export interface LeadWizardSubmission {
+  serviceOrNeed: string;
+  budgetOrScale: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  notes?: string;
+  createdAt: string;
 }
 

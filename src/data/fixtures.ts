@@ -2,12 +2,14 @@
 // Los componentes NUNCA acceden a fixtures directamente (ver README.md).
 
 import type {
+  BlogPost,
   FaqItem,
   Investment,
   PageConfig,
   Project,
   Service,
   TeamMember,
+  Testimonial,
 } from './types';
 
 const px = (id: number, w = 1600) =>
@@ -505,5 +507,139 @@ export const FAQ_FIXTURE: FaqItem[] = [
       '¿Puedo salir de la inversión antes de la finalización?',
     answer:
       'Los proyectos inmobiliarios son inversiones de mediano plazo y la permanencia hasta el término es el escenario previsto. No obstante, los contratos suelen contemplar la cesión de la posición fiduciaria a un tercero, sujeta a las condiciones establecidas en cada fideicomiso. Lo analizamos caso por caso.',
+  },
+];
+
+export const BLOG_POSTS_FIXTURE: BlogPost[] = [
+  {
+    id: 'post-1',
+    slug: 'claves-invertir-desarrollos-inmobiliarios-2026',
+    title: 'Claves para invertir en desarrollos inmobiliarios y activos reales en 2026',
+    excerpt: 'Análisis detallado sobre cómo proteger el capital en ladrillos, evaluar estructuras fiduciarias y maximizar la rentabilidad en el ciclo actual del mercado.',
+    content: `## Introducción al mercado actual
+
+Invertir en proyectos desde el pozo y en activos reales continúa siendo uno de los refugios de valor más sólidos frente a la volatilidad macroeconómica. En este artículo desglosamos los factores determinantes para seleccionar proyectos rentables y seguros.
+
+### 1. La importancia de la ubicación estratégica
+El primer factor de revalorización es la ubicación. Proyectos en corredores con consolidación urbana, conectividad a medios de transporte y cercanía a espacios verdes conservan una demanda sostenida tanto para compra final como para renta temporaria o tradicional.
+
+### 2. Estructura de fideicomiso al costo
+Un fideicomiso al costo brinda aislamiento patrimonial y transparencia: los fondos aportados se destinan exclusivamente a la adquisición del terreno y la ejecución de la obra, auditados periódicamente por profesionales independientes.
+
+### 3. Tiempos de ejecución y solidez de la constructora
+Verificar el track record de la desarrolladora y la constructora es indispensable. Conocer obras entregadas, cumplimiento de plazos y estándares constructivos minimiza riesgos operativos.
+
+> "El ladrillo no es solo una inversión en metros cuadrados, sino un resguardo patrimonial intergeneracional cuando está respaldado por una ejecución rigurosa."
+
+### Conclusión
+Evaluar la viabilidad económica, el perfil fiduciario y la calidad de los materiales asegura que tu inversión no solo conserve su valor en dólares, sino que capture el margen de apreciación de toda la etapa constructiva.`,
+    coverImage: px(35282689, 1600),
+    category: 'Inversiones',
+    tags: ['Inversión', 'Fideicomisos', 'Real Estate', 'Finanzas'],
+    author: {
+      name: 'Lic. Mariano Benítez',
+      role: 'Director Financiero',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
+    },
+    readTimeMinutes: 5,
+    published: true,
+    publishedAt: '2026-02-15T12:00:00.000Z',
+    featured: true,
+  },
+  {
+    id: 'post-2',
+    slug: 'arquitectura-sustentable-eficiencia-energetica',
+    title: 'Arquitectura sustentable y eficiencia energética en proyectos urbanos',
+    excerpt: 'Cómo la integración de carpinterías DVH, energía solar y aislaciones térmicas de última generación optimizan los costos de mantenimiento y reducen la huella ambiental.',
+    content: `## El nuevo estándar de la construcción sostenible
+
+La sostenibilidad dejó de ser un diferencial opcional para convertirse en un requerimiento fundamental en los desarrollos contemporáneos. Diseñar edificios eficientes reduce el consumo energético y revaloriza la propiedad.
+
+### Ventajas del Doble Vidriado Hermético (DVH)
+Las aberturas con DVH reducen la transferencia térmica hasta en un 50% respecto al vidrio simple, amortiguando simultáneamente el ruido urbano y garantizando confort acústico interior.
+
+### Climatización y consumo responsable
+La incorporación de sistemas inverter, paneles solares para áreas comunes e iluminación LED de bajo consumo permite reducir drásticamente las expensas mensuales del consorcio.
+
+### Materiales nobles y durabilidad
+El hormigón visto y los revestimientos de bajo mantenimiento aseguran que la fachada mantenga su estética a lo largo de las décadas sin requerir constantes gastos de pintura o impermeabilización.`,
+    coverImage: px(30832160, 1600),
+    category: 'Arquitectura',
+    tags: ['Sustentabilidad', 'Diseño', 'Energía', 'Construcción'],
+    author: {
+      name: 'Arq. Clara Méndez',
+      role: 'Jefa de Proyecto y Diseño',
+      avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80',
+    },
+    readTimeMinutes: 4,
+    published: true,
+    publishedAt: '2026-02-28T10:30:00.000Z',
+    featured: true,
+  },
+  {
+    id: 'post-3',
+    slug: 'estructuras-fideicomiso-al-costo-seguridad-juridica',
+    title: 'Estructuras de fideicomiso al costo: transparencia y seguridad jurídica',
+    excerpt: 'Comprendé el marco legal, los roles del fiduciante y fiduciario, y las garantías contractuales que protegen al inversor durante el desarrollo.',
+    content: `## ¿Por qué el fideicomiso es la figura líder en desarrollo?
+
+El fideicomiso inmobiliario es la herramienta legal por excelencia para canalizar inversiones en construcción en el marco del Código Civil y Comercial de la Nación.
+
+### Separación patrimonial
+El patrimonio del fideicomiso es completamente independiente del patrimonio personal de los fiduciantes, del fiduciario y de la empresa constructora. Ningún acreedor individual puede embargar los bienes de la obra.
+
+### Rol de la escribanía y auditorías
+La intervención notarial y contable regulariza cada cesión de boleto, comprobante de ingreso de fondos y balance de avance, protegiendo a todas las partes intervinientes.`,
+    coverImage: px(11968124, 1600),
+    category: 'Legal & Finanzas',
+    tags: ['Legales', 'Fideicomiso', 'Seguridad Jurídica'],
+    author: {
+      name: 'Dr. Hernán Varela',
+      role: 'Asesor Legal & Fiduciario',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
+    },
+    readTimeMinutes: 6,
+    published: true,
+    publishedAt: '2026-03-05T09:00:00.000Z',
+    featured: false,
+  },
+];
+
+export const TESTIMONIALS_FIXTURE: Testimonial[] = [
+  {
+    id: 'test-1',
+    clientName: 'Martín Gómez',
+    role: 'Inversor privado',
+    company: 'Fideicomiso Residencial',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80',
+    content: 'La transparencia en el seguimiento de obra y los reportes financieros mensuales superaron todas mis expectativas. Cumplieron con los plazos prometidos y el rendimiento final fue excelente.',
+    rating: 5,
+    featured: true,
+    published: true,
+    createdAt: '2026-01-10T10:00:00.000Z',
+  },
+  {
+    id: 'test-2',
+    clientName: 'Arq. Valeria Rossi',
+    role: 'Socia Directora',
+    company: 'Estudio Rossi & Asoc.',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80',
+    content: 'Trabajar como aliados estratégicos fue una experiencia impecable. La atención al detalle constructivo, la resolución técnica y el profesionalismo marcan una diferencia real en el mercado.',
+    rating: 5,
+    featured: true,
+    published: true,
+    createdAt: '2026-01-22T14:30:00.000Z',
+  },
+  {
+    id: 'test-3',
+    clientName: 'Santiago Echeverría',
+    role: 'Propietario',
+    company: 'Unidad Torre Libertador',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80',
+    content: 'El proceso de compra y personalización de la unidad fue fluido y profesional desde el primer contacto. Las terminaciones y amenities son de una categoría superlativa.',
+    rating: 5,
+    featured: true,
+    published: true,
+    createdAt: '2026-02-05T16:00:00.000Z',
   },
 ];
