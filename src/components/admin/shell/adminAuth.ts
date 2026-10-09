@@ -16,7 +16,7 @@
 
 import { getSupabase, SUPABASE_READY } from '../../../data/supabaseClient';
 
-const SESSION_KEY = 'puntocero:v1:admin-session';
+const SESSION_KEY = 'templatecero:v1:admin-session';
 
 export interface AdminSession {
   email: string;

@@ -1,116 +1,131 @@
-# Guía de Despliegue a Producción — Template Cero 🚀
+# Guía de Despliegue en Vercel y Configuración de Dominio Propio 🚀
 
-Esta guía detalla cómo compilar y desplegar **Template Cero** en las plataformas de hosting más populares (Vercel, Netlify, Cloudflare Pages o servidores estáticos con Nginx/Docker).
-
----
-
-## 🏗️ Proceso de Compilación (Build)
-
-Antes del despliegue, el comando de compilación realiza dos tareas:
-1. **`vite build`**: Transpila TypeScript y genera el bundle minificado en la carpeta `dist/`.
-2. **`node scripts/prerender-og.mjs`**: Genera páginas `.html` estáticas por cada ruta para asegurar que Google y los scrapers de redes sociales (WhatsApp, LinkedIn, Twitter/X) lean los títulos, descripciones y tarjetas Open Graph correspondientes sin necesidad de ejecutar JavaScript. Además, genera automáticamente `dist/sitemap.xml`.
-
-```bash
-npm run build
-```
+Esta guía detalla paso a paso cómo desplegar **Template Cero** en Vercel, configurar variables de entorno, conectar Supabase y vincular tu propio dominio personalizado con HTTPS automático.
 
 ---
 
-## ⚡ Despliegue en Vercel (Recomendado)
+## 📋 Índice
+1. [Requisitos Previos](#1-requisitos-previos)
+2. [Paso 1: Despliegue en Vercel](#paso-1-despliegue-en-vercel)
+3. [Paso 2: Variables de Entorno en Vercel](#paso-2-variables-de-entorno-en-vercel)
+4. [Paso 3: Configuración de Dominio Personalizado](#paso-3-configuración-de-dominio-personalizado)
+5. [Paso 4: Conexión con Supabase (Base de Datos Real)](#paso-4-conexión-con-supabase-base-de-datos-real)
+6. [Credenciales de Acceso al Panel de Administración](#credenciales-de-acceso-al-panel-de-administración)
 
-Template Cero incluye un archivo [`vercel.json`](vercel.json) preconfigurado que maneja:
-- El ruteo de SPA (Single Page Application) sin romper el SEO estático.
-- Cabeceras de caché inmutables para assets (`/assets/*`, `/hero-frames/*`).
-- Revalidación inmediata para archivos `.html`.
+---
 
-### Pasos:
-1. Sube tu código a GitHub, GitLab o Bitbucket.
-2. En tu cuenta de [Vercel](https://vercel.com), haz clic en **"Add New Project"** e importa el repositorio.
-3. Vercel detectará Vite automáticamente:
-   - **Framework Preset**: Vite
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-4. *(Opcional)* En la sección **Environment Variables**, agrega las credenciales de Supabase si deseas usar la base de datos real:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
-   - `VITE_GA4_ID` (si usas Google Analytics)
-5. Haz clic en **Deploy**.
+## 1. Requisitos Previos
+
+- Una cuenta en [GitHub](https://github.com) con el repositorio subido (ej: `nicoxroll/template-cero`).
+- Una cuenta gratuita en [Vercel](https://vercel.com) (puedes iniciar sesión con tu cuenta de GitHub).
+- Un dominio registrado en cualquier registrador (DonWeb, Nic.ar, GoDaddy, Namecheap, Cloudflare, Hostinger, etc.).
+
+---
+
+## Paso 1: Despliegue en Vercel
+
+1. Inicia sesión en [Vercel](https://vercel.com).
+2. En el panel principal (Dashboard), haz clic en el botón azul **"Add New..."** -> **"Project"**.
+3. En la lista **"Import Git Repository"**, busca y selecciona tu repositorio: `template-cero`. Haz clic en **"Import"**.
+4. En la pantalla de configuración del proyecto:
+   - **Project Name:** Puedes dejar `template-cero` o el nombre de tu cliente.
+   - **Framework Preset:** Vercel detectará automáticamente **Vite**.
+   - **Root Directory:** `./`
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+5. Haz clic en el botón **"Deploy"**.
+6. En aproximadamente 60 segundos, Vercel compilará la aplicación y te entregará una URL pública gratuita con terminación `.vercel.app` (por ejemplo: `https://template-cero.vercel.app`).
+
+> [!NOTE]
+> El proyecto ya incluye un archivo [`vercel.json`](vercel.json) configurado que garantiza el correcto funcionamiento del ruteo SPA en todas las páginas (`/proyectos`, `/inversiones`, `/admin`, etc.) sin errores 404 al recargar la página.
+
+---
+
+## Paso 2: Variables de Entorno en Vercel
+
+Si deseas conectar la base de datos real de Supabase o Google Analytics:
+
+1. En tu proyecto de Vercel, ve a la pestaña **Settings** (arriba) -> **Environment Variables** (menú izquierdo).
+2. Agrega las siguientes variables:
+   - `VITE_SUPABASE_URL`: `https://tu-proyecto.supabase.co`
+   - `VITE_SUPABASE_ANON_KEY`: `tu-clave-anonima-publica`
+   - `VITE_GA4_ID`: *(Opcional)* tu identificador de Google Analytics (ej: `G-XXXXXXXXXX`).
+3. Haz clic en **Save**.
 
 > [!IMPORTANT]
-> **Variables en Vite durante el Build:**  
-> Vite hornea las variables con prefijo `VITE_` en el bundle **durante el build**, no en tiempo de ejecución. Si agregas o cambias variables de entorno en Vercel, debes hacer un **Redeploy** para que surtan efecto.
+> **Vite hornea las variables durante el Build:**  
+> Cada vez que agregues o modifiques variables de entorno en Vercel, debes ir a la pestaña **Deployments**, hacer clic en los tres puntos `...` del último despliegue y seleccionar **Redeploy** para que los cambios surtan efecto en el código empaquetado.
 
 ---
 
-## 🌐 Despliegue en Netlify
+## Paso 3: Configuración de Dominio Personalizado
 
-1. En [Netlify](https://netlify.com), selecciona **"Add new site"** → **"Import an existing project"**.
-2. Configuración de build:
-   - **Build command:** `npm run build`
-   - **Publish directory:** `dist`
-3. Si la navegación directa a subrutas (como `/admin` o `/proyectos`) da error 404, asegúrate de que exista un archivo `public/_redirects` con la siguiente línea:
-   ```text
-   /*    /index.html   200
-   ```
+Para que tu sitio web abra con tu propio dominio (ej: `tuempresa.com` o `www.tuempresa.com`):
 
----
+### 1. Agregar el dominio en Vercel:
+1. En tu proyecto de Vercel, ve a **Settings** -> **Domains**.
+2. Escribe tu dominio en el campo de texto (ejemplo: `tuempresa.com`) y haz clic en **Add**.
+3. Vercel te preguntará si deseas redirigir `tuempresa.com` a `www.tuempresa.com` (recomendado) o viceversa. Selecciona la opción recomendada.
 
-## 🐳 Despliegue con Docker y Nginx
+### 2. Configurar los registros DNS en tu proveedor de dominio:
+Ingresa al panel de control donde compraste el dominio (Cloudflare, GoDaddy, DonWeb, Hostinger, etc.) y ve a la sección de **Gestión de DNS** o **Zona DNS**:
 
-Si prefieres alojar la aplicación en tu propio servidor VPS (DigitalOcean, AWS EC2, Hetzner):
+| Tipo de Registro | Nombre / Host | Valor / Destino | TTL |
+| :--- | :--- | :--- | :--- |
+| **A** | `@` (o déjalo en blanco según el proveedor) | `76.76.21.21` | Automático / 3600 |
+| **CNAME** | `www` | `cname.vercel-dns.com` | Automático / 3600 |
 
-### Dockerfile de ejemplo (Multi-stage build):
-```dockerfile
-# Etapa 1: Compilación
-FROM node:22-alpine AS builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
-
-# Etapa 2: Servidor Nginx liviano
-FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-### nginx.conf correspondiente:
-```nginx
-server {
-    listen 80;
-    server_name _;
-    root /usr/share/nginx/html;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-
-    # Caché para assets estáticos inmutables
-    location ~* \.(?:css|js|woff2?|svg|webp|png|jpg|jpeg|gif|ico)$ {
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
-}
-```
+### 3. Verificación y Certificado SSL (HTTPS):
+- Una vez guardados los registros DNS, Vercel verificará la conexión automáticamente en pocos minutos (la propagación DNS puede tomar entre 5 minutos y 2 horas).
+- Vercel emitirá automáticamente un certificado SSL gratuito mediante Let's Encrypt. Cuando veas el tilde verde **Valid Configuration**, tu sitio ya estará en vivo y seguro con `https://`.
 
 ---
 
-## 🔐 Acceso al Panel de Administración en Producción
+## Paso 4: Conexión con Supabase (Base de Datos Real)
 
-- **URL:** `https://tudominio.com/admin`
-- **Comportamiento según entorno:**
-  - **Sin Supabase configurado:** El panel funciona en modo demostración. Cualquier email y clave permiten el ingreso (datos en el `localStorage` del visitante).
-  - **Con Supabase configurado:** Requiere usuario creado en Supabase Auth y registrado en la tabla `admin_users`.
+Si vas a usar Supabase como backend:
+
+1. Crea un proyecto nuevo en [Supabase](https://supabase.com).
+2. En el panel lateral, ve a **SQL Editor** -> **New query**.
+3. Abre el archivo [`supabase/schema.sql`](supabase/schema.sql) de este repositorio, copia **todo el contenido** y pégalo en el editor de Supabase.
+4. Haz clic en **Run**. El script creará automáticamente:
+   - Todas las 13 tablas necesarias (`projects`, `investments`, `leads`, `team_members`, etc.).
+   - Triggers y políticas RLS seguras.
+   - Buckets de Supabase Storage para fotos y documentos (`assets`, `project-images`, `project-docs`).
+   - Datos iniciales completos.
+5. Copia tu URL y clave anónima desde **Project Settings** -> **API** y colócalas en las variables de entorno de Vercel (o en tu archivo `.env` local).
 
 ---
 
-## 🔍 Verificación Post-Despliegue
+## 🔐 Credenciales de Acceso al Panel de Administración
 
-1. Entra a `https://tudominio.com` y verifica que cargue fluidamente.
-2. Navega directamente a `https://tudominio.com/proyectos` en una nueva pestaña (comprueba que no dé 404).
-3. Abre las herramientas de desarrollo (F12) y comprueba que no existan errores de consola.
-4. Comparte la URL en un validador Open Graph (como [opengraph.xyz](https://www.opengraph.xyz)) para confirmar que la imagen de previsualización y el título se muestren correctamente.
+Para probar el panel de administración y editar el sitio:
+
+- **Ruta de acceso:** `https://tudominio.com/admin` (o `/admin` en tu entorno local).
+
+### Modo 1: Sin Supabase (Modo Demostración Local)
+Si no configuraste variables de entorno de Supabase, la plantilla funciona al 100% de manera autónoma en modo mock:
+- **Email de prueba:** `admin@templatecero.com` (o cualquier email válido)
+- **Contraseña:** `admin123` (o cualquier contraseña)
+- *Todos los cambios se guardan en el almacenamiento local de tu navegador y puedes probar la edición en vivo al instante.*
+
+### Modo 2: Con Supabase Conectado
+Si conectaste Supabase, la tabla `admin_users` ya incluye pre-autorizados los emails:
+- `admin@templatecero.com`
+- `equipo@templatecero.com`
+
+**Para crear tu usuario en Supabase:**
+1. En tu dashboard de Supabase, ve a **Authentication** -> **Users**.
+2. Haz clic en **Add user** -> **Create new user**.
+3. Ingresa `admin@templatecero.com` (o `equipo@templatecero.com`) y escribe la contraseña que elijas.
+4. **IMPORTANTE:** Marca la casilla **"Auto Confirm User"** para que el usuario pueda ingresar de inmediato sin esperar confirmación por correo.
+5. ¡Listo! Ya puedes iniciar sesión en `/admin`.
+
+---
+
+## 🛠️ Herramientas de Personalización en Vivo (CMS Live)
+
+Una vez que inicias sesión en el panel y regresas al sitio web principal:
+- Verás la barra flotante **CMS Live** en la esquina inferior izquierda.
+- Puedes hacer clic en **"Editar Página"** para activar los lápices de edición sobre cualquier sección de la página y cambiar textos e imágenes in-situ.
+- Puedes hacer clic en **"Personalizar Plantilla"** para cambiar el nombre de la empresa, slogan y la paleta de colores (`Esmeralda`, `Índigo`, `Pizarra`, `Ámbar`) con un solo clic en tiempo real.

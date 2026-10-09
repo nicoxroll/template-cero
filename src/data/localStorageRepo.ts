@@ -388,8 +388,8 @@ export class LocalStorageConfigRepository implements ConfigRepository {
 const ADMIN_USERS_FIXTURE: AdminUser[] = [
   {
     id: 'usr-admin-1',
-    email: 'equipo@puntocero.com',
-    fullName: 'Equipo Punto Cero',
+    email: 'equipo@templatecero.com',
+    fullName: 'Equipo Template Cero',
     createdAt: '2024-01-01T00:00:00.000Z',
   },
 ];

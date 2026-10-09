@@ -1,6 +1,6 @@
-// Inversiones — INV-01 (oportunidades activas), INV-03 (disclaimer),
-// INV-04 (FAQ) e INV-05 (newsletter). Datos vía investmentRepo.
-// Soporta edición en vivo para administradores.
+﻿// Inversiones â€” INV-01 (oportunidades activas), INV-03 (disclaimer),
+// INV-04 (FAQ) e INV-05 (newsletter). Datos vÃ­a investmentRepo.
+// Soporta ediciÃ³n en vivo para administradores.
 
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
@@ -38,18 +38,18 @@ export default function Inversiones() {
     save: handleSaveHero,
     cancel: handleCancelHero,
   } = useLiveSection({
-    badge: { key: 'inversiones.hero.badge', default: 'Plataforma de Inversión Inmobiliaria' },
-    title: { key: 'inversiones.hero.title', default: 'Rendimiento en m² con respaldo real' },
+    badge: { key: 'inversiones.hero.badge', default: 'Plataforma de InversiÃ³n Inmobiliaria' },
+    title: { key: 'inversiones.hero.title', default: 'Rendimiento en mÂ² con respaldo real' },
     description: {
       key: 'inversiones.hero.description',
       default:
-        'Participe en desarrollos inmobiliarios de Punto Cero estructurados bajo fideicomiso al costo. Información clara, métricas actualizadas y seguimiento integral sin intermediarios.',
+        'Participe en desarrollos inmobiliarios de Template Cero estructurados bajo fideicomiso al costo. InformaciÃ³n clara, mÃ©tricas actualizadas y seguimiento integral sin intermediarios.',
     },
     stat1Val: { key: 'inversiones.hero.stat1_val', default: '100%' },
     stat1Lbl: { key: 'inversiones.hero.stat1_lbl', default: 'Transparencia Fiduciaria' },
-    stat2Val: { key: 'inversiones.hero.stat2_val', default: 'USD / m²' },
+    stat2Val: { key: 'inversiones.hero.stat2_val', default: 'USD / mÂ²' },
     stat2Lbl: { key: 'inversiones.hero.stat2_lbl', default: 'Resguardo de Valor' },
-    stat3Val: { key: 'inversiones.hero.stat3_val', default: '+15 Años' },
+    stat3Val: { key: 'inversiones.hero.stat3_val', default: '+15 AÃ±os' },
     stat3Lbl: { key: 'inversiones.hero.stat3_lbl', default: 'Trayectoria Constructora' },
     image: { key: 'inversiones.hero.image', default: IMAGERY.wide },
   });
@@ -62,18 +62,18 @@ export default function Inversiones() {
     cancel: handleCancelList,
   } = useLiveSection({
     kicker: { key: 'inversiones.list.kicker', default: 'Oportunidades Vigentes' },
-    title: { key: 'inversiones.list.title', default: 'Modelos de Inversión Activos' },
+    title: { key: 'inversiones.list.title', default: 'Modelos de InversiÃ³n Activos' },
     intro: {
       key: 'inversiones.list.intro',
       default:
-        'Explore las oportunidades de participación con ingreso mínimo, tasa estimada y plazo de finalización. Haga clic en cualquiera para ver la memoria descriptiva y los documentos.',
+        'Explore las oportunidades de participaciÃ³n con ingreso mÃ­nimo, tasa estimada y plazo de finalizaciÃ³n. Haga clic en cualquiera para ver la memoria descriptiva y los documentos.',
     },
   });
 
   usePageMeta({
     title: 'Inversiones',
     description:
-      'Oportunidades de inversión inmobiliaria con estructura jurídica sólida, información transparente y retornos estimados en cada etapa.',
+      'Oportunidades de inversiÃ³n inmobiliaria con estructura jurÃ­dica sÃ³lida, informaciÃ³n transparente y retornos estimados en cada etapa.',
   });
 
   useEffect(() => {
@@ -217,7 +217,7 @@ export default function Inversiones() {
 
       <EditableSectionWrapper
         sectionId="inversiones-list"
-        sectionLabel="Oportunidades de Inversión"
+        sectionLabel="Oportunidades de InversiÃ³n"
         onSave={handleSaveList}
         onCancel={handleCancelList}
         pencilPosition="top-8 right-8"
@@ -272,8 +272,8 @@ export default function Inversiones() {
                 </div>
               ) : loading ? null : investments.length === 0 ? (
                 <p className="text-base font-light leading-relaxed text-ink-soft">
-                  En este momento no hay oportunidades publicadas. Suscríbase al newsletter para
-                  recibir las próximas antes de su publicación general.
+                  En este momento no hay oportunidades publicadas. SuscrÃ­base al newsletter para
+                  recibir las prÃ³ximas antes de su publicaciÃ³n general.
                 </p>
               ) : (
                 <div ref={gridRef} className="grid gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">

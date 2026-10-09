@@ -1,7 +1,7 @@
-// Alianzas y Respaldo Institucional (Social Proof & Fiduciary Trust).
-// Destaca las alianzas estratégicas, escribanías intervinientes, bancos fiduciarios
-// y estudios de arquitectura que respaldan cada desarrollo de Punto Cero.
-// Soporta edición en vivo y control de visibilidad desde el panel de administración.
+﻿// Alianzas y Respaldo Institucional (Social Proof & Fiduciary Trust).
+// Destaca las alianzas estratÃ©gicas, escribanÃ­as intervinientes, bancos fiduciarios
+// y estudios de arquitectura que respaldan cada desarrollo de Template Cero.
+// Soporta ediciÃ³n en vivo y control de visibilidad desde el panel de administraciÃ³n.
 
 import { ShieldCheck, Scale, Building, Landmark, CheckCircle2, Eye, EyeOff, Award } from 'lucide-react';
 import Container from '../ui/Container';
@@ -22,9 +22,9 @@ interface PartnerItem {
 
 const PARTNERS_FIJOS: PartnerItem[] = [
   {
-    nombre: 'Escribanías Titulares',
+    nombre: 'EscribanÃ­as Titulares',
     rol: 'Seguridad y Trazabilidad Notarial',
-    subtexto: 'Boletos de adhesión, protocolizaciones y constitución de fideicomisos bajo Ley 24.441.',
+    subtexto: 'Boletos de adhesiÃ³n, protocolizaciones y constituciÃ³n de fideicomisos bajo Ley 24.441.',
     icon: Scale,
   },
   {
@@ -35,21 +35,21 @@ const PARTNERS_FIJOS: PartnerItem[] = [
   },
   {
     nombre: 'Estudios de Arquitectura & BIM',
-    rol: 'Proyecto y Dirección Ejecutiva',
-    subtexto: 'Modelado 3D de alta precisión, sustentabilidad térmica y optimización de costos constructivos.',
+    rol: 'Proyecto y DirecciÃ³n Ejecutiva',
+    subtexto: 'Modelado 3D de alta precisiÃ³n, sustentabilidad tÃ©rmica y optimizaciÃ³n de costos constructivos.',
     icon: Building,
   },
   {
-    nombre: 'Auditoría Técnica Externa',
-    rol: 'Inspección de Avance y Calidad',
-    subtexto: 'Certificaciones bimestrales de hitos de obra previo a cada liberación de fondos del cronograma.',
+    nombre: 'AuditorÃ­a TÃ©cnica Externa',
+    rol: 'InspecciÃ³n de Avance y Calidad',
+    subtexto: 'Certificaciones bimestrales de hitos de obra previo a cada liberaciÃ³n de fondos del cronograma.',
     icon: ShieldCheck,
   },
 ];
 
 const GARANTIAS_METRICAS = [
   { valor: '100%', etiqueta: 'Fideicomisos al Costo Auditados' },
-  { valor: '+15', etiqueta: 'Años de Trayectoria Constructora' },
+  { valor: '+15', etiqueta: 'AÃ±os de Trayectoria Constructora' },
   { valor: '0', etiqueta: 'Litigios Notariales o Financieros' },
   { valor: '100%', etiqueta: 'Obras Entregadas en Plazo' },
 ];
@@ -64,11 +64,11 @@ export default function AlianzasStrip({
     save: saveSectionCMS,
   } = useLiveSection({
     kicker: { key: 'home.alianzas.kicker', default: 'Respaldo Institucional' },
-    title: { key: 'home.alianzas.title', default: 'Seguridad jurídica y excelencia profesional' },
+    title: { key: 'home.alianzas.title', default: 'Seguridad jurÃ­dica y excelencia profesional' },
     intro: {
       key: 'home.alianzas.intro',
       default:
-        'Cada desarrollo de Punto Cero se estructura bajo los más rigurosos estándares jurídicos, financieros y técnicos del mercado inmobiliario argentino.',
+        'Cada proyecto de Template Cero se estructura bajo los mÃ¡s rigurosos estÃ¡ndares jurÃ­dicos, financieros y tÃ©cnicos del mercado.',
     },
     sectionVisible: { key: 'home.alianzas.visible', default: 'true' },
   });
@@ -88,23 +88,23 @@ export default function AlianzasStrip({
         return (
           <section
             id={id}
-            aria-label="Alianzas estratégicas y respaldo institucional"
+            aria-label="Alianzas estratÃ©gicas y respaldo institucional"
             className={`py-20 md:py-28 bg-paper-soft border-t border-line transition-opacity duration-300 ${className} ${
               !isVisible ? 'opacity-50' : 'opacity-100'
             }`}
           >
             <Container>
-              {/* Banner de control de visibilidad en modo edición admin */}
+              {/* Banner de control de visibilidad en modo ediciÃ³n admin */}
               {isEditing && (
                 <div className="mb-10 p-4 bg-brand-500/10 border border-brand-500/30 rounded flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
                   <div className="flex items-center gap-2">
                     {isVisible ? (
                       <span className="inline-flex items-center gap-1.5 font-medium text-emerald-600 dark:text-emerald-400">
-                        <Eye className="w-4 h-4" /> La sección de alianzas está <strong>visible</strong> en la portada
+                        <Eye className="w-4 h-4" /> La secciÃ³n de alianzas estÃ¡ <strong>visible</strong> en la portada
                       </span>
                     ) : (
                       <span className="inline-flex items-center gap-1.5 font-medium text-amber-600 dark:text-amber-400">
-                        <EyeOff className="w-4 h-4" /> La sección de alianzas está <strong>oculta</strong> en la portada
+                        <EyeOff className="w-4 h-4" /> La secciÃ³n de alianzas estÃ¡ <strong>oculta</strong> en la portada
                       </span>
                     )}
                   </div>
@@ -117,7 +117,7 @@ export default function AlianzasStrip({
                         : 'bg-emerald-600 text-white hover:bg-emerald-700'
                     }`}
                   >
-                    {isVisible ? 'Ocultar sección' : 'Hacer visible'}
+                    {isVisible ? 'Ocultar secciÃ³n' : 'Hacer visible'}
                   </button>
                 </div>
               )}
@@ -183,7 +183,7 @@ export default function AlianzasStrip({
                 })}
               </div>
 
-              {/* Tira inferior de Métricas de Garantía Fiduciaria */}
+              {/* Tira inferior de MÃ©tricas de GarantÃ­a Fiduciaria */}
               <div className="mt-12 bg-ink-fixed text-white p-8 sm:p-10 border border-white/10 shadow-xl">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center divide-y lg:divide-y-0 lg:divide-x divide-white/10">
                   {GARANTIAS_METRICAS.map((m, idx) => (

@@ -20,6 +20,7 @@
 import { getSupabase } from './supabaseClient';
 import type {
   AdminUser,
+  BlogPost,
   FaqItem,
   Investment,
   Lead,
@@ -29,9 +30,11 @@ import type {
   Project,
   Service,
   TeamMember,
+  Testimonial,
 } from './types';
 import type {
   AdminUserRepository,
+  BlogPostRepository,
   ConfigRepository,
   FaqRepository,
   InvestmentRepository,
@@ -40,13 +43,19 @@ import type {
   ProjectRepository,
   ServiceRepository,
   TeamRepository,
+  TestimonialRepository,
 } from './repositories';
 import {
+  fromBlogPost,
+  fromBlogPostPatch,
   fromInvestment,
   fromPageConfigPatch,
   fromProject,
   fromProjectPatch,
+  fromTestimonial,
+  fromTestimonialPatch,
   toAdminUser,
+  toBlogPost,
   toInvestment,
   toLead,
   toNewsletterSub,
@@ -55,7 +64,9 @@ import {
   toProject,
   toService,
   toTeamMember,
+  toTestimonial,
   type AdminUserRow,
+  type BlogPostRow,
   type FaqRow,
   type InvestmentRow,
   type LeadRow,
@@ -63,6 +74,7 @@ import {
   type PageConfigRow,
   type ProjectRow,
   type ServiceRow,
+  type TestimonialRow,
   type TeamRow,
 } from './supabaseMappers';
 
@@ -662,4 +674,145 @@ export class SupabaseAdminUserRepository implements AdminUserRepository {
     if (error) fail('eliminar administrador', error);
   }
 }
+
+// ---------------------------------------------------------------------- Blog
+
+export class SupabaseBlogPostRepository implements BlogPostRepository {
+  async list(): Promise<BlogPost[]> {
+    const { data, error } = await getSupabase()
+      .from('blog_posts')
+      .select('*')
+      .order('published_at', { ascending: false });
+    if (error) fail('listar publicaciones de blog (admin)', error);
+    return (data as BlogPostRow[]).map(toBlogPost);
+  }
+
+  async listPublished(): Promise<BlogPost[]> {
+    const { data, error } = await getSupabase()
+      .from('blog_posts')
+      .select('*')
+      .eq('published', true)
+      .order('published_at', { ascending: false });
+    if (error) fail('listar publicaciones de blog', error);
+    return (data as BlogPostRow[]).map(toBlogPost);
+  }
+
+  async listFeatured(): Promise<BlogPost[]> {
+    const { data, error } = await getSupabase()
+      .from('blog_posts')
+      .select('*')
+      .eq('published', true)
+      .eq('featured', true)
+      .order('published_at', { ascending: false });
+    if (error) fail('listar publicaciones destacadas', error);
+    return (data as BlogPostRow[]).map(toBlogPost);
+  }
+
+  async getBySlug(slug: string): Promise<BlogPost | null> {
+    const { data, error } = await getSupabase()
+      .from('blog_posts')
+      .select('*')
+      .eq('slug', slug)
+      .eq('published', true)
+      .maybeSingle();
+    if (error) fail(`obtener publicación ${slug}`, error);
+    return data ? toBlogPost(data as BlogPostRow) : null;
+  }
+
+  async getBySlugAdmin(slug: string): Promise<BlogPost | null> {
+    const { data, error } = await getSupabase()
+      .from('blog_posts')
+      .select('*')
+      .eq('slug', slug)
+      .maybeSingle();
+    if (error) fail(`obtener publicación (admin) ${slug}`, error);
+    return data ? toBlogPost(data as BlogPostRow) : null;
+  }
+
+  async create(post: Omit<BlogPost, 'id' | 'updatedAt'>): Promise<BlogPost> {
+    const row = fromBlogPost(post);
+    const { data, error } = await getSupabase()
+      .from('blog_posts')
+      .insert(row)
+      .select('*')
+      .single();
+    if (error) fail(`crear publicación ${post.slug}`, error);
+    return toBlogPost(data as BlogPostRow);
+  }
+
+  async update(idOrSlug: string, patch: Partial<BlogPost>): Promise<BlogPost> {
+    const row = fromBlogPostPatch(patch);
+    const { data, error } = await getSupabase()
+      .from('blog_posts')
+      .update(row)
+      .or(`id.eq.${idOrSlug},slug.eq.${idOrSlug}`)
+      .select('*')
+      .single();
+    if (error) fail(`actualizar publicación ${idOrSlug}`, error);
+    return toBlogPost(data as BlogPostRow);
+  }
+
+  async remove(idOrSlug: string): Promise<void> {
+    const { error } = await getSupabase()
+      .from('blog_posts')
+      .delete()
+      .or(`id.eq.${idOrSlug},slug.eq.${idOrSlug}`);
+    if (error) fail(`eliminar publicación ${idOrSlug}`, error);
+  }
+}
+
+// ---------------------------------------------------------------- Testimonials
+
+export class SupabaseTestimonialRepository implements TestimonialRepository {
+  async list(): Promise<Testimonial[]> {
+    const { data, error } = await getSupabase()
+      .from('testimonials')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) fail('listar testimonios (admin)', error);
+    return (data as TestimonialRow[]).map(toTestimonial);
+  }
+
+  async listPublished(): Promise<Testimonial[]> {
+    const { data, error } = await getSupabase()
+      .from('testimonials')
+      .select('*')
+      .eq('published', true)
+      .order('created_at', { ascending: false });
+    if (error) fail('listar testimonios', error);
+    return (data as TestimonialRow[]).map(toTestimonial);
+  }
+
+  async create(testimonial: Omit<Testimonial, 'id' | 'createdAt'>): Promise<Testimonial> {
+    const row = fromTestimonial(testimonial);
+    const { data, error } = await getSupabase()
+      .from('testimonials')
+      .insert(row)
+      .select('*')
+      .single();
+    if (error) fail('crear testimonio', error);
+    return toTestimonial(data as TestimonialRow);
+  }
+
+  async update(id: string, patch: Partial<Testimonial>): Promise<Testimonial> {
+    const row = fromTestimonialPatch(patch);
+    const { data, error } = await getSupabase()
+      .from('testimonials')
+      .update(row)
+      .eq('id', id)
+      .select('*')
+      .single();
+    if (error) fail(`actualizar testimonio ${id}`, error);
+    return toTestimonial(data as TestimonialRow);
+  }
+
+  async remove(id: string): Promise<void> {
+    const { error } = await getSupabase()
+      .from('testimonials')
+      .delete()
+      .eq('id', id);
+    if (error) fail(`eliminar testimonio ${id}`, error);
+  }
+}
+
 

@@ -13,7 +13,24 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { INVESTMENTS_FIXTURE, PROJECTS_FIXTURE } from '../src/data/fixtures.ts';
+
+async function loadFixtures() {
+  try {
+    return await import('../src/data/fixtures.ts');
+  } catch (err) {
+    if (err && (err.code === 'ERR_UNKNOWN_FILE_EXTENSION' || err.code === 'ERR_UNSUPPORTED_DIR_IMPORT')) {
+      const ts = (await import('typescript')).default;
+      const fs = await import('node:fs');
+      const fixturesPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../src/data/fixtures.ts');
+      const code = fs.readFileSync(fixturesPath, 'utf8');
+      const js = ts.transpileModule(code, { compilerOptions: { module: ts.ModuleKind.ESNext } }).outputText;
+      return await import('data:text/javascript;base64,' + Buffer.from(js).toString('base64'));
+    }
+    throw err;
+  }
+}
+
+const { INVESTMENTS_FIXTURE, PROJECTS_FIXTURE } = await loadFixtures();
 
 const outDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public/docs');
 mkdirSync(outDir, { recursive: true });

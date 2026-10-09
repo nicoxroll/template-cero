@@ -1,15 +1,15 @@
-// Hero de IMAGEN fija — el modo por defecto de la portada. El de video (tour)
-// solo aparece si el equipo lo habilita en Configuración.
+﻿// Hero de IMAGEN fija â€” el modo por defecto de la portada. El de video (tour)
+// solo aparece si el equipo lo habilita en ConfiguraciÃ³n.
 //
-// Tratamiento tipográfico tomado de real5.html: título display enorme en
+// Tratamiento tipogrÃ¡fico tomado de real5.html: tÃ­tulo display enorme en
 // `mix-blend-difference`, que INVIERTE el color contra la foto. Sobre zonas
-// claras se dibuja oscuro y sobre zonas oscuras, claro — nunca hay una parte
+// claras se dibuja oscuro y sobre zonas oscuras, claro â€” nunca hay una parte
 // de la palabra que se pierda, que es lo que pasa con texto blanco plano sobre
 // una fachada con vidrio, madera y cielo en el mismo cuadro.
 //
 // Diferencia deliberada con la referencia: AURUM aplica el mismo blend al NAV,
-// y ahí "RESIDENCES / ABOUT / PRIVATE OFFICE" queda casi ilegible sobre el
-// cielo. Acá el blend es SOLO del título; el header mantiene su velo superior y
+// y ahÃ­ "RESIDENCES / ABOUT / PRIVATE OFFICE" queda casi ilegible sobre el
+// cielo. AcÃ¡ el blend es SOLO del tÃ­tulo; el header mantiene su velo superior y
 // su sombra en capas (ver Header.tsx + .hero-legible).
 
 import { useLayoutEffect, useRef } from 'react';
@@ -57,7 +57,7 @@ export function StaticHero() {
     }
   };
 
-  // Kicker, bajada y CTAs entran DESPUÉS del título, que es el que manda la
+  // Kicker, bajada y CTAs entran DESPUÃ‰S del tÃ­tulo, que es el que manda la
   // escena. useLayoutEffect + opacidad puesta por GSAP: si el script fallara,
   // el texto queda visible en vez de invisible.
   useLayoutEffect(() => {
@@ -76,7 +76,7 @@ export function StaticHero() {
     let tween: gsap.core.Tween | null = null;
     let cancelled = false;
 
-    // Igual que el título: espera a que el telón empiece a abrirse, si no toda
+    // Igual que el tÃ­tulo: espera a que el telÃ³n empiece a abrirse, si no toda
     // la entrada del hero pasa tapada. Ver src/lib/pageIntro.ts.
     void heroReady.then(() => {
       if (cancelled) return;
@@ -107,7 +107,7 @@ export function StaticHero() {
       {(isEditing) => (
         <section
           ref={sectionRef}
-          aria-label="Todo comienza en Punto Cero"
+          aria-label="Todo comienza en Template Cero"
           className="relative h-screen w-full overflow-hidden bg-ink-fixed"
         >
           {/* Input oculto para cambiar foto del hero */}
@@ -129,24 +129,24 @@ export function StaticHero() {
             </button>
           )}
 
-          {/* -inset-y-[14%]: la capa es más alta que el hero para que el recorrido
+          {/* -inset-y-[14%]: la capa es mÃ¡s alta que el hero para que el recorrido
               del parallax no descubra el fondo por arriba ni por abajo. */}
           <div
             ref={photoRef}
             className="absolute -inset-y-[14%] inset-x-0 bg-cover bg-center transition-all duration-500"
             style={{ backgroundImage: `url(${heroData.photo})` }}
           />
-          {/* Velo suave y no el gradiente fuerte de antes: el título ya se defiende
+          {/* Velo suave y no el gradiente fuerte de antes: el tÃ­tulo ya se defiende
               solo con el blend, y apagar la foto era desperdiciarla. Alcanza para
-              que la bajada y los CTAs —que no llevan blend— pasen contraste. */}
+              que la bajada y los CTAs â€”que no llevan blendâ€” pasen contraste. */}
           <div
             aria-hidden
             className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/65"
           />
 
           {/* Sin z-index ni transform en este contenedor: cualquiera de los dos
-              crearía un contexto de apilamiento que AÍSLA el mix-blend-difference
-              del título y lo dejaría sin nada contra qué invertir. */}
+              crearÃ­a un contexto de apilamiento que AÃSLA el mix-blend-difference
+              del tÃ­tulo y lo dejarÃ­a sin nada contra quÃ© invertir. */}
           <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center">
             <EditableText
               as="p"
@@ -157,7 +157,7 @@ export function StaticHero() {
             />
 
             {/* El blend va en un wrapper propio: aplicarlo al <h1> junto con las
-                máscaras de SplitReveal mezclaba las dos cosas y el resultado era
+                mÃ¡scaras de SplitReveal mezclaba las dos cosas y el resultado era
                 impredecible entre navegadores. */}
             <div className="mix-blend-difference">
               {isEditing ? (
@@ -191,7 +191,7 @@ export function StaticHero() {
             {isEditing ? (
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4 text-xs font-mono">
                 <div className="flex items-center gap-2 bg-black/80 border border-brand-500/60 px-3.5 py-2 rounded">
-                  <span className="text-brand-300 font-bold uppercase text-[10px]">Botón 1:</span>
+                  <span className="text-brand-300 font-bold uppercase text-[10px]">BotÃ³n 1:</span>
                   <EditableText
                     value={heroData.ctaPrimary}
                     isEditing={isEditing}
@@ -200,7 +200,7 @@ export function StaticHero() {
                   />
                 </div>
                 <div className="flex items-center gap-2 bg-black/80 border border-brand-500/60 px-3.5 py-2 rounded">
-                  <span className="text-brand-300 font-bold uppercase text-[10px]">Botón 2:</span>
+                  <span className="text-brand-300 font-bold uppercase text-[10px]">BotÃ³n 2:</span>
                   <EditableText
                     value={heroData.ctaSecondary}
                     isEditing={isEditing}

@@ -11,6 +11,8 @@
 import type {
   AdminUser,
   AporteEtapa,
+  BlogPost,
+  BlogPostAuthor,
   DocumentRef,
   FaqItem,
   Fiduciario,
@@ -24,6 +26,7 @@ import type {
   ProjectStage,
   Service,
   TeamMember,
+  Testimonial,
   TipoEstructuraFideicomiso,
 } from './types';
 
@@ -153,6 +156,40 @@ export interface PageConfigRow {
   disclaimer_datos_personales: string;
   lead_notification_webhook?: string | null;
   lead_notification_email?: string | null;
+  telegram_bot_token?: string | null;
+  telegram_chat_id?: string | null;
+}
+
+export interface BlogPostRow {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  cover_image: string;
+  category: string;
+  tags: string[];
+  author: BlogPostAuthor;
+  read_time_minutes: number;
+  published: boolean;
+  published_at: string;
+  featured: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface TestimonialRow {
+  id: string;
+  client_name: string;
+  role: string;
+  company: string;
+  avatar: string;
+  content: string;
+  rating: number;
+  featured: boolean;
+  published: boolean;
+  created_at: string;
+  updated_at?: string;
 }
 
 /* ----------------------------------------------------------- Fila → dominio */
@@ -288,6 +325,42 @@ export function toPageConfig(row: PageConfigRow): PageConfig {
     zonasCobertura: row.zonas_cobertura ?? [],
     leadNotificationWebhook: row.lead_notification_webhook ?? undefined,
     leadNotificationEmail: row.lead_notification_email ?? undefined,
+    telegramBotToken: row.telegram_bot_token ?? undefined,
+    telegramChatId: row.telegram_chat_id ?? undefined,
+  };
+}
+
+export function toBlogPost(row: BlogPostRow): BlogPost {
+  return {
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    excerpt: row.excerpt,
+    content: row.content,
+    coverImage: row.cover_image,
+    category: row.category,
+    tags: Array.isArray(row.tags) ? row.tags : [],
+    author: row.author,
+    readTimeMinutes: row.read_time_minutes ?? 4,
+    published: row.published,
+    publishedAt: row.published_at,
+    featured: row.featured,
+    updatedAt: row.updated_at,
+  };
+}
+
+export function toTestimonial(row: TestimonialRow): Testimonial {
+  return {
+    id: row.id,
+    clientName: row.client_name,
+    role: row.role,
+    company: row.company,
+    avatar: row.avatar,
+    content: row.content,
+    rating: row.rating ?? 5,
+    featured: row.featured,
+    published: row.published,
+    createdAt: row.created_at,
   };
 }
 
@@ -403,6 +476,73 @@ export function fromPageConfigPatch(patch: Partial<PageConfig>): Record<string, 
   if (patch.leadNotificationEmail !== undefined) {
     row.lead_notification_email = patch.leadNotificationEmail;
   }
+  if (patch.telegramBotToken !== undefined) {
+    row.telegram_bot_token = patch.telegramBotToken;
+  }
+  if (patch.telegramChatId !== undefined) {
+    row.telegram_chat_id = patch.telegramChatId;
+  }
   return row;
 }
+
+export function fromBlogPost(p: Omit<BlogPost, 'id' | 'updatedAt'>): Record<string, unknown> {
+  return {
+    slug: p.slug,
+    title: p.title,
+    excerpt: p.excerpt,
+    content: p.content,
+    cover_image: p.coverImage,
+    category: p.category,
+    tags: p.tags,
+    author: p.author,
+    read_time_minutes: p.readTimeMinutes,
+    published: p.published,
+    published_at: p.publishedAt,
+    featured: p.featured,
+  };
+}
+
+export function fromBlogPostPatch(patch: Partial<BlogPost>): Record<string, unknown> {
+  const row: Record<string, unknown> = {};
+  if (patch.slug !== undefined) row.slug = patch.slug;
+  if (patch.title !== undefined) row.title = patch.title;
+  if (patch.excerpt !== undefined) row.excerpt = patch.excerpt;
+  if (patch.content !== undefined) row.content = patch.content;
+  if (patch.coverImage !== undefined) row.cover_image = patch.coverImage;
+  if (patch.category !== undefined) row.category = patch.category;
+  if (patch.tags !== undefined) row.tags = patch.tags;
+  if (patch.author !== undefined) row.author = patch.author;
+  if (patch.readTimeMinutes !== undefined) row.read_time_minutes = patch.readTimeMinutes;
+  if (patch.published !== undefined) row.published = patch.published;
+  if (patch.publishedAt !== undefined) row.published_at = patch.publishedAt;
+  if (patch.featured !== undefined) row.featured = patch.featured;
+  return row;
+}
+
+export function fromTestimonial(t: Omit<Testimonial, 'id' | 'createdAt'>): Record<string, unknown> {
+  return {
+    client_name: t.clientName,
+    role: t.role,
+    company: t.company,
+    avatar: t.avatar,
+    content: t.content,
+    rating: t.rating,
+    featured: t.featured,
+    published: t.published,
+  };
+}
+
+export function fromTestimonialPatch(patch: Partial<Testimonial>): Record<string, unknown> {
+  const row: Record<string, unknown> = {};
+  if (patch.clientName !== undefined) row.client_name = patch.clientName;
+  if (patch.role !== undefined) row.role = patch.role;
+  if (patch.company !== undefined) row.company = patch.company;
+  if (patch.avatar !== undefined) row.avatar = patch.avatar;
+  if (patch.content !== undefined) row.content = patch.content;
+  if (patch.rating !== undefined) row.rating = patch.rating;
+  if (patch.featured !== undefined) row.featured = patch.featured;
+  if (patch.published !== undefined) row.published = patch.published;
+  return row;
+}
+
 

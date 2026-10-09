@@ -1,7 +1,7 @@
 {
-  "name": "Punto Cero Desarrollos",
-  "short_name": "Punto Cero",
-  "description": "Transformamos ideas en proyectos de valor. Soluciones integrales en desarrollo inmobiliario, arquitectura, construcción e inversiones.",
+  "name": "Template Cero",
+  "short_name": "Template Cero",
+  "description": "Plantilla web corporativa modular y de alto rendimiento construida con React 19, Tailwind CSS v4, GSAP y arquitectura de datos resiliente.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#091711",

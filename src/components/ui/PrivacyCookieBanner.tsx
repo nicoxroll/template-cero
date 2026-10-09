@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Shield, X } from 'lucide-react';
 import { Link } from 'react-router';
 
-const STORAGE_KEY = 'puntocero:privacy-consent:v1';
+const STORAGE_KEY = 'templatecero:privacy-consent:v1';
 
 export default function PrivacyCookieBanner() {
   const [visible, setVisible] = useState(false);

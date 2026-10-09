@@ -418,31 +418,31 @@ export const TEAM_FIXTURE: TeamMember[] = [
     name: 'Arq. Julieta Sansone',
     role: 'Directora de diseño',
     photo: px(36646353, 800),
-    bio: 'Arquitecta UTDT. Lidera el estudio de diseño de Punto Cero con foco en arquitectura de líneas puras y eficiencia.',
+    bio: 'Arquitecta UTDT. Lidera el estudio de diseño con foco en arquitectura de líneas puras y eficiencia.',
   },
 ];
 
 export const CONFIG_FIXTURE: PageConfig = {
   heroScrubEnabled: false,
-  contactEmail: 'contacto@puntocerodesarrollos.com.ar',
-  contactPhone: '+54 11 5555-0123',
-  whatsappNumber: '5491155550123',
-  address: 'Av. del Libertador 5252, Piso 3, Vicente López, Buenos Aires',
+  contactEmail: 'contacto@templatecero.com',
+  contactPhone: '+54 11 1234-5678',
+  whatsappNumber: '5491112345678',
+  address: 'Av. del Libertador 1234, Piso 10, Buenos Aires',
   officeCoords: { lat: -34.5271, lng: -58.4795 },
   metrics: {
     years: 18,
     m2: 185000,
     projects: 24,
   },
-  legalName: 'Punto Cero Desarrollos S.A.',
-  cuit: '30-71845632-1',
+  legalName: 'Template Cero S.A.',
+  cuit: '30-71234567-8',
   matricula: 'Mat. CUCICBA 6042 / CMCPSI 4318',
-  domicilioLegal: 'Av. del Libertador 5252, Piso 3, Vicente López, Buenos Aires, Argentina',
+  domicilioLegal: 'Av. del Libertador 1234, Piso 10, Buenos Aires, Argentina',
   disclaimers: {
     ofertaPublica:
-      'Las oportunidades de inversión presentadas en este sitio no constituyen oferta pública de valores negociables en los términos de la Ley N.º 26.831 y no se encuentran registradas ante la Comisión Nacional de Valores (CNV). Están dirigidas exclusivamente a inversores que las reciban por contacto directo con Punto Cero Desarrollos.',
+      'Las oportunidades de inversión presentadas en este sitio no constituyen oferta pública de valores negociables en los términos de la Ley N.º 26.831 y no se encuentran registradas ante la Comisión Nacional de Valores (CNV). Están dirigidas exclusivamente a inversores que las reciban por contacto directo con Template Cero.',
     datosPersonales:
-      'Los datos personales ingresados en este sitio son tratados conforme a la Ley N.º 25.326 de Protección de los Datos Personales. El titular puede ejercer sus derechos de acceso, rectificación y supresión dirigiéndose a contacto@puntocerodesarrollos.com.ar.',
+      'Los datos personales ingresados en este sitio son tratados conforme a la Ley N.º 25.326 de Protección de los Datos Personales. El titular puede ejercer sus derechos de acceso, rectificación y supresión dirigiéndose a contacto@templatecero.com.',
   },
   horarioAtencion: 'Lunes a viernes de 9 a 18 h',
   zonasCobertura: ['CABA', 'GBA Norte', 'Pilar', 'Tigre'],

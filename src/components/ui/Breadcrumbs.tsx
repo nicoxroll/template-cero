@@ -27,7 +27,7 @@ export default function Breadcrumbs({ items, className = '', dark = false }: Bre
       position: index + 1,
       name: item.label,
       item: item.to
-        ? `https://www.puntocerodesarrollos.com.ar${item.to}`
+        ? `${typeof window !== 'undefined' ? window.location.origin : ''}${item.to}`
         : undefined,
     })),
   };

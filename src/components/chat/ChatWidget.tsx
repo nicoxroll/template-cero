@@ -235,8 +235,8 @@ export default function ChatWidget() {
                 <LogoMark tone="current" className="h-5 w-5" />
               </div>
               <div>
-                <span className="block text-xs font-light tracking-[0.25em] text-white">
-                  PUNTO CERO
+                <span className="block text-xs font-light tracking-[0.25em] text-white uppercase">
+                  {siteConfig.name}
                 </span>
                 <span className="flex items-center gap-1.5 text-[10px] font-medium tracking-widest text-brand-300">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -316,7 +316,7 @@ export default function ChatWidget() {
                   <Bot size={12} />
                 </div>
                 <div className="border border-line bg-paper px-3 py-2 text-xs font-light text-ink-soft shadow-xs flex items-center gap-1">
-                  <span>Punto Cero está escribiendo</span>
+                  <span>{siteConfig.name} está escribiendo</span>
                   <span className="animate-bounce">.</span>
                   <span className="animate-bounce [animation-delay:0.2s]">.</span>
                   <span className="animate-bounce [animation-delay:0.4s]">.</span>

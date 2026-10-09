@@ -118,11 +118,11 @@ export default function CalculadoraInversion({
     [moneda],
   );
 
-  // URL WhatsApp con mensaje pre-armado
   const whatsappUrl = useMemo(() => {
     const phone = config?.whatsappNumber || '5491112345678';
+    const company = config?.legalName || 'Template Cero';
     const projectMention = initialProjectName ? ` en el proyecto ${initialProjectName}` : '';
-    const text = `Hola Punto Cero Desarrollos, utilicé el simulador de inversión en la web${projectMention}. Me interesa participar con un aporte de ${formatMoney(montoActual)}, con anticipo del ${anticipoPct}% (${formatMoney(calculations.anticipoMonto)}) y ${plazoMeses} cuotas de aprox. ${formatMoney(calculations.cuotaMensualEstimada)} ${moneda === 'ARS' ? '(ajuste CAC)' : 'fijas USD'}. Quisiera coordinar una reunión y recibir la corrida financiera detallada.`;
+    const text = `Hola ${company}, utilicé el simulador de inversión en la web${projectMention}. Me interesa participar con un aporte de ${formatMoney(montoActual)}, con anticipo del ${anticipoPct}% (${formatMoney(calculations.anticipoMonto)}) y ${plazoMeses} cuotas de aprox. ${formatMoney(calculations.cuotaMensualEstimada)} ${moneda === 'ARS' ? '(ajuste CAC)' : 'fijas USD'}. Quisiera coordinar una reunión y recibir la corrida financiera detallada.`;
     return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
   }, [config, initialProjectName, montoActual, anticipoPct, plazoMeses, calculations, formatMoney, moneda]);
 

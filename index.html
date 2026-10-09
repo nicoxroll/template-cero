@@ -95,6 +95,15 @@
           document.documentElement.setAttribute('data-mode', mode);
         } catch (e) {}
       })();
+      // Anti-flash del preset de color de la marca
+      (function () {
+        try {
+          var preset = localStorage.getItem('tc-theme-preset');
+          if (preset && preset !== 'emerald') {
+            document.documentElement.setAttribute('data-theme-preset', preset);
+          }
+        } catch (e) {}
+      })();
     </script>
     <style>
       /* Telón de entrada (INTRO-01) — el isotipo se dibuja trazo por trazo y
@@ -214,20 +223,20 @@
       {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "Punto Cero Desarrollos",
-        "url": "https://www.puntocerodesarrollos.com.ar/",
-        "logo": "https://www.puntocerodesarrollos.com.ar/favicon.svg",
-        "description": "Soluciones integrales en desarrollo inmobiliario: arquitectura, construcción, dirección de obra, infraestructura, financiamiento e inversiones.",
-        "email": "contacto@puntocerodesarrollos.com.ar",
-        "telephone": "+54 11 5555-0123",
+        "name": "Template Cero",
+        "url": "https://template-cero.vercel.app/",
+        "logo": "https://template-cero.vercel.app/favicon.svg",
+        "description": "Plantilla web corporativa modular y de alto rendimiento para desarrollos, arquitectura y proyectos premium.",
+        "email": "contacto@templatecero.com",
+        "telephone": "+54 11 1234-5678",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "Av. del Libertador 5252, Piso 3",
-          "addressLocality": "Vicente López",
+          "streetAddress": "Av. del Libertador 1234, Piso 10",
+          "addressLocality": "Buenos Aires",
           "addressRegion": "Buenos Aires",
           "addressCountry": "AR"
         },
-        "areaServed": "Argentina"
+        "areaServed": "Global"
       }
     </script>
   </head>

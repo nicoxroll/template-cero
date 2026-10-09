@@ -1,7 +1,7 @@
-// Contacto (CONT-01, CONT-03, CONT-04, SEO-02): formulario RHF+zod → leadRepo,
+﻿// Contacto (CONT-01, CONT-03, CONT-04, SEO-02): formulario RHF+zod â†’ leadRepo,
 // datos institucionales de configRepo, mapa de oficinas y aviso de privacidad
 // Ley 25.326.
-// Soporta edición en vivo para administradores.
+// Soporta ediciÃ³n en vivo para administradores.
 
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
@@ -26,7 +26,7 @@ export default function Contacto() {
   usePageMeta({
     title: 'Contacto',
     description:
-      'Comuníquese con el equipo de Punto Cero Desarrollos. Asesoramiento sobre desarrollos, inversiones y oportunidades inmobiliarias.',
+      'ComunÃ­quese con el equipo de Template Cero. Asesoramiento sobre desarrollos, inversiones y oportunidades inmobiliarias.',
   });
 
   const [config, setConfig] = useState<PageConfig | null>(null);
@@ -45,7 +45,7 @@ export default function Contacto() {
     cancel: handleCancelHero,
   } = useLiveSection({
     kicker: { key: 'contacto.hero.kicker', default: 'Contacto' },
-    title: { key: 'contacto.hero.title', default: 'Hablemos de su\npróximo proyecto' },
+    title: { key: 'contacto.hero.title', default: 'Hablemos de su\nprÃ³ximo proyecto' },
     image: { key: 'contacto.hero.image', default: IMAGERY.oficinas },
   });
 
@@ -56,12 +56,12 @@ export default function Contacto() {
     save: handleSaveContent,
     cancel: handleCancelContent,
   } = useLiveSection({
-    kicker: { key: 'contacto.page.kicker', default: 'Escríbanos' },
+    kicker: { key: 'contacto.page.kicker', default: 'EscrÃ­banos' },
     title: { key: 'contacto.page.title', default: 'Estamos para ayudarlo' },
     intro: {
       key: 'contacto.page.intro',
       default:
-        'Complete el formulario y un miembro de nuestro equipo se pondrá en contacto a la brevedad.',
+        'Complete el formulario y un miembro de nuestro equipo se pondrÃ¡ en contacto a la brevedad.',
     },
     asideTitle: { key: 'contacto.page.aside_title', default: 'Datos de contacto' },
     officesTitle: { key: 'contacto.page.offices_title', default: 'Nuestras oficinas' },
@@ -193,13 +193,13 @@ export default function Contacto() {
                 {isEditing && (
                   <div className="mb-8 p-4 bg-brand-500/10 border border-brand-500/30 rounded flex items-center justify-between text-xs">
                     <span className="text-ink-soft">
-                      Para editar teléfonos, WhatsApp, dirección postal o coordenadas del mapa:
+                      Para editar telÃ©fonos, WhatsApp, direcciÃ³n postal o coordenadas del mapa:
                     </span>
                     <Link
                       to="/admin/configuracion"
                       className="inline-flex items-center gap-1.5 font-bold uppercase text-brand-600 hover:text-brand-700"
                     >
-                      Configuración de Contacto <ExternalLink className="w-3.5 h-3.5" />
+                      ConfiguraciÃ³n de Contacto <ExternalLink className="w-3.5 h-3.5" />
                     </Link>
                   </div>
                 )}

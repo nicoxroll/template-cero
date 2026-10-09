@@ -1,14 +1,14 @@
-import { useRef, useState, type FC, type MouseEvent, type ReactNode, type CSSProperties, type ChangeEvent } from 'react';
+﻿import { useRef, useState, type FC, type MouseEvent, type ReactNode, type CSSProperties, type ChangeEvent } from 'react';
 import { Edit3, Check, X, Upload, ImageIcon, Loader2 } from 'lucide-react';
 import { useLiveCMS } from '../../lib/LiveCMSContext';
 import { uploadImage } from '../../data/storage';
 
-// ── Botón Flotante de Edición de Sección ─────────────────────────────────────
+// â”€â”€ BotÃ³n Flotante de EdiciÃ³n de SecciÃ³n â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export const EditPencilButton: FC<{
   onClick: (e: MouseEvent) => void;
   position?: string;
   label?: string;
-}> = ({ onClick, position = 'top-4 right-4', label = 'Editar Sección' }) => {
+}> = ({ onClick, position = 'top-4 right-4', label = 'Editar SecciÃ³n' }) => {
   const { isEditMode } = useLiveCMS();
   if (!isEditMode) return null;
 
@@ -33,7 +33,7 @@ export const EditPencilButton: FC<{
   );
 };
 
-// ── Barra Flotante Inferior de Guardado y Descarte ────────────────────────────
+// â”€â”€ Barra Flotante Inferior de Guardado y Descarte â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export const InlineEditBar: FC<{
   onSave: () => void;
   onCancel: () => void;
@@ -42,7 +42,7 @@ export const InlineEditBar: FC<{
 }> = ({ onSave, onCancel, isSaving, sectionLabel }) => {
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] flex items-center gap-4 bg-ink-fixed/95 text-white rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.8)] px-6 py-3.5 border border-brand-500/40 backdrop-blur-2xl animate-[fade-in_0.3s_ease-out] font-sans">
-      {/* Esquinas arquitectónicas */}
+      {/* Esquinas arquitectÃ³nicas */}
       <div className="absolute -top-1 -left-1 w-2.5 h-2.5 bg-brand-400" />
       <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-brand-400" />
       <div className="absolute -bottom-1 -left-1 w-2.5 h-2.5 bg-brand-400" />
@@ -50,10 +50,10 @@ export const InlineEditBar: FC<{
 
       <div className="flex flex-col items-start pr-4 border-r border-white/15">
         <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-brand-400 font-mono">
-          PUNTO CERO // CMS LIVE
+          TEMPLATE CERO // CMS LIVE
         </span>
         <span className="text-xs font-medium uppercase tracking-wider text-white">
-          {sectionLabel || 'EDITANDO SECCIÓN'}
+          {sectionLabel || 'EDITANDO SECCIÃ“N'}
         </span>
       </div>
 
@@ -82,7 +82,7 @@ export const InlineEditBar: FC<{
   );
 };
 
-// ── Wrapper Editable de Sección ──────────────────────────────────────────────
+// â”€â”€ Wrapper Editable de SecciÃ³n â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export const EditableSectionWrapper: FC<{
   sectionId: string;
   sectionLabel: string;
@@ -109,11 +109,11 @@ export const EditableSectionWrapper: FC<{
     setIsSaving(true);
     try {
       await onSave();
-      // Pequeña pausa para transición suave
+      // PequeÃ±a pausa para transiciÃ³n suave
       await new Promise((res) => setTimeout(res, 500));
       stopEditingSection();
     } catch (err) {
-      console.error('Error al guardar sección:', err);
+      console.error('Error al guardar secciÃ³n:', err);
     } finally {
       setIsSaving(false);
     }
@@ -143,7 +143,7 @@ export const EditableSectionWrapper: FC<{
           </div>
           <div className="text-center space-y-2 max-w-sm px-4">
             <span className="text-[10px] uppercase font-bold tracking-[0.3em] text-brand-400 block font-mono">
-              PUNTO CERO // CMS LIVE
+              TEMPLATE CERO // CMS LIVE
             </span>
             <h3 className="text-xl font-light uppercase text-white tracking-wide">
               GUARDANDO CAMBIOS...
@@ -155,7 +155,7 @@ export const EditableSectionWrapper: FC<{
         </div>
       )}
 
-      {/* Esquinas arquitectónicas cuando la sección está activa */}
+      {/* Esquinas arquitectÃ³nicas cuando la secciÃ³n estÃ¡ activa */}
       {isEditingThisSection && (
         <>
           <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-brand-400 pointer-events-none" />
@@ -165,7 +165,7 @@ export const EditableSectionWrapper: FC<{
         </>
       )}
 
-      {/* Botón de edición cuando el modo está activo pero no en esta sección */}
+      {/* BotÃ³n de ediciÃ³n cuando el modo estÃ¡ activo pero no en esta secciÃ³n */}
       {isEditMode && !isEditingThisSection && (
         <EditPencilButton
           onClick={() => startEditingSection(sectionId)}
@@ -174,10 +174,10 @@ export const EditableSectionWrapper: FC<{
         />
       )}
 
-      {/* Renderizado de los hijos pasando si esta sección está en edición */}
+      {/* Renderizado de los hijos pasando si esta secciÃ³n estÃ¡ en ediciÃ³n */}
       {children(isEditingThisSection)}
 
-      {/* Barra flotante inferior cuando esta sección está activa */}
+      {/* Barra flotante inferior cuando esta secciÃ³n estÃ¡ activa */}
       {isEditingThisSection && (
         <InlineEditBar
           sectionLabel={sectionLabel}
@@ -190,7 +190,7 @@ export const EditableSectionWrapper: FC<{
   );
 };
 
-// ── Componente de Texto Editable In-situ ──────────────────────────────────────
+// â”€â”€ Componente de Texto Editable In-situ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export const EditableText: FC<{
   value: string;
   isEditing: boolean;
@@ -231,7 +231,7 @@ export const EditableText: FC<{
   );
 };
 
-// ── Componente de Imagen Editable In-situ ─────────────────────────────────────
+// â”€â”€ Componente de Imagen Editable In-situ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export const EditableImage: FC<{
   src?: string;
   value?: string;

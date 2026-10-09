@@ -25,6 +25,7 @@ import {
 } from './localStorageRepo';
 import {
   SupabaseAdminUserRepository,
+  SupabaseBlogPostRepository,
   SupabaseConfigRepository,
   SupabaseFaqRepository,
   SupabaseInvestmentRepository,
@@ -33,6 +34,7 @@ import {
   SupabaseProjectRepository,
   SupabaseServiceRepository,
   SupabaseTeamRepository,
+  SupabaseTestimonialRepository,
 } from './supabaseRepo';
 import { SUPABASE_READY } from './supabaseClient';
 import { withLocalFallback } from './resilientRepo';
@@ -129,8 +131,17 @@ export const adminUserRepo: AdminUserRepository = mount<AdminUserRepository>(
   'adminUserRepo',
 );
 
-export const blogRepo: BlogPostRepository = new LocalStorageBlogPostRepository();
-export const testimonialRepo: TestimonialRepository = new LocalStorageTestimonialRepository();
+export const blogRepo: BlogPostRepository = mount<BlogPostRepository>(
+  () => new SupabaseBlogPostRepository(),
+  () => new LocalStorageBlogPostRepository(),
+  'blogRepo',
+);
+
+export const testimonialRepo: TestimonialRepository = mount<TestimonialRepository>(
+  () => new SupabaseTestimonialRepository(),
+  () => new LocalStorageTestimonialRepository(),
+  'testimonialRepo',
+);
 
 export { siteContentRepo, SITE_CONTENT_UPDATED_EVENT } from './siteContentRepo';
 export type { SiteContentRepository } from './siteContentRepo';

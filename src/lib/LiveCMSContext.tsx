@@ -43,7 +43,7 @@ export function LiveCMSProvider({ children }: { children: ReactNode }) {
     });
 
     const onStorage = (e: StorageEvent) => {
-      if (e.key === 'puntocero:v1:site-content') {
+      if (e.key === 'templatecero:v1:site-content') {
         setContent(siteContentRepo.getSync());
       }
       checkAuth();

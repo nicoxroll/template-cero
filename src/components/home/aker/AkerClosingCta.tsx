@@ -43,7 +43,7 @@ export default function AkerClosingCta() {
           <div>
             <AkerOverline className="mb-3">Inversiones</AkerOverline>
             <h3 className="max-w-md text-[clamp(36px,3.5vw,48px)] leading-[1.1] font-light tracking-[-0.025em] text-aker-ink">
-              Invertí con Punto Cero
+              Invertí con Template Cero
             </h3>
           </div>
 

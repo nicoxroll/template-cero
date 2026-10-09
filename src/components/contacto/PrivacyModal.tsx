@@ -35,7 +35,7 @@ export default function PrivacyModal({ onClose }: { onClose: () => void }) {
         <div className="mt-6 space-y-4 text-base font-light leading-relaxed text-ink-soft">
           <p>
             Los datos personales ingresados en este formulario (nombre, email, teléfono y mensaje)
-            serán utilizados por Punto Cero Desarrollos con el único fin de responder su consulta y
+            serán utilizados por Template Cero con el único fin de responder su consulta y
             mantener contacto comercial relacionado con nuestros proyectos y servicios.
           </p>
           <p>

@@ -7,6 +7,7 @@ import SkinToggle from '../ui/SkinToggle';
 import LogoMark from '../ui/LogoMark';
 import { useHeroScrubEnabled } from '../../lib/useHeroScrubEnabled';
 
+import { useLiveCMS } from '../../lib/LiveCMSContext';
 import { siteConfig } from '../../config/site';
 
 const NAV_ITEMS = siteConfig.navigation.map((item) => ({
@@ -22,6 +23,9 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { pathname } = useLocation();
+  const { getContent } = useLiveCMS();
+  const brandName = getContent('site.name', siteConfig.name);
+  const brandShortName = getContent('site.shortName', siteConfig.shortName);
   const isHome = pathname === '/';
   // El toggle de hero solo tiene sentido en la home, y solo si el tour está
   // habilitado en Configuración: apagado, no hay nada que alternar
@@ -32,9 +36,6 @@ export default function Header() {
   const esAdmin = isAuthenticated();
   const showHeroToggle = isHome && scrubEnabled;
 
-  // Rutas que abren con un hero a sangre: ahí el header arranca transparente y
-  // se vuelve sólido al scrollear. Es una lista explícita y no un patrón porque
-  // las páginas de detalle pueden renderizar un 404 sin hero, y un header
   // Rutas que abren con un hero a sangre: ahí el header arranca transparente y
   // se vuelve sólido al scrollear.
   const hasFullBleedHero =
@@ -101,9 +102,9 @@ export default function Header() {
             gradientId="pc-logo-header"
           />
           <span className="flex flex-col">
-            <span className="text-lg font-light tracking-[0.35em] uppercase">{siteConfig.name}</span>
+            <span className="text-lg font-light tracking-[0.35em] uppercase">{brandName}</span>
             <span className={`mt-1 text-[0.6rem] font-medium tracking-[0.5em] uppercase ${brandAccent}`}>
-              {siteConfig.shortName}
+              {brandShortName}
             </span>
           </span>
         </Link>

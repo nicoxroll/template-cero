@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 
-const SITE_NAME = 'Punto Cero Desarrollos';
+import { siteConfig } from '../config/site';
+const SITE_NAME = siteConfig.name;
 const DEFAULT_DESCRIPTION =
-  'Transformamos ideas en proyectos de valor. Soluciones integrales en desarrollo inmobiliario, arquitectura, construcción, infraestructura, financiamiento e inversiones.';
+  'Transformamos ideas en proyectos de alto valor y escala. Soluciones integrales en desarrollo inmobiliario, arquitectura, construcciÃ³n, infraestructura, financiamiento e inversiones.';
 
 interface PageMeta {
   title: string;
@@ -21,7 +22,7 @@ function setMeta(attr: 'name' | 'property', key: string, content: string) {
 }
 
 /**
- * Título + meta description + OG por página. Llamar en el top-level de cada page component.
+ * TÃ­tulo + meta description + OG por pÃ¡gina. Llamar en el top-level de cada page component.
  * `title` va sin sufijo: el hook agrega " | Punto Cero Desarrollos".
  */
 export function usePageMeta({ title, description, ogImage }: PageMeta) {
@@ -40,9 +41,9 @@ export function usePageMeta({ title, description, ogImage }: PageMeta) {
     setMeta('name', 'twitter:description', desc);
     if (ogImage) setMeta('name', 'twitter:image', ogImage);
 
-    // Canonical y og:url siguen a la navegación del SPA. El crawler ve el HTML
+    // Canonical y og:url siguen a la navegaciÃ³n del SPA. El crawler ve el HTML
     // prerenderizado (que ya los trae bien), pero un visitante que comparte la
-    // URL desde la barra después de navegar dejaba la canonical de la página
+    // URL desde la barra despuÃ©s de navegar dejaba la canonical de la pÃ¡gina
     // anterior.
     const url = window.location.origin + window.location.pathname;
     setMeta('property', 'og:url', url);

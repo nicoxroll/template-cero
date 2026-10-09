@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -15,14 +15,14 @@ import { EditableSectionWrapper, EditableText } from '../ui/InlineEditOverlay';
 import { uploadImage } from '../../data/storage';
 
 const schema = z.object({
-  email: z.string().email('Ingrese un email válido'),
-  consent: z.boolean().refine((v) => v === true, 'Debe aceptar los términos para continuar'),
+  email: z.string().email('Ingrese un email vÃ¡lido'),
+  consent: z.boolean().refine((v) => v === true, 'Debe aceptar los tÃ©rminos para continuar'),
 });
 
 type FormValues = z.infer<typeof schema>;
 
 interface NewsletterSignupProps {
-  /** Origen para analytics: la sección se monta en /inversiones y en la home. */
+  /** Origen para analytics: la secciÃ³n se monta en /inversiones y en la home. */
   location?: string;
 }
 
@@ -45,7 +45,7 @@ export default function NewsletterSignup({ location = 'inversiones' }: Newslette
     description: {
       key: 'newsletter.description',
       default:
-        'Deje su email y reciba cada nueva oportunidad de inversión antes de su publicación general.',
+        'Deje su email y reciba cada nueva oportunidad de inversiÃ³n antes de su publicaciÃ³n general.',
     },
     photo: { key: 'newsletter.photo', default: IMAGERY.newsletter },
     sectionVisible: { key: 'newsletter.visible', default: 'true' },
@@ -138,11 +138,11 @@ export default function NewsletterSignup({ location = 'inversiones' }: Newslette
                   <div className="flex items-center gap-2">
                     {isVisible ? (
                       <span className="inline-flex items-center gap-1.5 font-medium text-emerald-400">
-                        <Eye className="w-4 h-4" /> La sección está <strong>visible</strong> para los visitantes
+                        <Eye className="w-4 h-4" /> La secciÃ³n estÃ¡ <strong>visible</strong> para los visitantes
                       </span>
                     ) : (
                       <span className="inline-flex items-center gap-1.5 font-medium text-amber-400">
-                        <EyeOff className="w-4 h-4" /> La sección está <strong>oculta</strong> para los visitantes
+                        <EyeOff className="w-4 h-4" /> La secciÃ³n estÃ¡ <strong>oculta</strong> para los visitantes
                       </span>
                     )}
                   </div>
@@ -155,7 +155,7 @@ export default function NewsletterSignup({ location = 'inversiones' }: Newslette
                         : 'bg-brand-500 hover:bg-brand-600 text-white'
                     }`}
                   >
-                    {isVisible ? 'Ocultar sección' : 'Hacer visible'}
+                    {isVisible ? 'Ocultar secciÃ³n' : 'Hacer visible'}
                   </button>
                 </div>
               )}
@@ -165,10 +165,10 @@ export default function NewsletterSignup({ location = 'inversiones' }: Newslette
                 <div role="status">
                   <CheckCircle2 aria-hidden className="mx-auto h-10 w-10 text-brand-300" />
                   <h2 className="mt-6 text-3xl font-light uppercase tracking-wide md:text-4xl">
-                    Suscripción confirmada
+                    SuscripciÃ³n confirmada
                   </h2>
                   <p className="mt-4 text-base font-light leading-relaxed text-white/80">
-                    Le avisaremos por email cuando publiquemos una nueva oportunidad de inversión.
+                    Le avisaremos por email cuando publiquemos una nueva oportunidad de inversiÃ³n.
                     Sin frecuencia fija, sin promociones: solo novedades relevantes.
                   </p>
                 </div>
@@ -218,7 +218,7 @@ export default function NewsletterSignup({ location = 'inversiones' }: Newslette
                         />
                       </div>
                       <Button type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? 'Enviando…' : 'Suscribirme'}
+                        {isSubmitting ? 'Enviandoâ€¦' : 'Suscribirme'}
                       </Button>
                     </div>
                     {errors.email && (
@@ -234,9 +234,9 @@ export default function NewsletterSignup({ location = 'inversiones' }: Newslette
                         {...register('consent')}
                       />
                       <span>
-                        Acepto que Punto Cero Desarrollos utilice mi email para enviarme información
-                        sobre nuevas oportunidades de inversión, conforme a la Ley 25.326 de
-                        Protección de Datos Personales. Puedo solicitar la baja en cualquier momento.
+                        Acepto que Template Cero utilice mi email para enviarme informaciÃ³n
+                        sobre nuevas oportunidades de inversiÃ³n, conforme a la Ley 25.326 de
+                        ProtecciÃ³n de Datos Personales. Puedo solicitar la baja en cualquier momento.
                       </span>
                     </label>
                     {errors.consent && (
@@ -246,7 +246,7 @@ export default function NewsletterSignup({ location = 'inversiones' }: Newslette
                     )}
                     {submitError && (
                       <p role="alert" className="mt-4 text-sm font-light text-brand-300">
-                        No pudimos registrar su suscripción. Intente nuevamente en unos minutos.
+                        No pudimos registrar su suscripciÃ³n. Intente nuevamente en unos minutos.
                       </p>
                     )}
                   </form>
