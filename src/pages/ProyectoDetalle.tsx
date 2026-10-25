@@ -155,7 +155,7 @@ export default function ProyectoDetalle() {
       {isEditMode && (
         <div className="sticky top-20 z-40 bg-brand-900/90 text-white backdrop-blur border-b border-white/20 px-4 py-3 flex items-center justify-between text-xs sm:text-sm">
           <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="inline-block w-2 h-2 rounded-full bg-brand-300 animate-pulse" />
             <span>
               Modo Edición activo: <strong>{project.name}</strong>
             </span>

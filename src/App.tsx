@@ -116,13 +116,6 @@ function PublicLayout() {
 
   return (
     <>
-      {/* Enlace accesible para saltar directo al contenido principal (WCAG 2.1 AA) */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-brand-900 focus:text-white focus:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-400 font-medium text-xs uppercase tracking-wider"
-      >
-        Saltar al contenido principal
-      </a>
 
       <Header />
       {/* RevealFooter envuelve TODAS las páginas: el footer es único y vive

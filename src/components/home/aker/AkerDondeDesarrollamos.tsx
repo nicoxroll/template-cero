@@ -216,14 +216,14 @@ export default function AkerDondeDesarrollamos() {
                       cx={z.x}
                       cy={z.y}
                       r="4.5"
-                      fill={z.status === 'activos' ? '#3e7a5a' : '#8d8d8d'}
+                      fill={z.status === 'activos' ? 'var(--brand-accent, #3e7a5a)' : '#8d8d8d'}
                     />
                     <circle
                       cx={z.x}
                       cy={z.y}
                       r="9"
                       fill="none"
-                      stroke={z.status === 'activos' ? '#3e7a5a' : '#8d8d8d'}
+                      stroke={z.status === 'activos' ? 'var(--brand-accent, #3e7a5a)' : '#8d8d8d'}
                       strokeOpacity="0.4"
                     />
                     <text

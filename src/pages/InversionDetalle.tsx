@@ -1,5 +1,5 @@
-﻿// Detalle de oportunidad â€” INV-02 (datos completos, documentos, proyecto vinculado)
-// e INV-03 (disclaimer junto a toda cifra de retorno). Datos vÃ­a repos.
+// Detalle de oportunidad — INV-02 (datos completos, documentos, proyecto vinculado)
+// e INV-03 (disclaimer junto a toda cifra de retorno). Datos vía repos.
 
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router';
@@ -34,7 +34,7 @@ function DetailSkeleton() {
   return (
     <>
       {/* Mismo alto que el hero real: si el skeleton midiera menos, el contenido
-          saltarÃ­a hacia abajo al llegar los datos. */}
+          saltaría hacia abajo al llegar los datos. */}
       <Skeleton className="h-screen w-full" />
       <Container>
         <div className="mt-16 grid gap-12 md:mt-20 lg:grid-cols-3">
@@ -63,8 +63,8 @@ function DetailSkeleton() {
 export default function InversionDetalle() {
   const { slug } = useParams<{ slug: string }>();
   // Igual que ProyectoDetalle: el resultado viaja JUNTO al slug que lo produjo,
-  // asÃ­ "todavÃ­a no carguÃ© este slug" se deriva de comparar. Evita el reset al
-  // principio del efecto (setState sÃ­ncrono dentro del efecto) y el frame que
+  // así "todavía no cargué este slug" se deriva de comparar. Evita el reset al
+  // principio del efecto (setState síncrono dentro del efecto) y el frame que
   // mostraba los datos de la oportunidad anterior al navegar entre dos.
   const [result, setResult] = useState<{
     slug: string;
@@ -81,7 +81,7 @@ export default function InversionDetalle() {
   const { isEditMode } = useLiveCMS();
 
   usePageMeta({
-    title: investment ? investment.title : 'Oportunidad de inversiÃ³n',
+    title: investment ? investment.title : 'Oportunidad de inversión',
     description: investment?.description,
     ogImage: investment?.coverImage,
   });
@@ -92,8 +92,8 @@ export default function InversionDetalle() {
     void (async () => {
       const inv = await investmentRepo.getBySlug(currentSlug).catch(() => null);
       if (cancelled) return;
-      // El proyecto vinculado se resuelve ANTES de publicar el resultado: asÃ­
-      // la pÃ¡gina aparece completa de una vez, sin un segundo repintado que
+      // El proyecto vinculado se resuelve ANTES de publicar el resultado: así
+      // la página aparece completa de una vez, sin un segundo repintado que
       // haga saltar el bloque del proyecto.
       let proj: Project | null = null;
       if (inv) {
@@ -124,7 +124,7 @@ export default function InversionDetalle() {
 
   // Se comprueba `!result` y no `loading`: son equivalentes en runtime, pero
   // TypeScript no puede correlacionar un booleano derivado con el estado que lo
-  // origina, y sin esto `investment` no se estrecha mÃ¡s abajo.
+  // origina, y sin esto `investment` no se estrecha más abajo.
   if (!result || result.slug !== currentSlug) {
     return <main className="pt-24 pb-20 md:pt-32 md:pb-28" />;
   }
@@ -140,8 +140,8 @@ export default function InversionDetalle() {
             Oportunidad no encontrada
           </h1>
           <p className="mt-6 max-w-2xl text-base font-light leading-relaxed text-ink-soft">
-            La oportunidad que busca no existe o ya no estÃ¡ publicada. Puede ver las
-            oportunidades vigentes en la secciÃ³n de inversiones.
+            La oportunidad que busca no existe o ya no está publicada. Puede ver las
+            oportunidades vigentes en la sección de inversiones.
           </p>
           <div className="mt-10">
             <Button variant="outline" to="/inversiones">
@@ -162,9 +162,9 @@ export default function InversionDetalle() {
       {isEditMode && (
         <div className="sticky top-20 z-40 bg-brand-900/90 text-white backdrop-blur border-b border-white/20 px-4 py-3 flex items-center justify-between text-xs sm:text-sm">
           <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="inline-block w-2 h-2 rounded-full bg-brand-300 animate-pulse" />
             <span>
-              Modo EdiciÃ³n activo: <strong>{title}</strong>
+              Modo Edición activo: <strong>{title}</strong>
             </span>
           </div>
           <Link
@@ -179,10 +179,10 @@ export default function InversionDetalle() {
       )}
       <div ref={contentRef}>
         {/* Hero a pantalla completa, como el detalle de proyecto. Antes la
-            portada era una franja de 40vh DENTRO del Container, con el tÃ­tulo
-            reciÃ©n debajo: la oportunidad se presentaba con una foto del tamaÃ±o
-            de una postal y el nombre en texto oscuro sobre fondo claro. AcÃ¡ la
-            foto ocupa la pantalla y el tÃ­tulo va encima, que es el idioma del
+            portada era una franja de 40vh DENTRO del Container, con el título
+            recién debajo: la oportunidad se presentaba con una foto del tamaño
+            de una postal y el nombre en texto oscuro sobre fondo claro. Acá la
+            foto ocupa la pantalla y el título va encima, que es el idioma del
             resto del sitio. */}
         <section
           aria-label={title}
@@ -209,12 +209,12 @@ export default function InversionDetalle() {
               </Link>
               <ShareButton
                 title={title}
-                text={`${title} â€” Oportunidad de inversiÃ³n en Template Cero`}
+                text={`${title} — Oportunidad de inversión en Template Cero`}
                 dark
               />
             </div>
             <p className="mb-4 mt-8 text-xs font-medium uppercase tracking-[0.3em] text-brand-300 md:text-sm">
-              Oportunidad de inversiÃ³n Â· {INVESTMENT_STATUS_LABELS[status]}
+              Oportunidad de inversión · {INVESTMENT_STATUS_LABELS[status]}
             </p>
             <h1 className="hero-legible max-w-4xl text-4xl font-light uppercase tracking-wide text-white sm:text-5xl md:text-6xl lg:text-7xl">
               {title}
@@ -242,7 +242,7 @@ export default function InversionDetalle() {
               {docs.length > 0 && (
                 <div className="mt-14">
                   <h2 className="text-xl font-light tracking-wide text-ink md:text-2xl">
-                    DocumentaciÃ³n
+                    Documentación
                   </h2>
                   <ul className="mt-6 divide-y divide-hairline border-y border-hairline">
                     {docs.map((doc) => (
@@ -283,7 +283,7 @@ export default function InversionDetalle() {
                         </h3>
                         <p className="mt-2 flex items-center gap-2 text-sm font-light text-ink-soft">
                           <MapPin className="h-4 w-4 shrink-0 text-brand-500" aria-hidden />
-                          {project.location} Â· {PROJECT_STATUS_LABELS[project.status]}
+                          {project.location} · {PROJECT_STATUS_LABELS[project.status]}
                         </p>
                         <span className="mt-auto flex items-center gap-2 pt-4 text-sm font-medium uppercase tracking-widest text-brand-500 transition-colors duration-300 group-hover:text-brand-900 dark:group-hover:text-brand-100">
                           Ver proyecto
@@ -299,12 +299,12 @@ export default function InversionDetalle() {
             {/* Ficha lateral */}
             <aside className="h-fit border border-line bg-paper-soft p-8 lg:sticky lg:top-28">
               <h2 className="text-xs font-medium uppercase tracking-widest text-ink-soft">
-                Ficha de la inversiÃ³n
+                Ficha de la inversión
               </h2>
               <dl className="mt-6 space-y-5">
                 <div className="flex items-baseline justify-between gap-4">
                   <dt className="text-xs font-medium uppercase tracking-widest text-ink-soft">
-                    InversiÃ³n mÃ­nima
+                    Inversión mínima
                   </dt>
                   <dd className="text-lg font-medium text-ink">
                     {formatAmount(amount, currency)}
@@ -334,11 +334,11 @@ export default function InversionDetalle() {
               <ReturnDisclaimer className="mt-6 border-t border-hairline pt-6" />
               <div className="mt-8">
                 <Button to="/contacto" className="w-full">
-                  Quiero mÃ¡s informaciÃ³n
+                  Quiero más información
                 </Button>
               </div>
               <p className="mt-4 text-center text-xs font-light text-ink-soft">
-                Coordinamos una reuniÃ³n sin compromiso para presentarle el proyecto en detalle.
+                Coordinamos una reunión sin compromiso para presentarle el proyecto en detalle.
               </p>
             </aside>
           </div>
@@ -364,14 +364,14 @@ export default function InversionDetalle() {
                 Proceso transparente
               </p>
               <h2 className="text-2xl font-light uppercase tracking-wide text-ink md:text-3xl lg:text-4xl">
-                Â¿CÃ³mo funciona la inversiÃ³n?
+                ¿Cómo funciona la inversión?
               </h2>
             </div>
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {[
-                { step: '01', title: 'ElecciÃ³n de Oportunidad', text: 'Analice mÃ©tricas de retorno, plazo y proyecto vinculado con el equipo.' },
-                { step: '02', title: 'Firma de Fideicomiso', text: 'EstructuraciÃ³n jurÃ­dica transparente con protecciÃ³n total para el inversor.' },
-                { step: '03', title: 'Seguimiento de Obra', text: 'Reportes periÃ³dicos y certificados de avance de obra en tiempo real.' },
+                { step: '01', title: 'Elección de Oportunidad', text: 'Analice métricas de retorno, plazo y proyecto vinculado con el equipo.' },
+                { step: '02', title: 'Firma de Fideicomiso', text: 'Estructuración jurídica transparente con protección total para el inversor.' },
+                { step: '03', title: 'Seguimiento de Obra', text: 'Reportes periódicos y certificados de avance de obra en tiempo real.' },
                 { step: '04', title: 'Retorno de Capital', text: 'Cobro de rendimientos proyectados al finalizar la etapa acordada.' },
               ].map((item) => (
                 <div key={item.step} className="border border-hairline bg-paper p-6 transition-all duration-300 hover:border-brand-500/50">
@@ -384,7 +384,7 @@ export default function InversionDetalle() {
           </Container>
         </section>
 
-        {/* CTA final con imagen de fondo y superposiciÃ³n */}
+        {/* CTA final con imagen de fondo y superposición */}
         <section
           className="relative mt-20 overflow-hidden bg-brand-900 py-24 text-white md:mt-28 md:py-32"
         >
@@ -394,7 +394,7 @@ export default function InversionDetalle() {
             style={{ backgroundImage: `url(${coverImage || IMAGERY.wide})` }}
             aria-hidden="true"
           />
-          {/* SuperposiciÃ³n degradada verde/oscura para contraste y legibilidad absoluta */}
+          {/* Superposición degradada verde/oscura para contraste y legibilidad absoluta */}
           <div
             className="absolute inset-0 bg-gradient-to-t from-brand-900/95 via-brand-900/85 to-brand-900/90 backdrop-blur-[2px]"
             aria-hidden="true"
@@ -403,14 +403,14 @@ export default function InversionDetalle() {
           <Container className="relative z-10">
             <div className="mx-auto max-w-2xl text-center">
               <p className="mb-4 text-xs font-medium uppercase tracking-[0.3em] text-brand-300 md:text-sm">
-                PrÃ³ximo paso
+                Próximo paso
               </p>
               <h2 className="text-3xl font-light uppercase tracking-wide text-white md:text-4xl lg:text-5xl">
                 Conversemos sobre esta oportunidad
               </h2>
               <p className="mt-5 text-base font-light leading-relaxed text-white/90 md:text-lg">
-                Nuestro equipo le presenta la documentaciÃ³n completa, el cronograma de obra y el
-                esquema de participaciÃ³n, con total transparencia.
+                Nuestro equipo le presenta la documentación completa, el cronograma de obra y el
+                esquema de participación, con total transparencia.
               </p>
               <div className="mt-10">
                 <Button to="/contacto">Contactar al equipo</Button>

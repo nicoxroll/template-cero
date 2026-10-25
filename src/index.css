@@ -216,7 +216,13 @@
   --brand-700: #1f4a35;
   --brand-900: #10281d;
   --hairline: #e2eee7;
+  --ink-fixed: #101512;
   --shimmer-highlight: rgba(255, 255, 255, 0.7);
+  --map-tile-filter: sepia(1) hue-rotate(78deg) saturate(0.5) brightness(1.03);
+  --map-tile-filter-dark: sepia(1) hue-rotate(78deg) saturate(0.75) brightness(0.72) contrast(1.08);
+  --logo-grad-start: #4E7C5C;
+  --logo-grad-mid: #2C5741;
+  --logo-grad-end: #16351F;
   color-scheme: light;
 }
 
@@ -231,6 +237,12 @@
   --brand-700: #3730a3;
   --brand-900: #1e1b4b;
   --hairline: #e0e7ff;
+  --ink-fixed: #0b0f17;
+  --map-tile-filter: sepia(1) hue-rotate(175deg) saturate(0.7) brightness(1.02);
+  --map-tile-filter-dark: sepia(1) hue-rotate(175deg) saturate(0.9) brightness(0.72) contrast(1.1);
+  --logo-grad-start: #6366f1;
+  --logo-grad-mid: #4f46e5;
+  --logo-grad-end: #312e81;
 }
 
 /* Preset: Slate (Minimal / Luxury / Editorial) */
@@ -244,6 +256,12 @@
   --brand-700: #1e293b;
   --brand-900: #0f172a;
   --hairline: #e2e8f0;
+  --ink-fixed: #09090b;
+  --map-tile-filter: grayscale(1) contrast(1.05) brightness(1.02);
+  --map-tile-filter-dark: grayscale(1) brightness(0.7) contrast(1.15);
+  --logo-grad-start: #64748b;
+  --logo-grad-mid: #334155;
+  --logo-grad-end: #0f172a;
 }
 
 /* Preset: Amber (Creative / Studio / Warm) */
@@ -257,6 +275,12 @@
   --brand-700: #b45309;
   --brand-900: #78350f;
   --hairline: #fde68a;
+  --ink-fixed: #180f08;
+  --map-tile-filter: sepia(1) hue-rotate(-15deg) saturate(0.85) brightness(1.02);
+  --map-tile-filter-dark: sepia(1) hue-rotate(-12deg) saturate(1.1) brightness(0.72) contrast(1.12);
+  --logo-grad-start: #f59e0b;
+  --logo-grad-mid: #d97706;
+  --logo-grad-end: #92400e;
 }
 
 /* Dark mode */
@@ -266,9 +290,20 @@
   --text: #f2f5f3;
   --text-soft: #a7b2ac;
   --border: #232f28;
+  --brand-50: #121713;
+  --brand-100: #1a241e;
+  --brand-300: #9dbfac;
   --brand-accent: #7fc7a0;
+  --brand-700: #3e7a5a;
+  --brand-900: #1f4a35;
   --hairline: #23372c;
+  --ink-fixed: #0b0f0d;
   --shimmer-highlight: rgba(180, 214, 195, 0.14);
+  --map-tile-filter: sepia(1) hue-rotate(78deg) saturate(0.5) brightness(1.03);
+  --map-tile-filter-dark: sepia(1) hue-rotate(78deg) saturate(0.75) brightness(0.72) contrast(1.08);
+  --logo-grad-start: #7fc7a0;
+  --logo-grad-mid: #4E7C5C;
+  --logo-grad-end: #2C5741;
   color-scheme: dark;
 }
 
@@ -278,8 +313,18 @@
   --text: #f8fafc;
   --text-soft: #94a3b8;
   --border: #1e293b;
+  --brand-50: #0f172a;
+  --brand-100: #1e1b4b;
+  --brand-300: #a5b4fc;
   --brand-accent: #818cf8;
+  --brand-700: #6366f1;
+  --brand-900: #4f46e5;
   --hairline: #1e293b;
+  --ink-fixed: #0b0f17;
+  --map-tile-filter-dark: sepia(1) hue-rotate(175deg) saturate(0.9) brightness(0.72) contrast(1.1);
+  --logo-grad-start: #a5b4fc;
+  --logo-grad-mid: #818cf8;
+  --logo-grad-end: #4338ca;
 }
 
 .dark[data-theme-preset="slate"] {
@@ -288,18 +333,38 @@
   --text: #fafafa;
   --text-soft: #a1a1aa;
   --border: #27272a;
+  --brand-50: #18181b;
+  --brand-100: #27272a;
+  --brand-300: #cbd5e1;
   --brand-accent: #cbd5e1;
+  --brand-700: #94a3b8;
+  --brand-900: #64748b;
   --hairline: #27272a;
+  --ink-fixed: #09090b;
+  --map-tile-filter-dark: grayscale(1) brightness(0.7) contrast(1.15);
+  --logo-grad-start: #f1f5f9;
+  --logo-grad-mid: #cbd5e1;
+  --logo-grad-end: #64748b;
 }
 
 .dark[data-theme-preset="amber"] {
   --surface: #140d07;
   --surface-soft: #1f140b;
   --text: #fef3c7;
-  --text-soft: #d97706;
+  --text-soft: #fcd34d;
   --border: #2c1b0e;
+  --brand-50: #1f140b;
+  --brand-100: #2c1b0e;
+  --brand-300: #fcd34d;
   --brand-accent: #fbbf24;
+  --brand-700: #d97706;
+  --brand-900: #b45309;
   --hairline: #2c1b0e;
+  --ink-fixed: #140d07;
+  --map-tile-filter-dark: sepia(1) hue-rotate(-12deg) saturate(1.1) brightness(0.72) contrast(1.12);
+  --logo-grad-start: #fbbf24;
+  --logo-grad-mid: #f59e0b;
+  --logo-grad-end: #b45309;
 }
 
 /* Barrido del skeleton: el ::before (gradiente) cruza el bloque vía transform.
@@ -359,14 +424,11 @@
    que conservan sus colores de marca en vez de teñirse también. Si se aplicara
    al contenedor, el pin verde del proyecto terminaría de otro color. */
 .leaflet-tile-pane {
-  filter: sepia(1) hue-rotate(78deg) saturate(0.5) brightness(1.03);
+  filter: var(--map-tile-filter, sepia(1) hue-rotate(78deg) saturate(0.5) brightness(1.03));
 }
 
-/* En oscuro se parte de dark_all, que ya es casi negro: la saturación puede
-   subir un poco sin volverse chillona, y el brillo baja para que el mapa no sea
-   la superficie más clara de la pantalla. */
 .dark .leaflet-tile-pane {
-  filter: sepia(1) hue-rotate(78deg) saturate(0.75) brightness(0.72) contrast(1.08);
+  filter: var(--map-tile-filter-dark, sepia(1) hue-rotate(78deg) saturate(0.75) brightness(0.72) contrast(1.08));
 }
 
 /* Atribución de los mapas.

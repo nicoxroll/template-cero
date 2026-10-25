@@ -114,8 +114,8 @@ export default function ShareButton({
           >
             {copied ? (
               <>
-                <Check className="h-4 w-4 text-emerald-500 shrink-0" />
-                <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+                <Check className="h-4 w-4 text-brand-500 shrink-0" />
+                <span className="text-brand-500 font-medium">
                   ¡Enlace copiado!
                 </span>
               </>
@@ -135,7 +135,7 @@ export default function ShareButton({
             onClick={() => setMenuOpen(false)}
             className="flex w-full items-center gap-2.5 px-3 py-2 text-xs font-light text-ink hover:bg-paper-soft hover:text-brand-700 dark:hover:text-brand-300 transition-colors text-left"
           >
-            <MessageCircle className="h-4 w-4 text-emerald-500 shrink-0" />
+            <MessageCircle className="h-4 w-4 text-brand-500 shrink-0" />
             <span>Enviar por WhatsApp</span>
           </a>
         </div>

@@ -337,7 +337,7 @@ export default function LiveCMSEditor() {
 
                 <div className="flex items-center gap-3">
                   {savedSuccess && (
-                    <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                    <span className="text-xs font-medium text-brand-500 flex items-center gap-1">
                       <Check className="w-4 h-4" /> Cambios aplicados
                     </span>
                   )}

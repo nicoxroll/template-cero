@@ -142,7 +142,7 @@ export default function InvestorFaq() {
                 <div className="mb-8 p-4 bg-brand-500/10 border border-brand-500/30 rounded flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
                   <div className="flex items-center gap-2">
                     {isVisible ? (
-                      <span className="inline-flex items-center gap-1.5 font-medium text-emerald-600 dark:text-emerald-400">
+                      <span className="inline-flex items-center gap-1.5 font-medium text-brand-500">
                         <Eye className="w-4 h-4" /> La sección está <strong>visible</strong> para los visitantes
                       </span>
                     ) : (

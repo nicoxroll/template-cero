@@ -164,7 +164,7 @@ export default function CalculadoraInversion({
                 <div className="mb-10 p-4 bg-brand-500/10 border border-brand-500/30 rounded flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
                   <div className="flex items-center gap-2">
                     {isVisible ? (
-                      <span className="inline-flex items-center gap-1.5 font-medium text-emerald-600 dark:text-emerald-400">
+                      <span className="inline-flex items-center gap-1.5 font-medium text-brand-500">
                         <Eye className="w-4 h-4" /> La calculadora está <strong>visible</strong> para los inversores
                       </span>
                     ) : (
@@ -179,7 +179,7 @@ export default function CalculadoraInversion({
                     className={`px-3 py-1.5 font-medium tracking-wide uppercase transition-colors rounded ${
                       isVisible
                         ? 'bg-amber-600 text-white hover:bg-amber-700'
-                        : 'bg-emerald-600 text-white hover:bg-emerald-700'
+                        : 'bg-brand-500 text-white hover:bg-brand-700'
                     }`}
                   >
                     {isVisible ? 'Ocultar calculadora' : 'Hacer visible'}
@@ -405,7 +405,7 @@ export default function CalculadoraInversion({
                       <span className="text-xs uppercase tracking-widest text-brand-300 font-medium">
                         Resumen de Proyección
                       </span>
-                      <span className="inline-flex items-center gap-1 text-[0.65rem] font-mono uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">
+                      <span className="inline-flex items-center gap-1 text-[0.65rem] font-mono uppercase tracking-wider text-brand-300 bg-brand-900/60 border border-brand-500/30 px-2 py-0.5 rounded">
                         <Sparkles className="w-3 h-3" /> Fideicomiso al Costo
                       </span>
                     </div>
@@ -438,10 +438,10 @@ export default function CalculadoraInversion({
 
                       <div className="p-3.5 bg-white/5 border border-white/10 rounded-sm">
                         <div className="flex items-center gap-1.5 text-xs text-white/70 font-light">
-                          <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
+                          <TrendingUp className="w-3.5 h-3.5 text-brand-300" />
                           <span>Retorno proyectado:</span>
                         </div>
-                        <p className="mt-1 text-xl font-light text-emerald-300 font-serif">
+                        <p className="mt-1 text-xl font-light text-brand-300 font-serif">
                           +{calculations.plusvaliaBasePct}% <span className="text-[0.65rem] font-sans text-white/60">a posesión</span>
                         </p>
                       </div>
@@ -455,7 +455,7 @@ export default function CalculadoraInversion({
                       </div>
                       <div className="flex justify-between">
                         <span className="text-white/60">Tasa Interna de Retorno (TIR est.):</span>
-                        <span className="font-mono text-emerald-300">~{calculations.tirAnualizadaEstimada}% anual USD</span>
+                        <span className="font-mono text-brand-300">~{calculations.tirAnualizadaEstimada}% anual USD</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-white/60">Valorización final estimada:</span>
@@ -476,7 +476,7 @@ export default function CalculadoraInversion({
                           label: `Monto: ${montoActual} - Plazo: ${plazoMeses}`,
                         })
                       }
-                      className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs uppercase tracking-widest transition-colors rounded-sm shadow-lg hover:shadow-emerald-900/40"
+                      className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-brand-500 hover:bg-brand-700 text-white font-medium text-xs uppercase tracking-widest transition-colors rounded-sm shadow-lg hover:shadow-brand-900/40"
                     >
                       <MessageCircle className="w-4 h-4" />
                       Solicitar simulación por WhatsApp

@@ -1004,7 +1004,7 @@ export default function AdminContenido() {
               <div
                 className={`shrink-0 rounded-sm p-2.5 ${
                   teamVisible
-                    ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                    ? 'bg-brand-500/10 text-brand-500'
                     : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
                 }`}
               >
@@ -1016,7 +1016,7 @@ export default function AdminContenido() {
                   <span
                     className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase ${
                       teamVisible
-                        ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                        ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                         : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                     }`}
                   >
@@ -1105,7 +1105,7 @@ export default function AdminContenido() {
               <div
                 className={`shrink-0 rounded-sm p-2.5 ${
                   faqVisible
-                    ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                    ? 'bg-brand-500/10 text-brand-500'
                     : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
                 }`}
               >
@@ -1117,7 +1117,7 @@ export default function AdminContenido() {
                   <span
                     className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase ${
                       faqVisible
-                        ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                        ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                         : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                     }`}
                   >
@@ -1199,7 +1199,7 @@ export default function AdminContenido() {
               <div
                 className={`shrink-0 rounded-sm p-2.5 ${
                   serviciosVisible
-                    ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                    ? 'bg-brand-500/10 text-brand-500'
                     : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
                 }`}
               >
@@ -1211,7 +1211,7 @@ export default function AdminContenido() {
                   <span
                     className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase ${
                       serviciosVisible
-                        ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                        ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                         : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                     }`}
                   >
@@ -1381,7 +1381,7 @@ export default function AdminContenido() {
                       <span
                         className={`inline-flex items-center rounded-sm px-1.5 py-0.2 text-[0.6rem] font-medium uppercase tracking-wide ${
                           sec.visible
-                            ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                            ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                             : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                         }`}
                       >
@@ -1419,7 +1419,7 @@ export default function AdminContenido() {
                       onClick={() => void handleToggleCustomSectionVisibility(sec)}
                       className={`p-2 rounded-sm transition-colors ${
                         sec.visible
-                          ? 'text-emerald-600 hover:text-emerald-700 hover:bg-paper-soft'
+                          ? 'text-brand-600 hover:text-brand-700 hover:bg-paper-soft'
                           : 'text-amber-600 hover:text-amber-700 hover:bg-paper-soft'
                       }`}
                       title={sec.visible ? 'Ocultar sección en la portada' : 'Mostrar sección en la portada'}

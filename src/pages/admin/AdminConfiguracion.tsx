@@ -1,5 +1,5 @@
-// ConfiguraciÃ³n del sitio (HERO-05 lado config + datos de contacto y mÃ©tricas)
-// sobre configRepo. Incluye el switch "Modo cinemÃ¡tico (scroll video)".
+// Configuración del sitio (HERO-05 lado config + datos de contacto y métricas)
+// sobre configRepo. Incluye el switch "Modo cinemático (scroll video)".
 
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -35,38 +35,38 @@ import ConfirmDialog from '../../components/admin/crud/ConfirmDialog';
 import Button from '../../components/ui/Button';
 
 const int = (msg: string) =>
-  z.number({ message: 'Ingrese un nÃºmero' }).int('Debe ser un entero').min(0, msg);
+  z.number({ message: 'Ingrese un número' }).int('Debe ser un entero').min(0, msg);
 
 const configSchema = z.object({
   heroScrubEnabled: z.boolean(),
-  contactEmail: z.string().min(1, 'Ingrese el email de contacto').email('Ingrese un email vÃ¡lido'),
-  contactPhone: z.string().min(6, 'Ingrese un telÃ©fono vÃ¡lido'),
+  contactEmail: z.string().min(1, 'Ingrese el email de contacto').email('Ingrese un email válido'),
+  contactPhone: z.string().min(6, 'Ingrese un teléfono válido'),
   whatsappNumber: z
     .string()
-    .regex(/^\d{8,15}$/, 'Solo dÃ­gitos con cÃ³digo de paÃ­s, sin espacios (ej: 5491155550123)'),
-  address: z.string().min(5, 'Ingrese la direcciÃ³n'),
+    .regex(/^\d{8,15}$/, 'Solo dígitos con código de país, sin espacios (ej: 5491155550123)'),
+  address: z.string().min(5, 'Ingrese la dirección'),
   officeCoords: z.object({
     lat: z
-      .number({ message: 'Ingrese un nÃºmero' })
-      .refine((v) => Math.abs(v) <= 90, 'Latitud fuera de rango (âˆ’90 a 90)'),
+      .number({ message: 'Ingrese un número' })
+      .refine((v) => Math.abs(v) <= 90, 'Latitud fuera de rango (→90 a 90)'),
     lng: z
-      .number({ message: 'Ingrese un nÃºmero' })
-      .refine((v) => Math.abs(v) <= 180, 'Longitud fuera de rango (âˆ’180 a 180)'),
+      .number({ message: 'Ingrese un número' })
+      .refine((v) => Math.abs(v) <= 180, 'Longitud fuera de rango (→180 a 180)'),
   }),
-  horarioAtencion: z.string().min(3, 'Ingrese el horario de atenciÃ³n'),
+  horarioAtencion: z.string().min(3, 'Ingrese el horario de atención'),
   zonasCobertura: z.string().min(1, 'Ingrese al menos una zona'),
   metrics: z.object({
     years: int('No puede ser negativo'),
     m2: int('No puede ser negativo'),
     projects: int('No puede ser negativo'),
   }),
-  legalName: z.string().min(3, 'Ingrese la razÃ³n social'),
+  legalName: z.string().min(3, 'Ingrese la razón social'),
   cuit: z.string().regex(/^\d{2}-\d{8}-\d$/, 'Formato XX-XXXXXXXX-X'),
-  matricula: z.string().min(3, 'Ingrese la matrÃ­cula'),
+  matricula: z.string().min(3, 'Ingrese la matrícula'),
   domicilioLegal: z.string().min(5, 'Ingrese el domicilio legal'),
   disclaimers: z.object({
-    ofertaPublica: z.string().min(20, 'El texto de Ley 26.831 no puede quedar vacÃ­o'),
-    datosPersonales: z.string().min(20, 'El texto de Ley 25.326 no puede quedar vacÃ­o'),
+    ofertaPublica: z.string().min(20, 'El texto de Ley 26.831 no puede quedar vacío'),
+    datosPersonales: z.string().min(20, 'El texto de Ley 25.326 no puede quedar vacío'),
   }),
   leadNotificationWebhook: z.string().optional(),
   leadNotificationEmail: z.string().optional(),
@@ -161,7 +161,7 @@ function ConfigSkeleton() {
 }
 
 export default function AdminConfiguracion() {
-  usePageMeta({ title: 'Admin — Configuración' });
+  usePageMeta({ title: 'Admin  Configuracin' });
 
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
@@ -312,7 +312,7 @@ export default function AdminConfiguracion() {
 
   const handleTestWebhook = async () => {
     if (!webhookValue?.trim()) {
-      setWebhookTestResult({ ok: false, message: 'IngresÃ¡ una URL de Webhook para probar.' });
+      setWebhookTestResult({ ok: false, message: 'Ingresá una URL de Webhook para probar.' });
       return;
     }
     setTestingWebhook(true);
@@ -322,7 +322,7 @@ export default function AdminConfiguracion() {
       if (res.ok) {
         setWebhookTestResult({
           ok: true,
-          message: `Webhook verificado con Ã©xito (Respuesta HTTP ${res.status ?? 200}).`,
+          message: `Webhook verificado con éxito (Respuesta HTTP ${res.status ?? 200}).`,
         });
       } else {
         setWebhookTestResult({
@@ -377,7 +377,7 @@ export default function AdminConfiguracion() {
 
   return (
     <AdminShell
-      title="ConfiguraciÃ³n"
+      title="Configuración"
       subtitle="Datos de contacto, usuarios administradores, notificaciones y comportamiento del sitio."
     >
       {showSkeleton ? (
@@ -387,7 +387,7 @@ export default function AdminConfiguracion() {
           <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-8">
             <div
               role="tablist"
-              aria-label="Secciones de configuraciÃ³n"
+              aria-label="Secciones de configuración"
               className="flex flex-wrap border-b border-line"
             >
               {TABS.map(({ key, label, campos }) => {
@@ -409,7 +409,7 @@ export default function AdminConfiguracion() {
                     {conError && (
                       <span
                         className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-500"
-                        title="Hay campos con errores en esta secciÃ³n"
+                        title="Hay campos con errores en esta sección"
                       />
                     )}
                   </button>
@@ -501,7 +501,7 @@ export default function AdminConfiguracion() {
                   <div className="pt-4 flex items-center justify-between">
                     <div>
                       {brandSaved && (
-                        <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                        <span className="text-xs font-medium text-brand-500 flex items-center gap-1.5">
                           <Check className="w-4 h-4" /> Cambios de marca guardados y aplicados
                         </span>
                       )}
@@ -521,7 +521,7 @@ export default function AdminConfiguracion() {
             <div hidden={tab !== 'portada'}>
               <SectionCard
                 title="Portada del sitio"
-                intro="Define cÃ³mo se presenta la home a los visitantes."
+                intro="Define cómo se presenta la home a los visitantes."
               >
                 <Controller
                   control={control}
@@ -531,9 +531,9 @@ export default function AdminConfiguracion() {
                       <div>
                         <p className="text-sm font-medium text-ink">Tour en video disponible</p>
                         <p className="mt-2 max-w-md text-sm font-light leading-relaxed text-ink-soft">
-                          La portada siempre abre con el hero de imagen fija. Activado: ademÃ¡s
+                          La portada siempre abre con el hero de imagen fija. Activado: además
                           aparece el control en el encabezado para que el visitante active el
-                          tour â€”el vuelo de cÃ¡mara que avanza cuadro a cuadro con el scrollâ€”.
+                          tour —el vuelo de cámara que avanza cuadro a cuadro con el scroll—.
                           Desactivado: el control desaparece y el sitio queda solo con la imagen.
                         </p>
                       </div>
@@ -541,7 +541,7 @@ export default function AdminConfiguracion() {
                         type="button"
                         role="switch"
                         aria-checked={field.value}
-                        aria-label="Modo cinemÃ¡tico (scroll video)"
+                        aria-label="Modo cinemático (scroll video)"
                         onClick={() => field.onChange(!field.value)}
                         className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
                           field.value ? 'bg-brand-900 dark:bg-brand-500' : 'bg-line'
@@ -562,7 +562,7 @@ export default function AdminConfiguracion() {
                     Visibilidad de Secciones del Sitio
                   </h3>
                   <p className="text-xs font-light text-ink-soft mb-5">
-                    ActivÃ¡ o desactivÃ¡ bloques enteros del sitio segÃºn la etapa o requerimiento comercial.
+                    Activá o desactivá bloques enteros del sitio según la etapa o requerimiento comercial.
                   </p>
 
                   <div className="space-y-4">
@@ -570,11 +570,11 @@ export default function AdminConfiguracion() {
                     <div className="flex items-start justify-between gap-6 border border-hairline bg-paper-soft p-4">
                       <div>
                         <div className="flex items-center gap-2">
-                          <p className="text-sm font-medium text-ink">SecciÃ³n de Equipo ("QuiÃ©nes somos")</p>
+                          <p className="text-sm font-medium text-ink">Sección de Equipo ("Quiénes somos")</p>
                           <span
                             className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase ${
                               teamVisible
-                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                                 : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                             }`}
                           >
@@ -582,14 +582,14 @@ export default function AdminConfiguracion() {
                           </span>
                         </div>
                         <p className="mt-1 max-w-md text-xs font-light leading-relaxed text-ink-soft">
-                          Grilla de integrantes ("Las personas detrÃ¡s de cada proyecto") en la portada.
+                          Grilla de integrantes ("Las personas detrás de cada proyecto") en la portada.
                         </p>
                       </div>
                       <button
                         type="button"
                         role="switch"
                         aria-checked={teamVisible}
-                        aria-label="Visibilidad de la secciÃ³n de equipo"
+                        aria-label="Visibilidad de la sección de equipo"
                         onClick={() => void toggleSection('quienes.teamVisible', teamVisible, setTeamVisible)}
                         className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
                           teamVisible ? 'bg-brand-900 dark:bg-brand-500' : 'bg-line'
@@ -607,11 +607,11 @@ export default function AdminConfiguracion() {
                     <div className="flex items-start justify-between gap-6 border border-hairline bg-paper-soft p-4">
                       <div>
                         <div className="flex items-center gap-2">
-                          <p className="text-sm font-medium text-ink">SecciÃ³n de Servicios</p>
+                          <p className="text-sm font-medium text-ink">Sección de Servicios</p>
                           <span
                             className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase ${
                               serviciosVisible
-                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                                 : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                             }`}
                           >
@@ -626,7 +626,7 @@ export default function AdminConfiguracion() {
                         type="button"
                         role="switch"
                         aria-checked={serviciosVisible}
-                        aria-label="Visibilidad de la secciÃ³n de servicios"
+                        aria-label="Visibilidad de la sección de servicios"
                         onClick={() => void toggleSection('servicios.visible', serviciosVisible, setServiciosVisible)}
                         className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
                           serviciosVisible ? 'bg-brand-900 dark:bg-brand-500' : 'bg-line'
@@ -648,7 +648,7 @@ export default function AdminConfiguracion() {
                           <span
                             className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase ${
                               featuredVisible
-                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                                 : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                             }`}
                           >
@@ -656,7 +656,7 @@ export default function AdminConfiguracion() {
                           </span>
                         </div>
                         <p className="mt-1 max-w-md text-xs font-light leading-relaxed text-ink-soft">
-                          Paneles expansivos con las obras y desarrollos mÃ¡s relevantes en la portada.
+                          Paneles expansivos con las obras y desarrollos más relevantes en la portada.
                         </p>
                       </div>
                       <button
@@ -685,7 +685,7 @@ export default function AdminConfiguracion() {
                           <span
                             className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase ${
                               inversionesVisible
-                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                                 : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                             }`}
                           >
@@ -693,7 +693,7 @@ export default function AdminConfiguracion() {
                           </span>
                         </div>
                         <p className="mt-1 max-w-md text-xs font-light leading-relaxed text-ink-soft">
-                          Tarjetas de oportunidades de inversiÃ³n y fideicomisos en la portada.
+                          Tarjetas de oportunidades de inversión y fideicomisos en la portada.
                         </p>
                       </div>
                       <button
@@ -722,7 +722,7 @@ export default function AdminConfiguracion() {
                           <span
                             className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase ${
                               newsletterVisible
-                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                                 : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                             }`}
                           >
@@ -730,7 +730,7 @@ export default function AdminConfiguracion() {
                           </span>
                         </div>
                         <p className="mt-1 max-w-md text-xs font-light leading-relaxed text-ink-soft">
-                          Bloque de suscripciÃ³n anticipada a oportunidades de inversiÃ³n.
+                          Bloque de suscripción anticipada a oportunidades de inversión.
                         </p>
                       </div>
                       <button
@@ -759,7 +759,7 @@ export default function AdminConfiguracion() {
                           <span
                             className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase ${
                               faqVisible
-                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                                 : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                             }`}
                           >
@@ -767,7 +767,7 @@ export default function AdminConfiguracion() {
                           </span>
                         </div>
                         <p className="mt-1 max-w-md text-xs font-light leading-relaxed text-ink-soft">
-                          AcordeÃ³n de preguntas y respuestas en la pÃ¡gina de Inversiones.
+                          Acordeón de preguntas y respuestas en la página de Inversiones.
                         </p>
                       </div>
                       <button
@@ -788,15 +788,15 @@ export default function AdminConfiguracion() {
                       </button>
                     </div>
 
-                    {/* Calculadora de InversiÃ³n */}
+                    {/* Calculadora de Inversión */}
                     <div className="flex items-start justify-between gap-6 border border-hairline bg-paper-soft p-4">
                       <div>
                         <div className="flex items-center gap-2">
-                          <p className="text-sm font-medium text-ink">Calculadora de InversiÃ³n y Cuotas</p>
+                          <p className="text-sm font-medium text-ink">Calculadora de Inversión y Cuotas</p>
                           <span
                             className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase ${
                               calculadoraVisible
-                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                                 : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                             }`}
                           >
@@ -804,14 +804,14 @@ export default function AdminConfiguracion() {
                           </span>
                         </div>
                         <p className="mt-1 max-w-md text-xs font-light leading-relaxed text-ink-soft">
-                          Simulador financiero interactivo con cÃ¡lculo de anticipo, cuotas CAC/USD, mÂ² y retorno proyectado.
+                          Simulador financiero interactivo con cálculo de anticipo, cuotas CAC/USD, m² y retorno proyectado.
                         </p>
                       </div>
                       <button
                         type="button"
                         role="switch"
                         aria-checked={calculadoraVisible}
-                        aria-label="Visibilidad de la calculadora de inversiÃ³n"
+                        aria-label="Visibilidad de la calculadora de inversión"
                         onClick={() => void toggleSection('inversiones.calculadora.visible', calculadoraVisible, setCalculadoraVisible)}
                         className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
                           calculadoraVisible ? 'bg-brand-900 dark:bg-brand-500' : 'bg-line'
@@ -833,7 +833,7 @@ export default function AdminConfiguracion() {
                           <span
                             className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase ${
                               alianzasVisible
-                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                                 : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                             }`}
                           >
@@ -841,7 +841,7 @@ export default function AdminConfiguracion() {
                           </span>
                         </div>
                         <p className="mt-1 max-w-md text-xs font-light leading-relaxed text-ink-soft">
-                          Tira de escribanÃ­as, bancos fiduciarios y garantÃ­as fiduciarias de trayectoria en la portada.
+                          Tira de escribanías, bancos fiduciarios y garantías fiduciarias de trayectoria en la portada.
                         </p>
                       </div>
                       <button
@@ -862,15 +862,15 @@ export default function AdminConfiguracion() {
                       </button>
                     </div>
 
-                    {/* TipologÃ­as y Planos */}
+                    {/* Tipologías y Planos */}
                     <div className="flex items-start justify-between gap-6 border border-hairline bg-paper-soft p-4">
                       <div>
                         <div className="flex items-center gap-2">
-                          <p className="text-sm font-medium text-ink">Visor de TipologÃ­as y Planos</p>
+                          <p className="text-sm font-medium text-ink">Visor de Tipologías y Planos</p>
                           <span
                             className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase ${
                               tipologiasVisible
-                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                                 : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                             }`}
                           >
@@ -878,14 +878,14 @@ export default function AdminConfiguracion() {
                           </span>
                         </div>
                         <p className="mt-1 max-w-md text-xs font-light leading-relaxed text-ink-soft">
-                          PestaÃ±as de tipologÃ­as de departamentos y planos de planta arquitectÃ³nicos en las fichas de proyectos.
+                          Pestañas de tipologías de departamentos y planos de planta arquitectónicos en las fichas de proyectos.
                         </p>
                       </div>
                       <button
                         type="button"
                         role="switch"
                         aria-checked={tipologiasVisible}
-                        aria-label="Visibilidad de tipologÃ­as y planos"
+                        aria-label="Visibilidad de tipologías y planos"
                         onClick={() => void toggleSection('proyectos.tipologias.visible', tipologiasVisible, setTipologiasVisible)}
                         className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
                           tipologiasVisible ? 'bg-brand-900 dark:bg-brand-500' : 'bg-line'
@@ -905,8 +905,8 @@ export default function AdminConfiguracion() {
 
             <div hidden={tab !== 'contacto'}>
               <SectionCard
-                title="Datos de contacto y atenciÃ³n"
-                intro="Se muestran en la secciÃ³n de contacto, el pie institucional y el widget de WhatsApp."
+                title="Datos de contacto y atención"
+                intro="Se muestran en la sección de contacto, el pie institucional y el widget de WhatsApp."
               >
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
@@ -925,7 +925,7 @@ export default function AdminConfiguracion() {
                   </div>
                   <div>
                     <label htmlFor="cfg-phone" className={LABEL_CLS}>
-                      TelÃ©fono
+                      Teléfono
                     </label>
                     <input
                       id="cfg-phone"
@@ -939,7 +939,7 @@ export default function AdminConfiguracion() {
                   </div>
                   <div className="sm:col-span-2">
                     <label htmlFor="cfg-whatsapp" className={LABEL_CLS}>
-                      WhatsApp (cÃ³digo de paÃ­s + nÃºmero, sin espacios ni +)
+                      WhatsApp (código de país + número, sin espacios ni +)
                     </label>
                     <input
                       id="cfg-whatsapp"
@@ -954,7 +954,7 @@ export default function AdminConfiguracion() {
                   </div>
                   <div className="sm:col-span-2">
                     <label htmlFor="cfg-address" className={LABEL_CLS}>
-                      DirecciÃ³n de oficinas
+                      Dirección de oficinas
                     </label>
                     <input
                       id="cfg-address"
@@ -996,7 +996,7 @@ export default function AdminConfiguracion() {
                   </div>
                   <div className="sm:col-span-2">
                     <label htmlFor="cfg-horario" className={LABEL_CLS}>
-                      Horario de atenciÃ³n
+                      Horario de atención
                     </label>
                     <input
                       id="cfg-horario"
@@ -1011,7 +1011,7 @@ export default function AdminConfiguracion() {
                   </div>
                   <div className="sm:col-span-2">
                     <label htmlFor="cfg-zonas" className={LABEL_CLS}>
-                      Zonas de cobertura (una por lÃ­nea)
+                      Zonas de cobertura (una por línea)
                     </label>
                     <textarea
                       id="cfg-zonas"
@@ -1030,7 +1030,7 @@ export default function AdminConfiguracion() {
             <div hidden={tab !== 'notificaciones'}>
               <SectionCard
                 title="Notificaciones en tiempo real y Webhooks"
-                intro="ConectÃ¡ el sitio con Slack, Discord, Telegram o Zapier/Make para recibir alertas comerciales inmediatas cada vez que un cliente consulta."
+                intro="Conectá el sitio con Slack, Discord, Telegram o Zapier/Make para recibir alertas comerciales inmediatas cada vez que un cliente consulta."
               >
                 <div className="space-y-6">
                   <div>
@@ -1097,7 +1097,7 @@ export default function AdminConfiguracion() {
                   <div className="border border-hairline bg-paper-soft p-4 text-xs font-light leading-relaxed text-ink-soft">
                     <div className="flex items-center gap-2 font-medium text-ink">
                       <Sparkles size={15} className="text-brand-500" />
-                      <span>CÃ³mo integrar en 2 minutos:</span>
+                      <span>Cómo integrar en 2 minutos:</span>
                     </div>
                     <ul className="mt-2 list-inside list-disc space-y-1">
                       <li>
@@ -1122,7 +1122,7 @@ export default function AdminConfiguracion() {
             <div hidden={tab !== 'usuarios'}>
               <SectionCard
                 title="Equipo y Permisos de Acceso al Panel"
-                intro="AdministrÃ¡ quiÃ©nes tienen acceso al panel de administraciÃ³n de Template Cero. Los emails autorizados aquÃ­ podrÃ¡n iniciar sesiÃ³n con sus credenciales de Supabase."
+                intro="Administrá quiénes tienen acceso al panel de administración de Template Cero. Los emails autorizados aquí podrán iniciar sesión con sus credenciales de Supabase."
               >
                 <div className="space-y-8">
                   <div className="border border-hairline bg-paper-soft p-5">
@@ -1154,7 +1154,7 @@ export default function AdminConfiguracion() {
                         <input
                           id="new-user-name"
                           type="text"
-                          placeholder="Juan PÃ©rez"
+                          placeholder="Juan Pérez"
                           value={newUserName}
                           onChange={(e) => setNewUserName(e.target.value)}
                           className={FIELD_CLS}
@@ -1236,7 +1236,7 @@ export default function AdminConfiguracion() {
                               <div>
                                 {isSelf ? (
                                   <span
-                                    title="No podÃ©s eliminar tu propia cuenta mientras estÃ¡s logueado"
+                                    title="No podés eliminar tu propia cuenta mientras estás logueado"
                                     className="p-2 text-ink-soft/40 cursor-not-allowed"
                                   >
                                     <Shield size={16} />
@@ -1262,9 +1262,9 @@ export default function AdminConfiguracion() {
                   <div className="flex items-start gap-2 border border-hairline bg-brand-50/50 p-4 text-xs font-light text-brand-900 dark:border-brand-700/40 dark:bg-brand-900/20 dark:text-brand-100">
                     <Info size={16} className="shrink-0 text-brand-500" />
                     <span>
-                      <strong>Nota de seguridad:</strong> El acceso al panel estÃ¡ protegido por la
-                      allowlist de administradores. Quien figure en esta lista podrÃ¡ iniciar sesiÃ³n en
-                      el panel una vez que cree su contraseÃ±a en Supabase Auth.
+                      <strong>Nota de seguridad:</strong> El acceso al panel está protegido por la
+                      allowlist de administradores. Quien figure en esta lista podrá iniciar sesión en
+                      el panel una vez que cree su contraseña en Supabase Auth.
                     </span>
                   </div>
                 </div>
@@ -1273,13 +1273,13 @@ export default function AdminConfiguracion() {
 
             <div hidden={tab !== 'metricas'}>
               <SectionCard
-                title="MÃ©tricas institucionales"
-                intro="Cifras clave que se destacan en la portada y la secciÃ³n QuiÃ©nes somos."
+                title="Métricas institucionales"
+                intro="Cifras clave que se destacan en la portada y la sección Quiénes somos."
               >
                 <div className="grid gap-5 sm:grid-cols-3">
                   <div>
                     <label htmlFor="cfg-years" className={LABEL_CLS}>
-                      AÃ±os de trayectoria
+                      Años de trayectoria
                     </label>
                     <input
                       id="cfg-years"
@@ -1294,7 +1294,7 @@ export default function AdminConfiguracion() {
                   </div>
                   <div>
                     <label htmlFor="cfg-m2" className={LABEL_CLS}>
-                      mÂ² desarrollados / construidos
+                      m² desarrollados / construidos
                     </label>
                     <input
                       id="cfg-m2"
@@ -1327,12 +1327,12 @@ export default function AdminConfiguracion() {
             <div hidden={tab !== 'societarios'}>
               <SectionCard
                 title="Datos societarios y legales"
-                intro="RazÃ³n social, CUIT y matrÃ­cula que respaldan la operaciÃ³n institucional en el pie de pÃ¡gina."
+                intro="Razón social, CUIT y matrícula que respaldan la operación institucional en el pie de página."
               >
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
                     <label htmlFor="cfg-legal" className={LABEL_CLS}>
-                      RazÃ³n social
+                      Razón social
                     </label>
                     <input id="cfg-legal" type="text" className={FIELD_CLS} {...register('legalName')} />
                     {errors.legalName && <p className={ERROR_CLS}>{errors.legalName.message}</p>}
@@ -1352,7 +1352,7 @@ export default function AdminConfiguracion() {
                   </div>
                   <div>
                     <label htmlFor="cfg-matricula" className={LABEL_CLS}>
-                      MatrÃ­cula
+                      Matrícula
                     </label>
                     <input
                       id="cfg-matricula"
@@ -1388,7 +1388,7 @@ export default function AdminConfiguracion() {
                 <div className="space-y-5">
                   <div>
                     <label htmlFor="cfg-oferta" className={LABEL_CLS}>
-                      Oferta pÃºblica (Ley 26.831 â€” CNV)
+                      Oferta pública (Ley 26.831 — CNV)
                     </label>
                     <textarea
                       id="cfg-oferta"
@@ -1420,7 +1420,7 @@ export default function AdminConfiguracion() {
 
             <div className="flex items-center gap-4 pt-4">
               <Button type="submit" disabled={isSubmitting || !isDirty}>
-                {isSubmitting ? 'Guardandoâ€¦' : 'Guardar cambios'}
+                {isSubmitting ? 'Guardando⬦' : 'Guardar cambios'}
               </Button>
               <span
                 role="status"
@@ -1438,7 +1438,7 @@ export default function AdminConfiguracion() {
           <ConfirmDialog
             open={userToDelete !== null}
             title="Revocar acceso de administrador"
-            message={`Â¿EstÃ¡s seguro de que querÃ©s revocar el acceso a "${userToDelete?.email}"? El usuario no podrÃ¡ ingresar mÃ¡s al panel de administraciÃ³n.`}
+            message={`¿Estás seguro de que querés revocar el acceso a "${userToDelete?.email}"? El usuario no podrá ingresar más al panel de administración.`}
             confirmLabel="Revocar acceso"
             busy={deletingUser}
             onConfirm={handleDeleteUser}

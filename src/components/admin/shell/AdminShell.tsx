@@ -81,7 +81,7 @@ export default function AdminShell({ title, subtitle, actions, children }: Admin
       : {
           etiqueta: 'Conectado a Supabase',
           detalle: 'Los datos salen de la base real y los cambios se guardan.',
-          punto: 'bg-emerald-400',
+          punto: 'bg-brand-500',
           texto: 'text-brand-300',
         };
 

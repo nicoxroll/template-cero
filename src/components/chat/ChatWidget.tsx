@@ -239,7 +239,7 @@ export default function ChatWidget() {
                   {siteConfig.name}
                 </span>
                 <span className="flex items-center gap-1.5 text-[10px] font-medium tracking-widest text-brand-300">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-brand-500 animate-pulse" />
                   Atención en línea
                 </span>
               </div>

@@ -1,11 +1,11 @@
-﻿// Escenario pinned del hero scroll-scrub â€” MODO TOUR (HERO-01/02/04).
-// Ãšnico lugar del sitio que instala un ScrollTrigger con pin (regla DESIGN.md).
+// Escenario pinned del hero scroll-scrub — MODO TOUR (HERO-01/02/04).
+// Único lugar del sitio que instala un ScrollTrigger con pin (regla DESIGN.md).
 // Fondo = el video real del cliente (191 cuadros WebP, createVideoFrameSource)
-// dibujado a pantalla completa en canvas como CONTENIDO PRINCIPAL â€” no una capa
-// sutil sobre una foto. El scroll cuantiza el Ã­ndice de cuadro (coalescido en
+// dibujado a pantalla completa en canvas como CONTENIDO PRINCIPAL — no una capa
+// sutil sobre una foto. El scroll cuantiza el índice de cuadro (coalescido en
 // rAF junto con el overlay de legibilidad) y sincroniza los tres beats de
-// texto. Todo el trabajo por-frame ocurre solo mientras el ScrollTrigger estÃ¡
-// en rango (onUpdate no dispara fuera de Ã©l).
+// texto. Todo el trabajo por-frame ocurre solo mientras el ScrollTrigger está
+// en rango (onUpdate no dispara fuera de él).
 
 import { useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router';
@@ -16,26 +16,26 @@ import { createVideoFrameSource, videoLegibilityOverlay } from './frameSource';
 import { STORY_BEATS } from './beats';
 
 /**
- * DuraciÃ³n del pin: ~2 alturas de viewport de scroll.
+ * Duración del pin: ~2 alturas de viewport de scroll.
  *
  * Era 300%. Con 191 cuadros repartidos en 3 pantallas, cada cuadro ocupaba
- * ~1,6% del recorrido: el tour se sentÃ­a lento y habÃ­a que scrollear mucho
- * para que la cÃ¡mara avanzara. A 200% el mismo video pasa en dos tercios del
- * scroll y ademÃ¡s cambia de cuadro mÃ¡s seguido por pÃ­xel recorrido, que es lo
- * que se percibe como fluidez â€” no hay cuadros "pegados" mientras la rueda gira.
+ * ~1,6% del recorrido: el tour se sentía lento y había que scrollear mucho
+ * para que la cámara avanzara. A 200% el mismo video pasa en dos tercios del
+ * scroll y además cambia de cuadro más seguido por píxel recorrido, que es lo
+ * que se percibe como fluidez — no hay cuadros "pegados" mientras la rueda gira.
  */
 const PIN_LENGTH = '+=200%';
-/** DuraciÃ³n de cada fade de beat en unidades de progreso del timeline (0..1) */
+/** Duración de cada fade de beat en unidades de progreso del timeline (0..1) */
 const FADE = 0.07;
 /** Debajo de este ancho, el video se carga salteando un cuadro de cada dos (memoria). */
 const MOBILE_STRIDE_BREAKPOINT = 768;
 
-/** Sombra en capas legible sobre imagen clara (paredes blancas, cielo) â€” nunca contorno duro. */
+/** Sombra en capas legible sobre imagen clara (paredes blancas, cielo) — nunca contorno duro. */
 // El video tiene cuadros MUY claros (paredes blancas, cielo, interiores con sol).
 // Sombra en tres capas: halo amplio que separa del fondo + dos capas cortas que
-// densifican el borde de la letra. Sin contorno duro â€” se lee premium, no stroke.
+// densifican el borde de la letra. Sin contorno duro — se lee premium, no stroke.
 // La receta vive como @utility en src/index.css (.hero-legible) porque el
-// Header la necesita tambiÃ©n, apoyado sobre los mismos cuadros claros.
+// Header la necesita también, apoyado sobre los mismos cuadros claros.
 const TEXT_SHADOW = 'hero-legible';
 
 export default function ScrubStage() {
@@ -45,11 +45,11 @@ export default function ScrubStage() {
   const beatRefs = useRef<(HTMLDivElement | null)[]>([]);
   const ctaRef = useRef<HTMLDivElement>(null);
 
-  // useLayoutEffect (no useEffect): el cleanup debe correr SÃNCRONO en la fase
-  // de mutaciÃ³n del unmount â€” gsapCtx.revert() saca el pin-spacer y devuelve el
+  // useLayoutEffect (no useEffect): el cleanup debe correr SÍNCRONO en la fase
+  // de mutación del unmount — gsapCtx.revert() saca el pin-spacer y devuelve el
   // <section> a su padre original ANTES del removeChild de React. Con useEffect
   // (cleanup pasivo/diferido) React intenta remover el nodo mientras sigue
-  // reparentado dentro del pin-spacer â†’ NotFoundError: removeChild.
+  // reparentado dentro del pin-spacer → NotFoundError: removeChild.
   useLayoutEffect(() => {
     const stage = stageRef.current;
     const overlay = overlayRef.current;
@@ -62,22 +62,22 @@ export default function ScrubStage() {
 
     let cssW = 0;
     let cssH = 0;
-    let pendingP = 0; // progreso continuo 0..1 â€” maneja el overlay de legibilidad
-    let pendingFrame = 0; // Ã­ndice cuantizado â€” maneja el cuadro de video dibujado
+    let pendingP = 0; // progreso continuo 0..1 — maneja el overlay de legibilidad
+    let pendingFrame = 0; // índice cuantizado — maneja el cuadro de video dibujado
     let drawnFrame = -1;
     let rafId = 0;
 
     // Coalescencia en rAF: por frame de pantalla se aplica el overlay y se
-    // redibuja el cuadro de video a lo sumo una vez â€” sin jank en scroll
-    // rÃ¡pido. El canvas solo redibuja si el Ã­ndice cuantizado cambiÃ³.
-    // drawnFrame solo se marca cuando drawFrame() pintÃ³ un cuadro REAL: en
-    // carga frÃ­a (skin 'tour' precargado, sin scroll todavÃ­a) el primer
+    // redibuja el cuadro de video a lo sumo una vez — sin jank en scroll
+    // rápido. El canvas solo redibuja si el índice cuantizado cambió.
+    // drawnFrame solo se marca cuando drawFrame() pintó un cuadro REAL: en
+    // carga fría (skin 'tour' precargado, sin scroll todavía) el primer
     // intento puede caer antes de que f001 termine de decodificar y pinta
-    // solo el flat-fill â€” si igual marcÃ¡ramos drawnFrame acÃ¡, el canvas
-    // quedarÃ­a en ese relleno plano para siempre (nada vuelve a pedir un
-    // redibujo hasta el prÃ³ximo cambio de pendingFrame, que sin scroll no
+    // solo el flat-fill — si igual marcáramos drawnFrame acá, el canvas
+    // quedaría en ese relleno plano para siempre (nada vuelve a pedir un
+    // redibujo hasta el próximo cambio de pendingFrame, que sin scroll no
     // llega nunca). onFrameLoaded (abajo) reintenta apenas carga cualquier
-    // cuadro, asÃ­ que dejar drawnFrame sin marcar es lo que fuerza ese reintento.
+    // cuadro, así que dejar drawnFrame sin marcar es lo que fuerza ese reintento.
     const scheduleDraw = () => {
       if (rafId) return;
       rafId = requestAnimationFrame(() => {
@@ -91,20 +91,20 @@ export default function ScrubStage() {
     };
 
     // onFrameLoaded dispara scheduleDraw() cuando termina de cargar CUALQUIER
-    // cuadro â€” cubre el arranque en frÃ­o (mount sin scroll aÃºn) donde el
+    // cuadro — cubre el arranque en frío (mount sin scroll aún) donde el
     // primer scheduleDraw() de resize() corre antes de que f001 haya
     // decodificado.
-    // lookahead 20 (default 10): al acortar el pin a 200% el Ã­ndice de cuadro
-    // avanza ~1,5Ã— mÃ¡s rÃ¡pido por pÃ­xel scrolleado, asÃ­ que la ventana de
-    // precarga tiene que mirar mÃ¡s lejos o el scroll rÃ¡pido alcanza cuadros
-    // todavÃ­a sin decodificar y se ven saltos.
+    // lookahead 20 (default 10): al acortar el pin a 200% el índice de cuadro
+    // avanza ~1,5× más rápido por píxel scrolleado, así que la ventana de
+    // precarga tiene que mirar más lejos o el scroll rápido alcanza cuadros
+    // todavía sin decodificar y se ven saltos.
     const videoSource = createVideoFrameSource({
       stride,
       lookahead: 20,
       onFrameLoaded: () => scheduleDraw(),
     });
 
-    // Backing store a devicePixelRatio (cap 2) â†’ cuadro nÃ­tido sin sobrecostos.
+    // Backing store a devicePixelRatio (cap 2) → cuadro nítido sin sobrecostos.
     const resize = () => {
       cssW = stage.clientWidth;
       cssH = stage.clientHeight;
@@ -112,7 +112,7 @@ export default function ScrubStage() {
       canvas.width = Math.round(cssW * dpr);
       canvas.height = Math.round(cssH * dpr);
       ctx2d.setTransform(dpr, 0, 0, dpr, 0, 0);
-      drawnFrame = -1; // forzar redibujo al nuevo tamaÃ±o
+      drawnFrame = -1; // forzar redibujo al nuevo tamaño
       scheduleDraw();
     };
 
@@ -131,13 +131,13 @@ export default function ScrubStage() {
           end: PIN_LENGTH,
           pin: true,
           // 0.25 y no 0.5: el scrub es el retardo con el que el timeline
-          // persigue al scroll. Medio segundo se sentÃ­a como que la cÃ¡mara
-          // venÃ­a atrasada respecto de la rueda; un cuarto sigue suavizando el
+          // persigue al scroll. Medio segundo se sentía como que la cámara
+          // venía atrasada respecto de la rueda; un cuarto sigue suavizando el
           // ruido del trackpad pero responde casi al instante.
           scrub: 0.25,
           anticipatePin: 1,
-          // Al soltar un scroll rÃ¡pido, saltar al destino en vez de seguir
-          // reproduciendo el tramo pendiente en cÃ¡mara lenta.
+          // Al soltar un scroll rápido, saltar al destino en vez de seguir
+          // reproduciendo el tramo pendiente en cámara lenta.
           fastScrollEnd: true,
           // El pin inserta ~300vh de spacer: debe recalcularse antes que los
           // triggers de reveal creados por las secciones que montaron antes.
@@ -145,7 +145,7 @@ export default function ScrubStage() {
         },
       });
 
-      // Progreso de scroll (0..1) â†’ overlay de legibilidad + Ã­ndice de cuadro
+      // Progreso de scroll (0..1) → overlay de legibilidad + índice de cuadro
       // de video (cuantizado sobre frameCount).
       tl.to(
         proxy,
@@ -173,12 +173,12 @@ export default function ScrubStage() {
         tl.fromTo(beats[2], { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: FADE }, 0.72);
       }
 
-      // Los CTAs del primer beat NO se animan por GSAP a propÃ³sito (ver la
-      // clase .hero-cta-in en index.css). El tween de entrada dependÃ­a del
+      // Los CTAs del primer beat NO se animan por GSAP a propósito (ver la
+      // clase .hero-cta-in en index.css). El tween de entrada dependía del
       // ticker de GSAP, que corre sobre requestAnimationFrame: si el rAF se
-      // congela â€”pestaÃ±a en segundo plano, panel que no compone, throttlingâ€”
+      // congela —pestaña en segundo plano, panel que no compone, throttling...
       // el tween se queda clavado en su estado inicial y los botones de
-      // conversiÃ³n del hero desaparecen. Con una animaciÃ³n CSS, si no llega a
+      // conversión del hero desaparecen. Con una animación CSS, si no llega a
       // correr el elemento queda visible, que es el fallo seguro.
     }, stage);
 
@@ -202,13 +202,13 @@ export default function ScrubStage() {
       aria-label="Todo comienza en Template Cero"
       className="relative h-screen w-full overflow-hidden bg-ink-fixed"
     >
-      {/* Video real del cliente (secuencia de cuadros) â€” contenido principal */}
+      {/* Video real del cliente (secuencia de cuadros) — contenido principal */}
       <canvas ref={canvasRef} aria-hidden className="absolute inset-0 h-full w-full" />
-      {/* Oscurecido mÃ­nimo, solo lo necesario para leer el texto sobre el video */}
+      {/* Oscurecido mínimo, solo lo necesario para leer el texto sobre el video */}
       <div ref={overlayRef} aria-hidden className="absolute inset-0 h-full w-full" />
       {/* Scrim radial centrado en el bloque de texto: garantiza legibilidad sobre
           cualquier cuadro (paredes blancas, cielo, interiores con sol) sin apagar
-          la imagen entera â€” cae al centro y se disuelve antes de los bordes.
+          la imagen entera — cae al centro y se disuelve antes de los bordes.
           Va antes de los beats (que llevan z-10) para quedar por debajo del texto. */}
       <div
         aria-hidden

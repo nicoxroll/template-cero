@@ -1,6 +1,6 @@
-﻿// Visor de TipologÃ­as y Planos ArquitectÃ³nicos de Proyectos.
+// Visor de Tipologías y Planos Arquitectónicos de Proyectos.
 // Permite a los compradores e inversores explorar las unidades disponibles (1, 2, 3 amb),
-// planos de planta, metros cuadrados (cubiertos/descubiertos), orientaciÃ³n y caracterÃ­sticas.
+// planos de planta, metros cuadrados (cubiertos/descubiertos), orientación y características.
 // Incluye control de visibilidad en vivo y consulta directa hacia WhatsApp / contacto.
 
 import { useState, useMemo } from 'react';
@@ -26,7 +26,7 @@ export interface TipologiasVisorProps {
   className?: string;
 }
 
-// TipologÃ­as por defecto si el proyecto no tiene definidas tipologÃ­as especÃ­ficas
+// Tipologías por defecto si el proyecto no tiene definidas tipologías específicas
 const DEFAULT_TIPOLOGIAS: ProjectTypology[] = [
   {
     id: '1-amb',
@@ -39,33 +39,33 @@ const DEFAULT_TIPOLOGIAS: ProjectTypology[] = [
     cocheraOpcional: true,
     disponibilidad: 'disponible',
     descripcion:
-      'Ideal para renta temporaria o primer vivienda. Espacio versÃ¡til y luminoso con cocina integrada, ventanales DVH de piso a techo y balcÃ³n aterrazado.',
+      'Ideal para renta temporaria o primer vivienda. Espacio versátil y luminoso con cocina integrada, ventanales DVH de piso a techo y balcón aterrazado.',
     caracteristicas: [
       'Cocina integrada con mesada de Silestone',
-      'CarpinterÃ­as de aluminio con doble vidriado hermÃ©tico (DVH)',
-      'PreinstalaciÃ³n para aire acondicionado frÃ­o/calor',
-      'BaÃ±o completo con artefactos y griferÃ­as de primera lÃ­nea',
-      'Pisos de porcelanato rectificado sÃ­mil madera',
+      'Carpinterías de aluminio con doble vidriado hermético (DVH)',
+      'Preinstalación para aire acondicionado frío/calor',
+      'Baño completo con artefactos y griferías de primera línea',
+      'Pisos de porcelanato rectificado símil madera',
     ],
   },
   {
     id: '2-amb',
-    nombre: '2 Ambientes con BalcÃ³n Terraza',
+    nombre: '2 Ambientes con Balcón Terraza',
     ambientes: 2,
     superficieCubierta: 54,
     superficieDescubierta: 12,
     superficieTotal: 66,
-    orientacion: 'Noreste / Frente con vista panorÃ¡mica',
+    orientacion: 'Noreste / Frente con vista panorámica',
     cocheraOpcional: true,
     disponibilidad: 'ultimas_unidades',
     descripcion:
-      'Unidad residencial de jerarquÃ­a con dormitorio en suite, vestidor, toilette de recepciÃ³n y balcÃ³n terraza con parrilla individual.',
+      'Unidad residencial de jerarquía con dormitorio en suite, vestidor, toilette de recepción y balcón terraza con parrilla individual.',
     caracteristicas: [
-      'Dormitorio principal con vestidor y baÃ±o en suite',
-      'Toilette de recepciÃ³n para visitas',
-      'BalcÃ³n terraza con parrilla propia integrada',
-      'CalefacciÃ³n por losa radiante individual',
-      'Mobiliario de cocina de diseÃ±o con bajo mesada y alacena',
+      'Dormitorio principal con vestidor y baño en suite',
+      'Toilette de recepción para visitas',
+      'Balcón terraza con parrilla propia integrada',
+      'Calefacción por losa radiante individual',
+      'Mobiliario de cocina de diseño con bajo mesada y alacena',
     ],
   },
   {
@@ -75,13 +75,13 @@ const DEFAULT_TIPOLOGIAS: ProjectTypology[] = [
     superficieCubierta: 88,
     superficieDescubierta: 18,
     superficieTotal: 106,
-    orientacion: 'Este / Doble orientaciÃ³n cruzada',
+    orientacion: 'Este / Doble orientación cruzada',
     cocheraOpcional: true,
     disponibilidad: 'disponible',
     descripcion:
-      'Semipiso de gran escala con palier semiprivado, master suite, segundo dormitorio, living apaisado y amplia expansiÃ³n exterior.',
+      'Semipiso de gran escala con palier semiprivado, master suite, segundo dormitorio, living apaisado y amplia expansión exterior.',
     caracteristicas: [
-      'Master suite con vestidor y baÃ±o compartimentado',
+      'Master suite con vestidor y baño compartimentado',
       'Segundo dormitorio con placard de piso a techo',
       'Living-comedor apaisado con salida directa a terraza',
       'Cocina independiente con lavadero sectorizado',
@@ -99,12 +99,12 @@ const DEFAULT_TIPOLOGIAS: ProjectTypology[] = [
     cocheraOpcional: false,
     disponibilidad: 'disponible',
     descripcion:
-      'Espacios vehiculares fijos y cubiertos con portÃ³n automÃ¡tico de alta velocidad, iluminaciÃ³n LED con sensores y bauleras metÃ¡licas.',
+      'Espacios vehiculares fijos y cubiertos con portón automático de alta velocidad, iluminación LED con sensores y bauleras metálicas.',
     caracteristicas: [
       'Acceso vehicular automatizado con control remoto',
-      'Espacio apto para camionetas SUV y vehÃ­culos grandes',
-      'Circuito cerrado de cÃ¡maras de seguridad (CCTV 24 hs)',
-      'Bauleras individuales metÃ¡licas con cerradura propia',
+      'Espacio apto para camionetas SUV y vehículos grandes',
+      'Circuito cerrado de cámaras de seguridad (CCTV 24 hs)',
+      'Bauleras individuales metálicas con cerradura propia',
     ],
   },
 ];
@@ -116,18 +116,18 @@ export default function TipologiasVisor({
 }: TipologiasVisorProps) {
   const [selectedId, setSelectedId] = useState<string>('2-amb');
 
-  // Control de visibilidad vÃ­a Live CMS
+  // Control de visibilidad vía Live CMS
   const {
     data: sectionData,
     update: updateSection,
     save: saveSectionCMS,
   } = useLiveSection({
-    kicker: { key: 'proyectos.tipologias.kicker', default: 'DistribuciÃ³n y Espacios' },
-    title: { key: 'proyectos.tipologias.title', default: 'TipologÃ­as y Planos de Planta' },
+    kicker: { key: 'proyectos.tipologias.kicker', default: 'Distribución y Espacios' },
+    title: { key: 'proyectos.tipologias.title', default: 'Tipologías y Planos de Planta' },
     intro: {
       key: 'proyectos.tipologias.intro',
       default:
-        'Explore las configuraciones de planta disponibles para este desarrollo, con especificaciones mÃ©tricas, orientaciÃ³n y detalles constructivos.',
+        'Explore las configuraciones de planta disponibles para este desarrollo, con especificaciones métricas, orientación y detalles constructivos.',
     },
     sectionVisible: { key: 'proyectos.tipologias.visible', default: 'true' },
   });
@@ -144,16 +144,16 @@ export default function TipologiasVisor({
     return tipologias.find((t) => t.id === selectedId) || tipologias[0];
   }, [tipologias, selectedId]);
 
-  // Mensaje WhatsApp con tipologÃ­a preseleccionada
+  // Mensaje WhatsApp con tipología preseleccionada
   const whatsappUrl = useMemo(() => {
-    const text = `Hola Template Cero, estoy viendo el proyecto "${project.name}" y quisiera consultar la disponibilidad y precios de la tipologÃ­a "${activeTipologia.nombre}" (${activeTipologia.superficieTotal} mÂ² totales).`;
+    const text = `Hola Template Cero, estoy viendo el proyecto "${project.name}" y quisiera consultar la disponibilidad y precios de la tipología "${activeTipologia.nombre}" (${activeTipologia.superficieTotal} m² totales).`;
     return `https://wa.me/5491112345678?text=${encodeURIComponent(text)}`;
   }, [project.name, activeTipologia]);
 
   return (
     <EditableSectionWrapper
       sectionId="proyectos-tipologias-wrapper"
-      sectionLabel="TipologÃ­as y Planos"
+      sectionLabel="Tipologías y Planos"
       onSave={saveSectionCMS}
       pencilPosition="top-6 right-6"
     >
@@ -163,23 +163,23 @@ export default function TipologiasVisor({
         return (
           <section
             id={id}
-            aria-label="TipologÃ­as y planos del proyecto"
+            aria-label="Tipologías y planos del proyecto"
             className={`py-20 md:py-28 bg-paper border-t border-line transition-opacity duration-300 ${className} ${
               !isVisible ? 'opacity-50' : 'opacity-100'
             }`}
           >
             <Container>
-              {/* Banner de control de visibilidad en modo ediciÃ³n admin */}
+              {/* Banner de control de visibilidad en modo edición admin */}
               {isEditing && (
                 <div className="mb-10 p-4 bg-brand-500/10 border border-brand-500/30 rounded flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
                   <div className="flex items-center gap-2">
                     {isVisible ? (
-                      <span className="inline-flex items-center gap-1.5 font-medium text-emerald-600 dark:text-emerald-400">
-                        <Eye className="w-4 h-4" /> La secciÃ³n de planos y tipologÃ­as estÃ¡ <strong>visible</strong>
+                      <span className="inline-flex items-center gap-1.5 font-medium text-brand-500">
+                        <Eye className="w-4 h-4" /> La sección de planos y tipologías está <strong>visible</strong>
                       </span>
                     ) : (
                       <span className="inline-flex items-center gap-1.5 font-medium text-amber-600 dark:text-amber-400">
-                        <EyeOff className="w-4 h-4" /> La secciÃ³n de planos y tipologÃ­as estÃ¡ <strong>oculta</strong>
+                        <EyeOff className="w-4 h-4" /> La sección de planos y tipologías está <strong>oculta</strong>
                       </span>
                     )}
                   </div>
@@ -189,10 +189,10 @@ export default function TipologiasVisor({
                     className={`px-3 py-1.5 font-medium tracking-wide uppercase transition-colors rounded ${
                       isVisible
                         ? 'bg-amber-600 text-white hover:bg-amber-700'
-                        : 'bg-emerald-600 text-white hover:bg-emerald-700'
+                        : 'bg-brand-500 text-white hover:bg-brand-700'
                     }`}
                   >
-                    {isVisible ? 'Ocultar secciÃ³n' : 'Hacer visible'}
+                    {isVisible ? 'Ocultar sección' : 'Hacer visible'}
                   </button>
                 </div>
               )}
@@ -223,10 +223,10 @@ export default function TipologiasVisor({
                 </p>
               </div>
 
-              {/* PestaÃ±as de SelecciÃ³n de TipologÃ­a */}
+              {/* Pestañas de Selección de Tipología */}
               <div
                 role="tablist"
-                aria-label="TipologÃ­as de departamentos"
+                aria-label="Tipologías de departamentos"
                 className="mt-10 flex flex-wrap gap-2 border-b border-line pb-4"
               >
                 {tipologias.map((tipologia) => {
@@ -249,16 +249,16 @@ export default function TipologiasVisor({
                       <span className={`text-[0.68rem] px-1.5 py-0.5 rounded ${
                         isSelected ? 'bg-white/20 text-white' : 'bg-line text-ink-soft'
                       }`}>
-                        {tipologia.superficieTotal} mÂ²
+                        {tipologia.superficieTotal} m²
                       </span>
                     </button>
                   );
                 })}
               </div>
 
-              {/* Contenido de la TipologÃ­a Activa */}
+              {/* Contenido de la Tipología Activa */}
               <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                {/* Columna Izquierda: Plano ArquitectÃ³nico Ilustrado (7 cols) */}
+                {/* Columna Izquierda: Plano Arquitectónico Ilustrado (7 cols) */}
                 <div className="lg:col-span-7 bg-paper-soft border border-line p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between">
                   <div className="flex items-center justify-between border-b border-hairline pb-4 mb-6">
                     <div className="flex items-center gap-2">
@@ -274,7 +274,7 @@ export default function TipologiasVisor({
                     <span
                       className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[0.7rem] uppercase tracking-wider font-medium ${
                         activeTipologia.disponibilidad === 'disponible'
-                          ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                          ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/60 dark:text-brand-300'
                           : activeTipologia.disponibilidad === 'ultimas_unidades'
                           ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                           : 'bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300'
@@ -285,14 +285,14 @@ export default function TipologiasVisor({
                       {activeTipologia.disponibilidad === 'disponible'
                         ? 'Disponible'
                         : activeTipologia.disponibilidad === 'ultimas_unidades'
-                        ? 'Ãšltimas unidades'
+                        ? 'Últimas unidades'
                         : 'Reservada'}
                     </span>
                   </div>
 
-                  {/* Plano arquitectÃ³nico ilustrado con grid blueprints */}
+                  {/* Plano arquitectónico ilustrado con grid blueprints */}
                   <div className="relative aspect-[4/3] w-full rounded-sm bg-brand-950/5 dark:bg-black/30 border border-hairline overflow-hidden flex items-center justify-center p-6">
-                    {/* CuadrÃ­cula milimetrada estilo blueprint arquitectÃ³nico */}
+                    {/* Cuadrícula milimetrada estilo blueprint arquitectónico */}
                     <div
                       className="absolute inset-0 opacity-15 dark:opacity-25 pointer-events-none"
                       style={{
@@ -304,7 +304,7 @@ export default function TipologiasVisor({
                       }}
                     />
 
-                    {/* IlustraciÃ³n esquemÃ¡tica del plano */}
+                    {/* Ilustración esquemática del plano */}
                     <div className="relative z-10 w-full max-w-md p-6 bg-paper/90 dark:bg-ink-fixed/90 backdrop-blur-sm border-2 border-brand-700/40 dark:border-brand-400/40 rounded shadow-lg text-center space-y-4">
                       <div className="flex items-center justify-between border-b border-hairline pb-3">
                         <span className="text-xs font-mono font-bold text-brand-700 dark:text-brand-300 uppercase">
@@ -321,11 +321,11 @@ export default function TipologiasVisor({
                           {activeTipologia.nombre}
                         </p>
                         <p className="text-2xl font-light text-brand-700 dark:text-brand-300 font-serif">
-                          {activeTipologia.superficieTotal} mÂ²
+                          {activeTipologia.superficieTotal} m²
                         </p>
                         <div className="flex items-center gap-4 text-xs font-light text-ink-soft pt-1">
-                          <span>Cubierta: <strong>{activeTipologia.superficieCubierta} mÂ²</strong></span>
-                          <span>Descubierta: <strong>{activeTipologia.superficieDescubierta} mÂ²</strong></span>
+                          <span>Cubierta: <strong>{activeTipologia.superficieCubierta} m²</strong></span>
+                          <span>Descubierta: <strong>{activeTipologia.superficieDescubierta} m²</strong></span>
                         </div>
                       </div>
 
@@ -337,11 +337,11 @@ export default function TipologiasVisor({
                   </div>
 
                   <p className="mt-4 text-[0.75rem] text-ink-soft font-light italic">
-                    * El plano ilustrado es de carÃ¡cter preliminar y sujeto a ajustes de proyecto ejecutivo y aprobaciÃ³n municipal.
+                    * El plano ilustrado es de carácter preliminar y sujeto a ajustes de proyecto ejecutivo y aprobación municipal.
                   </p>
                 </div>
 
-                {/* Columna Derecha: Especificaciones TÃ©cnicas y CTA (5 cols) */}
+                {/* Columna Derecha: Especificaciones Técnicas y CTA (5 cols) */}
                 <div className="lg:col-span-5 bg-paper border border-line p-6 sm:p-8 space-y-6">
                   <div>
                     <span className="text-xs font-medium uppercase tracking-widest text-brand-600 dark:text-brand-400">
@@ -355,14 +355,14 @@ export default function TipologiasVisor({
                     </p>
                   </div>
 
-                  {/* Ficha mÃ©trica */}
+                  {/* Ficha métrica */}
                   <div className="grid grid-cols-3 gap-3 border-y border-hairline py-4 text-center">
                     <div className="p-2 bg-paper-soft rounded-sm">
                       <span className="text-[0.65rem] uppercase tracking-wider text-ink-soft block">
                         Total
                       </span>
                       <span className="text-lg font-light text-ink font-serif">
-                        {activeTipologia.superficieTotal} mÂ²
+                        {activeTipologia.superficieTotal} m²
                       </span>
                     </div>
                     <div className="p-2 bg-paper-soft rounded-sm">
@@ -370,7 +370,7 @@ export default function TipologiasVisor({
                         Cubierta
                       </span>
                       <span className="text-lg font-light text-ink font-serif">
-                        {activeTipologia.superficieCubierta} mÂ²
+                        {activeTipologia.superficieCubierta} m²
                       </span>
                     </div>
                     <div className="p-2 bg-paper-soft rounded-sm">
@@ -378,7 +378,7 @@ export default function TipologiasVisor({
                         Exterior
                       </span>
                       <span className="text-lg font-light text-ink font-serif">
-                        {activeTipologia.superficieDescubierta} mÂ²
+                        {activeTipologia.superficieDescubierta} m²
                       </span>
                     </div>
                   </div>
@@ -388,7 +388,7 @@ export default function TipologiasVisor({
                     {activeTipologia.orientacion && (
                       <div className="flex items-center gap-2">
                         <Compass className="w-4 h-4 text-brand-500 shrink-0" />
-                        <span>OrientaciÃ³n: <strong className="text-ink">{activeTipologia.orientacion}</strong></span>
+                        <span>Orientación: <strong className="text-ink">{activeTipologia.orientacion}</strong></span>
                       </div>
                     )}
                     <div className="flex items-center gap-2">
@@ -399,7 +399,7 @@ export default function TipologiasVisor({
                     </div>
                   </div>
 
-                  {/* Lista de CaracterÃ­sticas */}
+                  {/* Lista de Características */}
                   {activeTipologia.caracteristicas && activeTipologia.caracteristicas.length > 0 && (
                     <div className="space-y-2 pt-2">
                       <p className="text-xs uppercase tracking-wider text-ink font-medium">
@@ -408,7 +408,7 @@ export default function TipologiasVisor({
                       <ul className="space-y-1.5">
                         {activeTipologia.caracteristicas.map((carac, i) => (
                           <li key={i} className="flex items-start gap-2 text-xs font-light text-ink-soft">
-                            <span className="text-brand-500 mt-0.5">â€¢</span>
+                            <span className="text-brand-500 mt-0.5">⬢</span>
                             <span>{carac}</span>
                           </li>
                         ))}
@@ -416,7 +416,7 @@ export default function TipologiasVisor({
                     </div>
                   )}
 
-                  {/* BotÃ³n de Contacto / WhatsApp */}
+                  {/* Botón de Contacto / WhatsApp */}
                   <div className="pt-4 border-t border-hairline">
                     <a
                       href={whatsappUrl}
